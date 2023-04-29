@@ -39,15 +39,6 @@ class MonsterLevel extends StatelessWidget with GetItMixin{
             mainAxisAlignment: MainAxisAlignment.end,
             children: List.generate(cardLevel.nullSafe(), (index) => LevelStar()),
           ),
-          // Selector<CardCreatorViewModel, int>(
-          //   selector: (_, provider) => provider.currentCard.level.nullSafe(),
-          //   builder: (ctx, level, child) {
-          //     return Row(
-          //       mainAxisAlignment: MainAxisAlignment.end,
-          //       children: List.generate(level, (index) => LevelStar()),
-          //     );
-          //   },
-          // ),
         ),
       ),
     );

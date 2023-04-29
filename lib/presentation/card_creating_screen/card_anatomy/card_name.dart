@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:yugioh_card_creator/application/extensions.dart';
 import 'package:yugioh_card_creator/presentation/card_creating_screen/card_constants.dart';
+import 'package:yugioh_card_creator/presentation/custom_classes/elastic_text_field.dart';
 
 import '../../../application/dependency_injection.dart';
 import '../../resources/styles.dart';
@@ -11,11 +12,9 @@ class CardName extends StatefulWidget {
 
   @override
   State<CardName> createState() => _CardNameState();
-
 }
 
 class _CardNameState extends State<CardName> {
-
   TextEditingController cardNameController = TextEditingController();
 
   @override
@@ -35,25 +34,19 @@ class _CardNameState extends State<CardName> {
 
   @override
   Widget build(BuildContext context) {
-
     return SizedBox(
-      width: _cardSize.width*CardConstants.cardNameWidth,
-      height: _cardSize.width*CardConstants.cardNameHeight,
-      child: TextField(
-        controller: cardNameController,
-        onSubmitted: (cardName) {
-          FocusManager.instance.primaryFocus?.unfocus();
-          _cardCreatorViewModel.setCardName(cardName);
-        },
-        onTapOutside: (event) {
-          FocusManager.instance.primaryFocus?.unfocus();
-          _cardCreatorViewModel.setCardName(cardNameController.text);
-        },
-        style: kCardNameTextStyle,
-        decoration: const InputDecoration(
-          border: InputBorder.none,
-        ),
-      ),
-    );
+        width: _cardSize.width * CardConstants.cardNameWidth,
+        height: _cardSize.width * CardConstants.cardNameHeight,
+        child: ElasticTextField(
+          width: _cardSize.width * CardConstants.cardNameWidth,
+          height: _cardSize.width * CardConstants.cardNameHeight,
+          controller: cardNameController,
+          onEditingComplete: (cardName) {
+            FocusManager.instance.primaryFocus?.unfocus();
+            _cardCreatorViewModel.setCardName(cardName);
+          },
+          style: kCardNameTextStyle,
+          maxLines: 1,
+        ));
   }
 }
