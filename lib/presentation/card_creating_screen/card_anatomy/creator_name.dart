@@ -34,8 +34,13 @@ class _CreatorNameState extends State<CreatorName> {
       child: TextField(
         textAlign: TextAlign.right,
         controller: creatorNameController,
-        onSubmitted: (String cardName) {
-          _cardCreatorViewModel.setCreatorName(cardName);
+        onSubmitted: (creatorName) {
+          FocusManager.instance.primaryFocus?.unfocus();
+          _cardCreatorViewModel.setCreatorName(creatorName);
+        },
+        onTapOutside: (event) {
+          FocusManager.instance.primaryFocus?.unfocus();
+          _cardCreatorViewModel.setCreatorName(creatorNameController.text);
         },
         style: kCreatorNameTextStyle,
         decoration: const InputDecoration(

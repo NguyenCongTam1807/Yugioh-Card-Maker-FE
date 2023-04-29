@@ -43,8 +43,13 @@ class _DefState extends State<Def> {
         maxLength: 4,
         textAlign: TextAlign.right,
         controller: defController,
-        onSubmitted: (String def) {
+        onSubmitted: (def) {
+          FocusManager.instance.primaryFocus?.unfocus();
           _cardCreatorViewModel.setCardDef(def);
+        },
+        onTapOutside: (event) {
+          FocusManager.instance.primaryFocus?.unfocus();
+          _cardCreatorViewModel.setCardDef(defController.text);
         },
         style: kAtkDefTextStyle,
         decoration: const InputDecoration(

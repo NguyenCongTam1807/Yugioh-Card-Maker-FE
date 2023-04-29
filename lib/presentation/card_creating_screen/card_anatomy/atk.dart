@@ -43,7 +43,12 @@ class _AtkState extends State<Atk> {
         textAlign: TextAlign.right,
         controller: atkController,
         onSubmitted: (String atk) {
+          FocusManager.instance.primaryFocus?.unfocus();
           _cardCreatorViewModel.setCardAtk(atk);
+        },
+        onTapOutside: (event) {
+          FocusManager.instance.primaryFocus?.unfocus();
+          _cardCreatorViewModel.setCardAtk(atkController.text);
         },
         style: kAtkDefTextStyle,
         decoration: const InputDecoration(

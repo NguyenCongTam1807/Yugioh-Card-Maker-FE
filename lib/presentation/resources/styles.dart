@@ -15,6 +15,7 @@ final TextStyle kMonsterTypeTextStyle = TextStyle(
 
 final TextStyle kCardDescTextStyle = TextStyle(
   fontSize: FontSize.s24_5.sp,
+  fontWeight: FontWeight.w500,
   fontFamily: FontFamily.matrix,
 );
 

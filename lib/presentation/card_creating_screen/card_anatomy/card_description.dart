@@ -44,7 +44,12 @@ class _CardDescriptionState extends State<CardDescription> {
       child: TextField(
         controller: cardDescController,
         onSubmitted: (String cardDesc) {
+          FocusManager.instance.primaryFocus?.unfocus();
           cardCreatorViewModel.setCardName(cardDesc);
+        },
+        onTapOutside: (event) {
+          FocusManager.instance.primaryFocus?.unfocus();
+          cardCreatorViewModel.setCardName(cardDescController.text);
         },
         style: kCardDescTextStyle,
         textAlign: TextAlign.justify,

@@ -41,8 +41,13 @@ class _CardNameState extends State<CardName> {
       height: _cardSize.width*CardConstants.cardNameHeight,
       child: TextField(
         controller: cardNameController,
-        onSubmitted: (String cardName) {
+        onSubmitted: (cardName) {
+          FocusManager.instance.primaryFocus?.unfocus();
           _cardCreatorViewModel.setCardName(cardName);
+        },
+        onTapOutside: (event) {
+          FocusManager.instance.primaryFocus?.unfocus();
+          _cardCreatorViewModel.setCardName(cardNameController.text);
         },
         style: kCardNameTextStyle,
         decoration: const InputDecoration(
