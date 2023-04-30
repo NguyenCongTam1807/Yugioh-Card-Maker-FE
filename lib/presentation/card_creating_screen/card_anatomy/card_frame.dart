@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../application/dependency_injection.dart';
-import '../card_constants.dart';
+import '../positions.dart';
 import '../card_creator_view_model.dart';
 
 class CardFrame extends StatelessWidget {
@@ -13,10 +13,10 @@ class CardFrame extends StatelessWidget {
   Widget build(BuildContext context) {
     return ClipPath(
       clipper: RectangleHoleClipper(
-          left: CardConstants.cardImageLeft * _cardWidth,
-          top: CardConstants.cardImageTop * _cardWidth,
-          insideWidth: CardConstants.cardImageSize * _cardWidth,
-          insideHeight: CardConstants.cardImageSize * _cardWidth,
+          left: CardPos.cardImageLeft * _cardWidth,
+          top: CardPos.cardImageTop * _cardWidth,
+          insideWidth: CardPos.cardImageSize * _cardWidth,
+          insideHeight: CardPos.cardImageSize * _cardWidth,
           outerWidth: _cardWidth,
           outerHeight: _cardHeight),
       child: Container(

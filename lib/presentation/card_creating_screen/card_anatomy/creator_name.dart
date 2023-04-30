@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../../application/dependency_injection.dart';
 import '../../resources/styles.dart';
-import '../card_constants.dart';
+import '../positions.dart';
 import '../card_creator_view_model.dart';
 
 class CreatorName extends StatefulWidget {
@@ -29,8 +29,8 @@ class _CreatorNameState extends State<CreatorName> {
   Widget build(BuildContext context) {
 
     return SizedBox(
-      width: _cardSize.width*CardConstants.creatorNameWidth,
-      height: _cardSize.width*CardConstants.creatorNameHeight,
+      width: _cardSize.width*CardPos.creatorNameWidth,
+      height: _cardSize.width*CardPos.creatorNameHeight,
       child: TextField(
         textAlign: TextAlign.right,
         controller: creatorNameController,

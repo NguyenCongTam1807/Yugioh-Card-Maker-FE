@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 
 import '../presentation/card_creating_screen/card_creator_view.dart';
-import '../presentation/card_creating_screen/card_constants.dart';
+import '../presentation/card_creating_screen/positions.dart';
 import '../presentation/resources/routes.dart';
 
 class MyApp extends StatelessWidget {
@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: const Size(CardConstants.cardWidthRatio, CardConstants.cardHeightRatio),
+      designSize: const Size(ScreenPos.cardWidthRatio, ScreenPos.cardHeightRatio),
       minTextAdapt: true,
       builder: (BuildContext context, Widget? child) {
         return MaterialApp(

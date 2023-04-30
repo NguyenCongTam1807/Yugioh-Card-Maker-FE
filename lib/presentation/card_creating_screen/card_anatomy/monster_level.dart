@@ -7,7 +7,7 @@ import 'package:yugioh_card_creator/presentation/card_creating_screen/card_creat
 
 import '../../../application/dependency_injection.dart';
 import '../../resources/images.dart';
-import '../card_constants.dart';
+import '../positions.dart';
 
 class MonsterLevel extends StatelessWidget with GetItMixin{
   MonsterLevel({Key? key}) : super(key: key);
@@ -20,27 +20,27 @@ class MonsterLevel extends StatelessWidget with GetItMixin{
 
     return Container(
       margin: EdgeInsets.symmetric(
-          horizontal: _cardWidth * CardConstants.monsterLevelMargin),
+          horizontal: _cardWidth * CardPos.monsterLevelMargin),
       child: GestureDetector(
         onHorizontalDragUpdate: (details) {
           final x = details.localPosition.dx;
-          final level = 12 - x / _cardWidth ~/ CardConstants.levelDragFormulaDivider;
+          final level = 12 - x / _cardWidth ~/ CardPos.levelDragFormulaDivider;
           if (level >= 1 && level <= 12) {
             _cardCreatorViewModel.setCardLevel(
-              12 - x / _cardWidth ~/ CardConstants.levelDragFormulaDivider);
+              12 - x / _cardWidth ~/ CardPos.levelDragFormulaDivider);
           }
         },
         onTapDown: (details) {
           final x = details.localPosition.dx;
-          final level = 12 - x / _cardWidth ~/ CardConstants.levelDragFormulaDivider;
+          final level = 12 - x / _cardWidth ~/ CardPos.levelDragFormulaDivider;
           if (level >= 1 && level <= 12) {
             _cardCreatorViewModel.setCardLevel(
-              12 - x / _cardWidth ~/ CardConstants.levelDragFormulaDivider);
+              12 - x / _cardWidth ~/ CardPos.levelDragFormulaDivider);
           }
         },
         behavior: HitTestBehavior.translucent,
         child: SizedBox(
-          width: _cardWidth * (1 - 2 * CardConstants.monsterLevelMargin),
+          width: _cardWidth * (1 - 2 * CardPos.monsterLevelMargin),
           child:
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
@@ -56,11 +56,11 @@ class LevelStar extends StatelessWidget {
   LevelStar({Key? key}) : super(key: key);
 
   final starSize = getIt<CardCreatorViewModel>().cardSize.width *
-      CardConstants.levelStarWidth;
+      CardPos.levelStarWidth;
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(left: CardConstants.levelStarLeftMargin),
+      margin: const EdgeInsets.only(left: CardPos.levelStarLeftMargin),
       width: starSize,
       height: starSize,
       decoration: const BoxDecoration(

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:yugioh_card_creator/application/extensions.dart';
 import 'package:yugioh_card_creator/presentation/resources/styles.dart';
 import '../../../application/dependency_injection.dart';
-import '../card_constants.dart';
+import '../positions.dart';
 import '../card_creator_view_model.dart';
 
 
@@ -38,8 +38,8 @@ class _MonsterTypeState extends State<MonsterType> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: _cardWidth*CardConstants.monsterTypeWidth,
-      height: _cardWidth*CardConstants.monsterTypeHeight,
+      width: _cardWidth*CardPos.monsterTypeWidth,
+      height: _cardWidth*CardPos.monsterTypeHeight,
       child: TextField(
         controller: monsterTypeController,
         onSubmitted: (String value) {

@@ -5,7 +5,7 @@ import 'package:yugioh_card_creator/application/extensions.dart';
 import '../../../application/dependency_injection.dart';
 import '../../custom_classes/elastic_text_field.dart';
 import '../../resources/styles.dart';
-import '../card_constants.dart';
+import '../positions.dart';
 import '../card_creator_view_model.dart';
 
 class CardDescription extends StatefulWidget {
@@ -40,11 +40,11 @@ class _CardDescriptionState extends State<CardDescription> {
         TextEditingValue(text: currentCard.description.nullSafe());
     return Container(
       padding: EdgeInsets.zero,
-      width: cardSize.width * CardConstants.cardDescriptionWidth,
-      height: cardSize.width * CardConstants.cardDescriptionHeight,
+      width: cardSize.width * CardPos.cardDescriptionWidth,
+      height: cardSize.width * CardPos.cardDescriptionHeight,
       child: ElasticTextField(
-        width: cardSize.width * CardConstants.cardDescriptionWidth,
-        height: cardSize.width * CardConstants.cardDescriptionHeight,
+        width: cardSize.width * CardPos.cardDescriptionWidth,
+        height: cardSize.width * CardPos.cardDescriptionHeight,
         controller: cardDescController,
         onEditingComplete: (cardDesc) {
           FocusManager.instance.primaryFocus?.unfocus();

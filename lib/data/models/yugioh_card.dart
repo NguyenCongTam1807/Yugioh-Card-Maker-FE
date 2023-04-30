@@ -21,7 +21,7 @@ class YugiohCard {
     this.id,
     this.name = Strings.defaultCardName,
     this.attribute = CardAttribute.light,
-    this.imagePath = ImagePath.defaultCardImage,
+    this.imagePath = ImagePath.cardImagePlaceHolder,
     this.monsterType = Strings.defaultMonsterType,
     this.description = Strings.defaultDescription,
     this.atk = Strings.defaultAtk,

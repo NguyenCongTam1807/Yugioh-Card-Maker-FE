@@ -3,7 +3,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:get_it_mixin/get_it_mixin.dart';
 import 'package:yugioh_card_creator/application/extensions.dart';
 import 'package:yugioh_card_creator/data/models/yugioh_card.dart';
-import 'package:yugioh_card_creator/presentation/card_creating_screen/card_constants.dart';
+import 'package:yugioh_card_creator/presentation/card_creating_screen/positions.dart';
 
 import '../../../application/dependency_injection.dart';
 import '../../resources/durations.dart';
@@ -56,14 +56,14 @@ class _CardAttributeIconState extends State<CardAttributeIcon>
               transitionBuilder: (ctx, a1, a2, widget) {
                 const iconMargin = Insets.i2;
                 final iconWidth = _cardWidth *
-                    CardConstants.cardAttributeIconSize *
-                    CardConstants.attributeScaleFactor;
+                    CardPos.cardAttributeIconSize *
+                    CardPos.attributeScaleFactor;
                 final halfDialogWidth =
-                    iconWidth * CardConstants.attributeIconsPerRow / 2 +
-                        iconMargin * CardConstants.attributeIconsPerRow;
+                    iconWidth * CardPos.attributeIconsPerRow / 2 +
+                        iconMargin * CardPos.attributeIconsPerRow;
                 final halfDialogHeight =
-                    iconWidth * CardConstants.attributeIconsPerColumn / 2 +
-                        iconMargin * CardConstants.attributeIconsPerColumn;
+                    iconWidth * CardPos.attributeIconsPerColumn / 2 +
+                        iconMargin * CardPos.attributeIconsPerColumn;
 
                 final curve = Curves.easeInOut.transform(a1.value);
                 return Stack(
@@ -78,16 +78,16 @@ class _CardAttributeIconState extends State<CardAttributeIcon>
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             children: List.generate(
-                                CardConstants.attributeIconsPerColumn,
+                                CardPos.attributeIconsPerColumn,
                                 (rowIndex) {
                               return Row(
                                 mainAxisSize: MainAxisSize.min,
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: List.generate(
-                                    CardConstants.attributeIconsPerRow,
+                                    CardPos.attributeIconsPerRow,
                                     (colIndex) {
                                   final iconIndex = rowIndex *
-                                          CardConstants.attributeIconsPerRow +
+                                          CardPos.attributeIconsPerRow +
                                       colIndex;
                                   return GestureDetector(
                                     onTap: () {
@@ -99,7 +99,7 @@ class _CardAttributeIconState extends State<CardAttributeIcon>
                                       CardAttribute.values[iconIndex]
                                           .getAssetPath(),
                                       scaleFactor:
-                                          CardConstants.attributeScaleFactor,
+                                          CardPos.attributeScaleFactor,
                                       margin: iconMargin,
                                     ),
                                   );
@@ -122,8 +122,8 @@ class _CardAttributeIconState extends State<CardAttributeIcon>
       {double scaleFactor = 1, double margin = 0}) {
     return Container(
       margin: EdgeInsets.all(margin),
-      width: _cardWidth * CardConstants.cardAttributeIconSize * scaleFactor,
-      height: _cardWidth * CardConstants.cardAttributeIconSize * scaleFactor,
+      width: _cardWidth * CardPos.cardAttributeIconSize * scaleFactor,
+      height: _cardWidth * CardPos.cardAttributeIconSize * scaleFactor,
       decoration: BoxDecoration(
           image: DecorationImage(
         image: AssetImage(assetPath),

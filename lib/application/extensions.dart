@@ -1,6 +1,7 @@
 
-import '../presentation/card_creating_screen/card_constants.dart';
+import '../presentation/card_creating_screen/positions.dart';
 import '../data/models/yugioh_card.dart';
+import '../presentation/resources/card_defaults.dart';
 
 extension NullableString on String? {
   String nullSafe() {
@@ -16,13 +17,13 @@ extension NullableInt on int? {
 
 extension NullableCardType on CardType? {
   CardType nullSafe() {
-    return this??CardConstants.defaultCardType;
+    return this??CardDefaults.defaultCardType;
   }
 }
 
 extension NullableCardAttribute on CardAttribute? {
   CardAttribute nullSafe() {
-    return this??CardConstants.defaultAttribute;
+    return this??CardDefaults.defaultAttribute;
   }
 }
 

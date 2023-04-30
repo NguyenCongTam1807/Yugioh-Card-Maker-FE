@@ -12,9 +12,12 @@ class CardImageButton extends StatelessWidget {
   final _imagePicker = getIt<ImagePicker>();
   final _cardCreatorViewModel = getIt<CardCreatorViewModel>();
 
-  Future _chooseImage(ImageSource source) async {
+  Future _chooseImage(ImageSource source, BuildContext context) async {
     final xFile = await _imagePicker.pickImage(source: source);
     if (xFile != null) {
+      if (context.mounted) {
+        Navigator.of(context).pop();
+      }
       _cardCreatorViewModel.setCardImage(xFile.path);
     }
   }
@@ -33,16 +36,15 @@ class CardImageButton extends StatelessWidget {
                     leading: const Icon(Icons.camera_alt),
                     title: const Text(Strings.useCamera),
                     onTap: () async {
-                      _chooseImage(ImageSource.camera);
-                      Navigator.of(context).pop();
+                      _chooseImage(ImageSource.camera, context);
                     },
                   ),
+                  const Divider(thickness: Sizes.s2, color: Colors.black,),
                   ListTile(
                       leading: const Icon(Icons.folder),
                       title: const Text(Strings.loadFromStorage),
                       onTap: () async {
-                        _chooseImage(ImageSource.gallery);
-                        Navigator.of(context).pop();
+                        _chooseImage(ImageSource.gallery, context);
                       })
                 ],
               );

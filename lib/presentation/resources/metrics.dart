@@ -1,3 +1,5 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 class Insets {
   static const i1 = 1.0;
   static const i2 = 2.0;
@@ -11,6 +13,7 @@ class Insets {
 }
 
 class Sizes {
+  static const s2 = 2.0;
   static const s3 = 3.0;
   static const s4 = 4.0;
   static const s5 = 5.0;

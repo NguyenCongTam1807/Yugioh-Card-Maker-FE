@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:yugioh_card_creator/application/extensions.dart';
-import 'package:yugioh_card_creator/presentation/card_creating_screen/card_constants.dart';
+import 'package:yugioh_card_creator/presentation/card_creating_screen/positions.dart';
 import 'package:yugioh_card_creator/presentation/custom_classes/elastic_text_field.dart';
 
 import '../../../application/dependency_injection.dart';
@@ -35,11 +35,11 @@ class _CardNameState extends State<CardName> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-        width: _cardSize.width * CardConstants.cardNameWidth,
-        height: _cardSize.width * CardConstants.cardNameHeight,
+        width: _cardSize.width * CardPos.cardNameWidth,
+        height: _cardSize.width * CardPos.cardNameHeight,
         child: ElasticTextField(
-          width: _cardSize.width * CardConstants.cardNameWidth,
-          height: _cardSize.width * CardConstants.cardNameHeight,
+          width: _cardSize.width * CardPos.cardNameWidth,
+          height: _cardSize.width * CardPos.cardNameHeight,
           controller: cardNameController,
           onEditingComplete: (cardName) {
             FocusManager.instance.primaryFocus?.unfocus();

@@ -4,7 +4,7 @@ import 'package:yugioh_card_creator/application/extensions.dart';
 
 import '../../../application/dependency_injection.dart';
 import '../../resources/styles.dart';
-import '../card_constants.dart';
+import '../positions.dart';
 import '../card_creator_view_model.dart';
 
 class Atk extends StatefulWidget {
@@ -36,8 +36,8 @@ class _AtkState extends State<Atk> {
   Widget build(BuildContext context) {
 
     return SizedBox(
-      width: _cardSize.width*CardConstants.atkWidth,
-      height: _cardSize.width*CardConstants.atkWidth,
+      width: _cardSize.width*CardPos.atkWidth,
+      height: _cardSize.width*CardPos.atkWidth,
       child: TextField(
         maxLength: 4,
         textAlign: TextAlign.right,

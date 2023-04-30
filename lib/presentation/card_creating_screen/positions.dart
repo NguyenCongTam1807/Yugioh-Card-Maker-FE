@@ -1,18 +1,11 @@
 import 'package:yugioh_card_creator/data/models/yugioh_card.dart';
 
 
-class CardConstants {
-  static const cardWidthRatio = 813.0;
-  static const cardHeightRatio = 1185.0;
-  static const cardMarginRatio = 0.34;
-
-  static const defaultAttribute = CardAttribute.light;
-  static const defaultCardType = CardType.normal;
-
-  //Card Buttons
+class CardPos {
+  //Card Image Button
   static const cardImageEditButtonTop = 0.968;
-  static const cardImageEditButtonLeft = 0.05
-  ;
+  static const cardImageEditButtonLeft = 0.05;
+
   //CardAttribute icons in popup menu
   static const attributeScaleFactor = 1.5;
   static const attributeIconsPerRow = 3;
@@ -58,5 +51,15 @@ class CardConstants {
   static const creatorNameLeft = 0.5;
   static const creatorNameWidth = 0.43;
   static const creatorNameHeight = 0.035;
+}
+
+class ScreenPos {
+  static const cardWidthRatio = 813.0;
+  static const cardHeightRatio = 1185.0;
+  static const cardMarginRatio = 0.34;
+
+  //Card Image Button
+  static const cardImageEditButtonTop = 0.943;
+  static const cardImageEditButtonLeft = 0.079;
 }
 
