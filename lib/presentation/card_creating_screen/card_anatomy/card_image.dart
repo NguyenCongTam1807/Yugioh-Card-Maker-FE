@@ -42,11 +42,12 @@ class ImageContainer extends StatelessWidget with GetItMixin {
   }
 
   Image _getCorrectImageType(String path) {
+    const boxFit = BoxFit.contain;
     if (path.startsWith(ImagePath.basePath)) {
-      return Image.asset(path, fit: BoxFit.cover,);
+      return Image.asset(path, fit: boxFit,);
     } else if (path.startsWith('http')) {
-      return Image.network(path, fit: BoxFit.cover,);
+      return Image.network(path, fit: boxFit,);
     }
-    return Image.file(File(path), fit: BoxFit.cover,);
+    return Image.file(File(path), fit: boxFit,);
   }
 }
