@@ -34,7 +34,6 @@ class _ElasticTextFieldState extends State<ElasticTextField> {
   bool _isEditable = false;
   double _textScaleY = 0.0;
 
-
   double _textWidthInOneLine(String text, TextStyle style) {
     final TextPainter textPainter = TextPainter(
         text: TextSpan(text: text, style: style),
@@ -44,7 +43,8 @@ class _ElasticTextFieldState extends State<ElasticTextField> {
     return textPainter.width;
   }
 
-  int _textLinesBoundByWidget(String text, TextStyle style, double widgetWidth) {
+  int _textLinesBoundByWidget(
+      String text, TextStyle style, double widgetWidth) {
     final TextPainter textPainter = TextPainter(
         text: TextSpan(text: text, style: style),
         textDirection: TextDirection.ltr)
@@ -103,29 +103,30 @@ class _ElasticTextFieldState extends State<ElasticTextField> {
                 _isEditable = true;
               });
             },
-            child: Container(
-              color: Colors.transparent,
+            behavior: HitTestBehavior.translucent,
+            child: SizedBox(
               width: widget.width,
               height: widget.height,
-              child: widget.maxLines == 1 ? Transform.scale(
-                scaleY: _textScaleY > 1 ? _textScaleY : 1,
-                alignment: _scaleAlignment(widget.maxLines),
-                child:FittedBox(
+              child: widget.maxLines == 1
+                  ? Transform.scale(
+                      scaleY: _textScaleY > 1 ? _textScaleY : 1,
+                      alignment: _scaleAlignment(widget.maxLines),
+                      child: FittedBox(
                         fit: BoxFit.scaleDown,
                         alignment: _scaleAlignment(widget.maxLines),
                         child: Text(
                           widget.controller.text,
                           style: widget.style,
                         ),
-                      )
-              ) : Text(
-                widget.controller.text,
-                style: widget.style,
-                textAlign: TextAlign.justify,
-                textScaleFactor: _textLines > widget.maxLines
-                    ? 1.0 / sqrt(_textLines / widget.maxLines)
-                    : 1,
-              ),
+                      ))
+                  : Text(
+                      widget.controller.text,
+                      style: widget.style,
+                      textAlign: TextAlign.justify,
+                      textScaleFactor: _textLines > widget.maxLines
+                          ? sqrt(widget.maxLines / _textLines)
+                          : 1,
+                    ),
             ),
           );
   }
