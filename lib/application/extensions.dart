@@ -20,13 +20,13 @@ extension NullableCardType on CardType? {
   }
 }
 
-extension NullableMonsterAttribute on MonsterAttribute? {
-  MonsterAttribute nullSafe() {
+extension NullableCardAttribute on CardAttribute? {
+  CardAttribute nullSafe() {
     return this??CardConstants.defaultAttribute;
   }
 }
 
-extension MonsterAttributeExtension on MonsterAttribute {
+extension CardAttributeExtension on CardAttribute {
   String getAssetPath() {
     return 'assets/images/attribute/${toString().split('.').last}_en.png';
   }

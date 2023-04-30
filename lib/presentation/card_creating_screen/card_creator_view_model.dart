@@ -18,17 +18,17 @@ class CardCreatorViewModel extends ChangeNotifier {
     notifyListeners();
   }
   
-  void setCardType(CardType type) {
+  setCardType(CardType type) {
     _currentCard.cardType = type;
     notifyListeners();
   }
 
-  void setMonsterAttribute(MonsterAttribute attribute) {
+  setCardAttribute(CardAttribute attribute) {
     _currentCard.attribute = attribute;
     notifyListeners();
   }
 
-  void setCardMonsterType(String monsterType) {
+  setCardMonsterType(String monsterType) {
     _currentCard.monsterType = monsterType;
     notifyListeners();
   }
@@ -37,47 +37,47 @@ class CardCreatorViewModel extends ChangeNotifier {
     return s[0].toUpperCase()+s.toLowerCase().substring(1);
   }
 
-  void setCardName(String name) {
+  setCardName(String name) {
     _currentCard.name = name;
     notifyListeners();
   }
 
-  void setCardTheme(CardType type) {
+  setCardTheme(CardType type) {
     _currentCard.cardType = type;
     notifyListeners();
   }
 
-  void setCardLevel(int level){
+  setCardLevel(int level){
     _currentCard.level = level;
     notifyListeners();
   }
 
-  void setCardDescription(String description) {
+  setCardDescription(String description) {
     _currentCard.description = description;
     notifyListeners();
   }
 
-  void setCardAtk(String atk) {
+  setCardAtk(String atk) {
     _currentCard.atk = atk;
     notifyListeners();
   }
 
-  void setCardDef(String def) {
+  setCardDef(String def) {
     _currentCard.def = def;
     notifyListeners();
   }
 
-  void setCreatorName(String name) {
+  setCreatorName(String name) {
     _currentCard.creatorName = name.toUpperCase();
     notifyListeners();
   }
 
-  void setCardImage(String url) {
+  setCardImage(String url) {
     _currentCard.imagePath = url;
     notifyListeners();
   }
 
-  void setCardEffectType(EffectType type) {
+  setCardEffectType(EffectType type) {
     _currentCard.effectType = type;
     notifyListeners();
   }

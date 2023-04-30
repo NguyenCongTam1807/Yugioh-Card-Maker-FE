@@ -6,7 +6,7 @@ import '../../presentation/resources/strings.dart';
 class YugiohCard {
   int? id;
   String? name;
-  MonsterAttribute? attribute;
+  CardAttribute? attribute;
   String? imagePath;
   String? monsterType;
   String? description;
@@ -20,7 +20,7 @@ class YugiohCard {
   YugiohCard({
     this.id,
     this.name = Strings.defaultCardName,
-    this.attribute = MonsterAttribute.light,
+    this.attribute = CardAttribute.light,
     this.imagePath = ImagePath.defaultCardImage,
     this.monsterType = Strings.defaultMonsterType,
     this.description = Strings.defaultDescription,
@@ -33,7 +33,7 @@ class YugiohCard {
   });
 }
 
-enum MonsterAttribute {
+enum CardAttribute {
   dark,
   light,
   earth,

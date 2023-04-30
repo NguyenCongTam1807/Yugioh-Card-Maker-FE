@@ -6,8 +6,13 @@ class CardConstants {
   static const cardHeightRatio = 1185.0;
   static const cardMarginRatio = 0.34;
 
-  static const defaultAttribute = MonsterAttribute.light;
+  static const defaultAttribute = CardAttribute.light;
   static const defaultCardType = CardType.normal;
+
+  //CardAttribute Icon scaleFactor in popup menu
+  static const attributeScaleFactor = 1.5;
+  static const attributeIconsPerRow = 3;
+  static const attributeIconsPerColumn = 3;
 
   //Relative positions inside a card, proportional to the card's width
   static const cardImageTop = 0.2685;

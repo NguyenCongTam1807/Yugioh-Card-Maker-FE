@@ -53,7 +53,7 @@ class _MonsterCardState extends State<MonsterCard> {
       Positioned(
         top: CardConstants.cardAttributeIconTop * cardWidth,
         left: CardConstants.cardAttributeIconLeft * cardWidth,
-        child: const CardAttributeIcon(),
+        child: CardAttributeIcon(),
       ),
       //Monster Level
       Positioned(

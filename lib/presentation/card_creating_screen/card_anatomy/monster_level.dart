@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it_mixin/get_it_mixin.dart';
 import 'package:yugioh_card_creator/application/extensions.dart';
@@ -22,17 +23,23 @@ class MonsterLevel extends StatelessWidget with GetItMixin{
           horizontal: _cardWidth * CardConstants.monsterLevelMargin),
       child: GestureDetector(
         onHorizontalDragUpdate: (details) {
-          var x = details.localPosition.dx;
-          _cardCreatorViewModel.setCardLevel(
+          final x = details.localPosition.dx;
+          final level = 12 - x / _cardWidth ~/ CardConstants.levelDragFormulaDivider;
+          if (level >= 1 && level <= 12) {
+            _cardCreatorViewModel.setCardLevel(
               12 - x / _cardWidth ~/ CardConstants.levelDragFormulaDivider);
+          }
         },
         onTapDown: (details) {
-          var x = details.localPosition.dx;
-          _cardCreatorViewModel.setCardLevel(
+          final x = details.localPosition.dx;
+          final level = 12 - x / _cardWidth ~/ CardConstants.levelDragFormulaDivider;
+          if (level >= 1 && level <= 12) {
+            _cardCreatorViewModel.setCardLevel(
               12 - x / _cardWidth ~/ CardConstants.levelDragFormulaDivider);
+          }
         },
-        child: Container(
-          color: Colors.transparent,
+        behavior: HitTestBehavior.translucent,
+        child: SizedBox(
           width: _cardWidth * (1 - 2 * CardConstants.monsterLevelMargin),
           child:
           Row(
