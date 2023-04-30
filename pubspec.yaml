@@ -38,6 +38,7 @@ dependencies:
   flutter_screenutil: ^5.7.0
   get_it: ^7.3.0
   get_it_mixin: ^4.1.1
+  image_picker: ^0.8.7+4
 
 dev_dependencies:
   flutter_test:
@@ -67,7 +68,7 @@ flutter:
     - assets/images/icons/
     - assets/images/attribute/
     - assets/images/example/
-    - assets/images/icon/
+    - assets/images/button/
     - assets/images/theme/
     - assets/images/stars/
     - assets/images/thumb/

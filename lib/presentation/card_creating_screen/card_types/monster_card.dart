@@ -4,6 +4,7 @@ import '../../../application/dependency_injection.dart';
 import '../card_anatomy/atk.dart';
 import '../card_anatomy/card_attribute.dart';
 import '../card_anatomy/card_description.dart';
+import '../card_anatomy/card_frame.dart';
 import '../card_anatomy/card_image.dart';
 import '../card_anatomy/card_name.dart';
 import '../card_anatomy/creator_name.dart';
@@ -22,7 +23,6 @@ class MonsterCard extends StatefulWidget {
 
 class _MonsterCardState extends State<MonsterCard> {
 
-  final _cardCreatorViewModel = getIt<CardCreatorViewModel>();
   final cardWidth = getIt<CardCreatorViewModel>().cardSize.width;
 
   @override
@@ -36,12 +36,11 @@ class _MonsterCardState extends State<MonsterCard> {
         child: CardImage(),
       ),
       //Card Frame Theme By Type
-      Container(
-        decoration: BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage(_cardCreatorViewModel.getCardTypeAssetImage()),
-                fit: BoxFit.cover)),
-      ),
+      CardFrame(),
+      // Container(
+      //   color: Colors.red.withOpacity(0.5),
+      //   child: Image.asset(_cardCreatorViewModel.getCardTypeAssetImage(), fit: BoxFit.cover,) ,
+      // ),
       //Card Name
       Positioned(
         top: CardConstants.cardNameTop * cardWidth,

@@ -9,7 +9,11 @@ class CardConstants {
   static const defaultAttribute = CardAttribute.light;
   static const defaultCardType = CardType.normal;
 
-  //CardAttribute Icon scaleFactor in popup menu
+  //Card Buttons
+  static const cardImageEditButtonTop = 0.968;
+  static const cardImageEditButtonLeft = 0.05
+  ;
+  //CardAttribute icons in popup menu
   static const attributeScaleFactor = 1.5;
   static const attributeIconsPerRow = 3;
   static const attributeIconsPerColumn = 3;

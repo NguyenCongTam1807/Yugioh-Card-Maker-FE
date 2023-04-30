@@ -13,15 +13,17 @@ import 'card_creator_view_model.dart';
 import 'card_types/monster_card.dart';
 import 'card_types/spell_card.dart';
 import 'card_types/trap_card.dart';
+import 'edit_buttons/card_image_button.dart';
 
-class CardCreatorView extends StatefulWidget with GetItStatefulWidgetMixin{
+class CardCreatorView extends StatefulWidget with GetItStatefulWidgetMixin {
   CardCreatorView({Key? key}) : super(key: key);
 
   @override
   State<CardCreatorView> createState() => _CardCreatorViewState();
 }
 
-class _CardCreatorViewState extends State<CardCreatorView> with GetItStateMixin {
+class _CardCreatorViewState extends State<CardCreatorView>
+    with GetItStateMixin {
   final _cardCreatorViewModel = getIt<CardCreatorViewModel>();
 
   late final double cardWidth;
@@ -40,8 +42,10 @@ class _CardCreatorViewState extends State<CardCreatorView> with GetItStateMixin 
         CardConstants.cardWidthRatio / CardConstants.cardHeightRatio;
     const marginRatio = CardConstants.cardMarginRatio;
 
-    final screenWidth = (window.physicalSize.shortestSide / window.devicePixelRatio);
-    final screenHeight = (window.physicalSize.longestSide / window.devicePixelRatio);
+    final screenWidth =
+        (window.physicalSize.shortestSide / window.devicePixelRatio);
+    final screenHeight =
+        (window.physicalSize.longestSide / window.devicePixelRatio);
 
     if (screenHeight / cardHeightRatio > screenWidth / cardWidthRatio) {
       cardHeight = screenHeight * (1 - marginRatio);
@@ -56,8 +60,8 @@ class _CardCreatorViewState extends State<CardCreatorView> with GetItStateMixin 
 
   @override
   Widget build(BuildContext context) {
-    final cardType = watchOnly((CardCreatorViewModel vm) => vm.currentCard.cardType);
-
+    final cardType =
+        watchOnly((CardCreatorViewModel vm) => vm.currentCard.cardType);
     return Scaffold(
       appBar: AppBar(
         title: const Text(Strings.appName),
@@ -74,10 +78,20 @@ class _CardCreatorViewState extends State<CardCreatorView> with GetItStateMixin 
         child: SizedBox(
           width: cardWidth,
           height: cardHeight,
-          child: Stack(children: [
-            //Card background by card type
-            _yugiohCardOfType(cardType.nullSafe())
-          ]),
+          child: LayoutBuilder(
+            builder: (ctx, constraints) {
+              final cardWidth = watchOnly((CardCreatorViewModel vm) => vm.cardSize.width);
+              return Stack(children: [
+                //Card background by card type
+                _yugiohCardOfType(cardType.nullSafe()),
+                //Card Image Button
+                Positioned(
+                    top: cardWidth * CardConstants.cardImageEditButtonTop,
+                    left: cardWidth * CardConstants.cardImageEditButtonLeft,
+                    child: CardImageButton())
+              ]);
+            },
+          ),
         ),
       )),
     );
