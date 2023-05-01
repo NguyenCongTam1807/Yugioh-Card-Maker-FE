@@ -22,4 +22,5 @@ class Sizes {
   static const s15 = 15.0;
   static const s25 = 25.0;
   static const s35 = 35.0;
+  static const s55 = 55.0;
 }

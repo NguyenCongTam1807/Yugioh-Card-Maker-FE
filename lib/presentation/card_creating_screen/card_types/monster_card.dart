@@ -4,7 +4,7 @@ import '../../../application/dependency_injection.dart';
 import '../card_anatomy/atk.dart';
 import '../card_anatomy/card_attribute.dart';
 import '../card_anatomy/card_description.dart';
-import '../card_anatomy/card_frame.dart';
+import '../card_anatomy/card_type.dart';
 import '../card_anatomy/card_image.dart';
 import '../card_anatomy/card_name.dart';
 import '../card_anatomy/creator_name.dart';
@@ -36,7 +36,7 @@ class _MonsterCardState extends State<MonsterCard> {
         child: CardImage(),
       ),
       //Card Frame Theme By Type
-      CardFrame(),
+      CardType(),
       // Container(
       //   color: Colors.red.withOpacity(0.5),
       //   child: Image.asset(_cardCreatorViewModel.getCardTypeAssetImage(), fit: BoxFit.cover,) ,

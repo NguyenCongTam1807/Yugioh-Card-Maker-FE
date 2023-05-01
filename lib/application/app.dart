@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../presentation/card_creating_screen/card_creator_view.dart';
 import '../presentation/card_creating_screen/positions.dart';
 import '../presentation/resources/routes.dart';
+import '../presentation/resources/themes.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -16,6 +17,7 @@ class MyApp extends StatelessWidget {
       minTextAdapt: true,
       builder: (BuildContext context, Widget? child) {
         return MaterialApp(
+          theme: getAppTheme(AppTheme.egyptian),
           onGenerateRoute: RouteGenerator.getRoute,
           home: CardCreatorView(),
           debugShowCheckedModeBanner: false,

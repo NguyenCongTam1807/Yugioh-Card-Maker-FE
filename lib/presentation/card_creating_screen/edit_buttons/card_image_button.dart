@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:yugioh_card_creator/presentation/card_creating_screen/card_creator_view_model.dart';
 import '../../../application/dependency_injection.dart';
@@ -51,11 +52,11 @@ class CardImageButton extends StatelessWidget {
             });
       },
         child: Container(
-      decoration: const BoxDecoration(boxShadow: [
+      decoration: BoxDecoration(boxShadow: [
         BoxShadow(
           color: Colors.black,
-          spreadRadius: Sizes.s3,
-          blurRadius: Sizes.s7,
+          spreadRadius: Sizes.s5.sp,
+          blurRadius: Sizes.s10.sp,
         )
       ]),
       child: Image.asset(

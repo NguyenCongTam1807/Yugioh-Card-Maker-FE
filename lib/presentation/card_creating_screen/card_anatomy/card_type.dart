@@ -4,8 +4,8 @@ import '../../../application/dependency_injection.dart';
 import '../positions.dart';
 import '../card_creator_view_model.dart';
 
-class CardFrame extends StatelessWidget {
-  CardFrame({Key? key}) : super(key: key);
+class CardType extends StatelessWidget {
+  CardType({Key? key}) : super(key: key);
   final _cardCreatorViewModel = getIt<CardCreatorViewModel>();
   final _cardWidth = getIt<CardCreatorViewModel>().cardSize.width;
   final _cardHeight = getIt<CardCreatorViewModel>().cardSize.height;
