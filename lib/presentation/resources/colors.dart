@@ -19,7 +19,8 @@ class AppColor {
 
   //common
   static const textColor = '#000000';
+  static const editButtonShadowColor = '#000000';
 
-  static const halfBlack = '#7F000000';
+  static const editMenuBgColor = '#9F000000';
 }
 

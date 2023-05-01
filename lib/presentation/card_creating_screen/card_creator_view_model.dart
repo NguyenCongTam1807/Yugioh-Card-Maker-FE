@@ -42,11 +42,6 @@ class CardCreatorViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  setCardTheme(CardType type) {
-    _currentCard.cardType = type;
-    notifyListeners();
-  }
-
   setCardLevel(int level){
     _currentCard.level = level;
     notifyListeners();
@@ -80,10 +75,5 @@ class CardCreatorViewModel extends ChangeNotifier {
   setCardEffectType(EffectType type) {
     _currentCard.effectType = type;
     notifyListeners();
-  }
-
-  String getCardTypeAssetImage() {
-    String cardType = _currentCard.cardType.toString().split('.').last;
-    return 'assets/images/theme/$cardType.png';
   }
 }

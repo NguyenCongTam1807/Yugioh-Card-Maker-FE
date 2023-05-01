@@ -1,6 +1,3 @@
-import 'package:yugioh_card_creator/data/models/yugioh_card.dart';
-
-
 class CardPos {
   //Card Image Button
   static const cardImageEditButtonTop = 0.968;
@@ -60,6 +57,11 @@ class ScreenPos {
 
   //Card Image Button
   static const cardImageEditButtonTop = 0.943;
-  static const cardImageEditButtonLeft = 0.079;
+
+  //Card Type Button
+  static const cardTypeEditButtonTop = 0.187;
+
+  //Common
+  static const cardEditButtonLeft = 0.07;
 }
 

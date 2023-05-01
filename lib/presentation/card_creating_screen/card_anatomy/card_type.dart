@@ -1,16 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:get_it_mixin/get_it_mixin.dart';
+import 'package:yugioh_card_creator/application/extensions.dart';
 
 import '../../../application/dependency_injection.dart';
 import '../positions.dart';
 import '../card_creator_view_model.dart';
 
-class CardType extends StatelessWidget {
+class CardType extends StatelessWidget with GetItMixin{
   CardType({Key? key}) : super(key: key);
   final _cardCreatorViewModel = getIt<CardCreatorViewModel>();
   final _cardWidth = getIt<CardCreatorViewModel>().cardSize.width;
   final _cardHeight = getIt<CardCreatorViewModel>().cardSize.height;
+
   @override
   Widget build(BuildContext context) {
+
+    final cardType = watchOnly((CardCreatorViewModel vm) => vm.currentCard.cardType);
+    print("cardType: $cardType - ${cardType.nullSafe().getAssetPath()}");
     return ClipPath(
       clipper: RectangleHoleClipper(
           left: CardPos.cardImageLeft * _cardWidth,
@@ -19,12 +25,9 @@ class CardType extends StatelessWidget {
           insideHeight: CardPos.cardImageSize * _cardWidth,
           outerWidth: _cardWidth,
           outerHeight: _cardHeight),
-      child: Container(
-        color: Colors.red.withOpacity(0.5),
-        child: Image.asset(
-          _cardCreatorViewModel.getCardTypeAssetImage(),
-          fit: BoxFit.cover,
-        ),
+      child: Image.asset(
+        cardType.nullSafe().getAssetPath(),
+        fit: BoxFit.cover,
       ),
     );
   }

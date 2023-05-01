@@ -6,6 +6,7 @@ import 'package:yugioh_card_creator/application/extensions.dart';
 
 import '../../application/dependency_injection.dart';
 import '../../data/models/yugioh_card.dart';
+import 'edit_buttons/card_type_button.dart';
 import 'positions.dart';
 import '../resources/routes.dart';
 import '../resources/strings.dart';
@@ -87,9 +88,15 @@ class _CardCreatorViewState extends State<CardCreatorView>
             children: [
               Positioned(
                   top: screenWidth *
+                      ScreenPos.cardTypeEditButtonTop,
+                  left: screenWidth *
+                      ScreenPos.cardEditButtonLeft,
+                  child: CardTypeButton()),
+              Positioned(
+                  top: screenWidth *
                       ScreenPos.cardImageEditButtonTop,
                   left: screenWidth *
-                      ScreenPos.cardImageEditButtonLeft,
+                      ScreenPos.cardEditButtonLeft,
                   child: CardImageButton()),
               Positioned(
                 top: (screenHeight - cardHeight - appBarHeight) / 2,

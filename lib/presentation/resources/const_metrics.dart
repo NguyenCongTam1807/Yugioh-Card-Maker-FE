@@ -1,18 +1,18 @@
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-class Insets {
+class ConstInsets {
   static const i1 = 1.0;
   static const i2 = 2.0;
   static const i3 = 3.0;
+  static const i4 = 4.0;
   static const i5 = 5.0;
   static const i8 = 8.0;
+  static const i10 = 10.0;
   static const i12 = 12.0;
   static const i20 = 20.0;
   static const i35 = 35.0;
   static const i60 = 60.0;
 }
 
-class Sizes {
+class ConstSizes {
   static const s2 = 2.0;
   static const s3 = 3.0;
   static const s4 = 4.0;

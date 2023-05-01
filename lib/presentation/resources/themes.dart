@@ -4,7 +4,7 @@ import 'package:yugioh_card_creator/application/extensions.dart';
 import 'package:yugioh_card_creator/presentation/resources/styles.dart';
 
 import 'colors.dart';
-import 'metrics.dart';
+import 'const_metrics.dart';
 
 ThemeData getAppTheme(AppTheme theme) {
   switch (theme) {
@@ -27,12 +27,12 @@ ThemeData _getEgyptianTheme() {
         ),
       actionsIconTheme: IconThemeData(
         color: AppColor.egyptIconColor.toColor(),
-        size: Sizes.s55.sp,
+        size: ConstSizes.s55.sp,
           shadows: [
             BoxShadow(
               color: AppColor.egyptIconBorder.toColor(),
-              spreadRadius: Sizes.s25.sp,
-              blurRadius: Sizes.s25.sp,
+              spreadRadius: ConstSizes.s25.sp,
+              blurRadius: ConstSizes.s25.sp,
             )
           ]
       )
@@ -41,7 +41,8 @@ ThemeData _getEgyptianTheme() {
       style: IconButton.styleFrom(
         foregroundColor: AppColor.egyptIconColor.toColor(),
       )
-    )
+    ),
+    shadowColor: AppColor.editButtonShadowColor.toColor(),
   );
 }
 

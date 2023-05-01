@@ -3,8 +3,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:yugioh_card_creator/presentation/card_creating_screen/card_creator_view_model.dart';
 import '../../../application/dependency_injection.dart';
-import '../../resources/metrics.dart';
+import '../../resources/const_metrics.dart';
 import '../../resources/images.dart';
+import '../../resources/layout.dart';
 import '../../resources/strings.dart';
 
 class CardImageButton extends StatelessWidget {
@@ -40,7 +41,7 @@ class CardImageButton extends StatelessWidget {
                       _chooseImage(ImageSource.camera, context);
                     },
                   ),
-                  const Divider(thickness: Sizes.s2, color: Colors.black,),
+                  const Divider(thickness: ConstSizes.s2, color: Colors.black,),
                   ListTile(
                       leading: const Icon(Icons.folder),
                       title: const Text(Strings.loadFromStorage),
@@ -54,14 +55,14 @@ class CardImageButton extends StatelessWidget {
         child: Container(
       decoration: BoxDecoration(boxShadow: [
         BoxShadow(
-          color: Colors.black,
-          spreadRadius: Sizes.s5.sp,
-          blurRadius: Sizes.s10.sp,
+          color: Theme.of(context).shadowColor,
+          spreadRadius: Layouts.editButtonSpreadRadius,
+          blurRadius: Layouts.editButtonBlurRadius,
         )
       ]),
       child: Image.asset(
         ImagePath.cardImageEditButton,
-        width: Sizes.s15,
+        width: Layouts.editButtonWidth,
         fit: BoxFit.contain,
       ),
     ));

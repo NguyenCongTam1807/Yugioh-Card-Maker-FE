@@ -9,7 +9,7 @@ import 'package:yugioh_card_creator/presentation/card_creating_screen/positions.
 import '../../../application/dependency_injection.dart';
 import '../../resources/colors.dart';
 import '../../resources/durations.dart';
-import '../../resources/metrics.dart';
+import '../../resources/const_metrics.dart';
 import '../card_creator_view_model.dart';
 
 class CardAttributeIcon extends StatefulWidget with GetItStatefulWidgetMixin {
@@ -25,14 +25,15 @@ class _CardAttributeIconState extends State<CardAttributeIcon>
   final _cardWidth = getIt<CardCreatorViewModel>().cardSize.width;
 
   final _widgetKey = GlobalKey();
-  late final Offset widgetOffset;
+  late final Offset widgetCenter;
 
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       final renderBox =
           _widgetKey.currentContext?.findRenderObject() as RenderBox;
-      widgetOffset = renderBox.localToGlobal(
+      //Center of the Widget
+      widgetCenter = renderBox.localToGlobal(
           Offset(renderBox.size.width / 2, renderBox.size.height / 2));
     });
     super.initState();
@@ -56,7 +57,7 @@ class _CardAttributeIconState extends State<CardAttributeIcon>
                 return const SizedBox();
               },
               transitionBuilder: (ctx, a1, a2, widget) {
-                const iconMargin = Insets.i2;
+                const iconMargin = ConstInsets.i2;
                 final iconWidth = _cardWidth *
                     CardPos.cardAttributeIconSize *
                     CardPos.attributeScaleFactor;
@@ -71,12 +72,12 @@ class _CardAttributeIconState extends State<CardAttributeIcon>
                 return Stack(
                   children: [
                     Positioned(
-                      top: widgetOffset.dy - halfDialogHeight,
-                      left: widgetOffset.dx - halfDialogWidth,
+                      top: widgetCenter.dy - halfDialogHeight,
+                      left: widgetCenter.dx - halfDialogWidth,
                       child: Transform.scale(
                         scale: curve,
                         child: Container(
-                          color: AppColor.halfBlack.toColor(),
+                          color: AppColor.editMenuBgColor.toColor(),
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             children: List.generate(
@@ -130,8 +131,8 @@ class _CardAttributeIconState extends State<CardAttributeIcon>
             if (decorated)
               BoxShadow(
                 color: Theme.of(context).primaryColor,
-                spreadRadius: Sizes.s10.sp,
-                blurRadius: Sizes.s15.sp,
+                spreadRadius: ConstSizes.s10.sp,
+                blurRadius: ConstSizes.s15.sp,
               )
           ],
           image: DecorationImage(

@@ -1,5 +1,6 @@
 
 
+import '../../presentation/resources/card_defaults.dart';
 import '../../presentation/resources/images.dart';
 import '../../presentation/resources/strings.dart';
 
@@ -20,15 +21,15 @@ class YugiohCard {
   YugiohCard({
     this.id,
     this.name = Strings.defaultCardName,
-    this.attribute = CardAttribute.light,
-    this.imagePath = ImagePath.cardImagePlaceHolder,
+    this.attribute = CardDefaults.defaultAttribute,
+    this.imagePath = CardDefaults.defaultCardImage,
     this.monsterType = Strings.defaultMonsterType,
     this.description = Strings.defaultDescription,
     this.atk = Strings.defaultAtk,
     this.def = Strings.defaultDef,
     this.creatorName = Strings.defaultCreatorName,
-    this.cardType = CardType.normal,
-    this.level = 6,
+    this.cardType = CardDefaults.defaultCardType,
+    this.level = CardDefaults.defaultCardLevel,
     this.effectType,
   });
 }
@@ -47,14 +48,14 @@ enum CardAttribute {
 
 enum CardType {
   normal,
-  effect,
-  fusion,
-  ritual,
-  synchro,
-  token,
-  xyz,
   spell,
   trap,
+  ritual,
+  effect,
+  fusion,
+  token,
+  synchro,
+  xyz,
   link
 }
 

@@ -1,4 +1,6 @@
-import 'metrics.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import 'const_metrics.dart';
 
 class ImagePath {
   static const basePath = 'assets/images';
@@ -6,5 +8,6 @@ class ImagePath {
   static const cardImageLoading = '$basePath/loading new.png';
   static const cardLevelStar = '$basePath/stars/star.png';
   static const cardImageEditButton = '$basePath/button/card_image_edit_button.png';
-  static const editButtonWidth = Sizes.s15;
+  static const cardTypeEditButton = '$basePath/button/card_type_edit_button.png';
+
 }
