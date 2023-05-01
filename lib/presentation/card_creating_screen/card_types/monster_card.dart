@@ -33,7 +33,7 @@ class _MonsterCardState extends State<MonsterCard> {
       Positioned(
         top: CardPos.cardImageTop * cardWidth,
         left: CardPos.cardImageLeft * cardWidth,
-        child: CardImage(),
+        child: const CardImage(),
       ),
       //Card Frame Theme By Type
       CardType(),

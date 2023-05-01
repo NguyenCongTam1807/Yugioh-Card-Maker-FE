@@ -5,24 +5,24 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'fonts.dart';
 
 final TextStyle kCardNameTextStyle = TextStyle(
-    fontSize: FontSize.s70.sp, fontFamily: FontFamily.matrixSmallCaps);
+    fontSize: 70.sp, fontFamily: FontFamily.matrixSmallCaps);
 
 final TextStyle kMonsterTypeTextStyle = TextStyle(
-  fontSize: FontSize.s21_5.sp,
+  fontSize: 21.5.sp,
   fontWeight: FontWeight.bold,
   fontFamily: FontFamily.stoneSerifSmallCapsBold,
 );
 
 final TextStyle kCardDescTextStyle = TextStyle(
-  fontSize: FontSize.s24_5.sp,
+  fontSize: 24.5.sp,
   fontWeight: FontWeight.w500,
   fontFamily: FontFamily.matrix,
 );
 
 final TextStyle kAtkDefTextStyle = TextStyle(
-  fontSize: FontSize.s26_8.sp,
+  fontSize: 24.2.sp,
   fontFamily: FontFamily.matrixBoldSmallCaps,
 );
 
 final TextStyle kCreatorNameTextStyle = TextStyle(
-    fontSize: FontSize.s26_3.sp, fontFamily: FontFamily.matrixSmallCaps);
+    fontSize: 26.3.sp, fontFamily: FontFamily.matrixSmallCaps);
