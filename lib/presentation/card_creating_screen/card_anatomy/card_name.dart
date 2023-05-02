@@ -35,11 +35,11 @@ class _CardNameState extends State<CardName> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-        width: _cardSize.width * CardPos.cardNameWidth,
-        height: _cardSize.width * CardPos.cardNameHeight,
+        width: _cardSize.width * CardLayout.cardNameWidth,
+        height: _cardSize.width * CardLayout.cardNameHeight,
         child: ElasticTextField(
-          width: _cardSize.width * CardPos.cardNameWidth,
-          height: _cardSize.width * CardPos.cardNameHeight,
+          width: _cardSize.width * CardLayout.cardNameWidth,
+          height: _cardSize.width * CardLayout.cardNameHeight,
           controller: cardNameController,
           onEditingComplete: (cardName) {
             FocusManager.instance.primaryFocus?.unfocus();

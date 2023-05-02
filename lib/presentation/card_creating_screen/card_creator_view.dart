@@ -8,6 +8,7 @@ import '../../application/dependency_injection.dart';
 import '../../data/models/yugioh_card.dart';
 import '../resources/images.dart';
 import '../resources/layout.dart';
+import '../resources/styles.dart';
 import 'edit_buttons/card_type_button.dart';
 import 'positions.dart';
 import '../resources/routes.dart';
@@ -29,7 +30,8 @@ class _CardCreatorViewState extends State<CardCreatorView>
     with GetItStateMixin {
   final _cardCreatorViewModel = getIt<CardCreatorViewModel>();
 
-  void _setCardLayout(double screenWidth, double screenHeight) {
+  void _setCardLayout(
+      double screenWidth, double screenHeight, double statusBarHeight) {
     const cardWidthRatio = ScreenPos.cardWidthRatio;
     const cardHeightRatio = ScreenPos.cardHeightRatio;
     const widthHeightRatio =
@@ -42,12 +44,14 @@ class _CardCreatorViewState extends State<CardCreatorView>
     if (screenHeight / cardHeightRatio > screenWidth / cardWidthRatio) {
       cardWidth = screenWidth * (1 - marginRatio);
       cardHeight = cardWidth / widthHeightRatio;
-      //_cardCreatorViewModel.standardSize = cardWidth;
     } else {
       cardHeight = screenHeight * (1 - marginRatio);
       cardWidth = cardHeight * widthHeightRatio;
-      //_cardCreatorViewModel.standardSize = cardHeight;
     }
+    kAtkDefTextStyle = kAtkDefTextStyle.copyWith(
+        fontSize: CardLayout.atkDefBaseFontSize * cardHeight);
+    kUnknownAtkDefTextStyle = kUnknownAtkDefTextStyle.copyWith(
+        fontSize: CardLayout.unknownAtkDefBaseFontSize * cardHeight);
 
     _cardCreatorViewModel.cardSize = Size(cardWidth, cardHeight);
     _cardCreatorViewModel.cardOffset =
@@ -74,9 +78,11 @@ class _CardCreatorViewState extends State<CardCreatorView>
           final deviceHeight =
               window.physicalSize.longestSide / window.devicePixelRatio;
 
-          final screenHeight = deviceHeight -
-              appBar.preferredSize.height -
-              MediaQuery.of(context).padding.top;
+          final statusBarHeight = MediaQuery.of(context).padding.top;
+
+          final screenHeight =
+              deviceHeight - appBar.preferredSize.height - statusBarHeight;
+
           final screenWidth = constraint.maxWidth;
 
           if (screenWidth >= screenHeight) {
@@ -86,7 +92,7 @@ class _CardCreatorViewState extends State<CardCreatorView>
               fit: BoxFit.scaleDown,
             ));
           }
-          _setCardLayout(screenWidth, screenHeight);
+          _setCardLayout(screenWidth, screenHeight, statusBarHeight);
           return SizedBox(
             width: screenWidth,
             height: screenHeight,
@@ -96,14 +102,15 @@ class _CardCreatorViewState extends State<CardCreatorView>
               final cardLeft = _cardCreatorViewModel.cardOffset.dx;
               final cardTop = _cardCreatorViewModel.cardOffset.dy;
               final iconLeft =
-                  (screenWidth - cardWidth - Layouts.editButtonWidth * 2) / 4;
+                  (screenWidth - cardWidth - ScreenLayout.editButtonWidth * 2) /
+                      4;
 
               return Stack(
                 children: [
                   Positioned(
                       top: cardTop, left: iconLeft, child: CardTypeButton()),
                   Positioned(
-                      top: cardTop + cardHeight - Layouts.editButtonHeight,
+                      top: cardTop + cardHeight - ScreenLayout.editButtonHeight,
                       left: iconLeft,
                       child: CardImageButton()),
                   Positioned(

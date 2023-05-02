@@ -29,8 +29,8 @@ class _CreatorNameState extends State<CreatorName> {
   Widget build(BuildContext context) {
 
     return SizedBox(
-      width: _cardSize.width*CardPos.creatorNameWidth,
-      height: _cardSize.width*CardPos.creatorNameHeight,
+      width: _cardSize.width*CardLayout.creatorNameWidth,
+      height: _cardSize.width*CardLayout.creatorNameHeight,
       child: TextField(
         textAlign: TextAlign.right,
         controller: creatorNameController,

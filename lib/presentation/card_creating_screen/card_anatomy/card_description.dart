@@ -38,13 +38,12 @@ class _CardDescriptionState extends State<CardDescription> {
   Widget build(BuildContext context) {
     cardDescController.value =
         TextEditingValue(text: currentCard.description.nullSafe());
-    return Container(
-      padding: EdgeInsets.zero,
-      width: cardSize.width * CardPos.cardDescriptionWidth,
-      height: cardSize.width * CardPos.cardDescriptionHeight,
+    return SizedBox(
+      width: cardSize.width * CardLayout.cardDescriptionWidth,
+      height: cardSize.width * CardLayout.cardDescriptionHeight,
       child: ElasticTextField(
-        width: cardSize.width * CardPos.cardDescriptionWidth,
-        height: cardSize.width * CardPos.cardDescriptionHeight,
+        width: cardSize.width * CardLayout.cardDescriptionWidth,
+        height: cardSize.width * CardLayout.cardDescriptionHeight,
         controller: cardDescController,
         onEditingComplete: (cardDesc) {
           FocusManager.instance.primaryFocus?.unfocus();

@@ -57,14 +57,14 @@ class _CardAttributeIconState extends State<CardAttributeIcon>
               transitionBuilder: (ctx, a1, a2, widget) {
                 const iconMargin = 2.0;
                 final iconWidth = _cardWidth *
-                    CardPos.cardAttributeIconSize *
-                    CardPos.attributeScaleFactor;
+                    CardLayout.cardAttributeIconSize *
+                    CardLayout.attributeScaleFactor;
                 final halfDialogWidth =
-                    iconWidth * CardPos.attributeIconsPerRow / 2 +
-                        iconMargin * CardPos.attributeIconsPerRow;
+                    iconWidth * CardLayout.attributeIconsPerRow / 2 +
+                        iconMargin * CardLayout.attributeIconsPerRow;
                 final halfDialogHeight =
-                    iconWidth * CardPos.attributeIconsPerColumn / 2 +
-                        iconMargin * CardPos.attributeIconsPerColumn;
+                    iconWidth * CardLayout.attributeIconsPerColumn / 2 +
+                        iconMargin * CardLayout.attributeIconsPerColumn;
 
                 final curve = Curves.easeInOut.transform(a1.value);
                 return Stack(
@@ -79,14 +79,14 @@ class _CardAttributeIconState extends State<CardAttributeIcon>
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             children: List.generate(
-                                CardPos.attributeIconsPerColumn, (rowIndex) {
+                                CardLayout.attributeIconsPerColumn, (rowIndex) {
                               return Row(
                                 mainAxisSize: MainAxisSize.min,
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: List.generate(
-                                    CardPos.attributeIconsPerRow, (colIndex) {
+                                    CardLayout.attributeIconsPerRow, (colIndex) {
                                   final attribute = CardAttribute.values[
-                                      rowIndex * CardPos.attributeIconsPerRow +
+                                      rowIndex * CardLayout.attributeIconsPerRow +
                                           colIndex];
                                   return GestureDetector(
                                     onTap: () {
@@ -96,7 +96,7 @@ class _CardAttributeIconState extends State<CardAttributeIcon>
                                     },
                                     child: _cardAttributeIcon(
                                       attribute.getAssetPath(),
-                                      scaleFactor: CardPos.attributeScaleFactor,
+                                      scaleFactor: CardLayout.attributeScaleFactor,
                                       margin: iconMargin,
                                       decorated: cardAttribute == attribute,
                                     ),
@@ -119,7 +119,7 @@ class _CardAttributeIconState extends State<CardAttributeIcon>
 
   Widget _cardAttributeIcon(String assetPath,
       {double scaleFactor = 1, double margin = 0, bool decorated = false}) {
-    final size = _cardWidth * CardPos.cardAttributeIconSize * scaleFactor;
+    final size = _cardWidth * CardLayout.cardAttributeIconSize * scaleFactor;
     return Container(
       margin: EdgeInsets.all(margin),
       width: size,

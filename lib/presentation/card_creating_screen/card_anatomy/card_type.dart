@@ -8,7 +8,6 @@ import '../card_creator_view_model.dart';
 
 class CardType extends StatelessWidget with GetItMixin{
   CardType({Key? key}) : super(key: key);
-  final _cardCreatorViewModel = getIt<CardCreatorViewModel>();
   final _cardWidth = getIt<CardCreatorViewModel>().cardSize.width;
   final _cardHeight = getIt<CardCreatorViewModel>().cardSize.height;
 
@@ -18,15 +17,16 @@ class CardType extends StatelessWidget with GetItMixin{
 
     return ClipPath(
       clipper: RectangleHoleClipper(
-          left: CardPos.cardImageLeft * _cardWidth,
-          top: CardPos.cardImageTop * _cardWidth,
-          insideWidth: CardPos.cardImageSize * _cardWidth,
-          insideHeight: CardPos.cardImageSize * _cardWidth,
+          left: CardLayout.cardImageLeft * _cardWidth,
+          top: CardLayout.cardImageTop * _cardWidth,
+          insideWidth: CardLayout.cardImageSize * _cardWidth,
+          insideHeight: CardLayout.cardImageSize * _cardWidth,
           outerWidth: _cardWidth,
           outerHeight: _cardHeight),
       child: Image.asset(
         cardType.nullSafe().getAssetPath(),
         fit: BoxFit.cover,
+        filterQuality: FilterQuality.medium,
       ),
     );
   }

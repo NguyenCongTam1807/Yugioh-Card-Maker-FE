@@ -20,27 +20,27 @@ class MonsterLevel extends StatelessWidget with GetItMixin{
 
     return Container(
       margin: EdgeInsets.symmetric(
-          horizontal: _cardWidth * CardPos.monsterLevelMargin),
+          horizontal: _cardWidth * CardLayout.monsterLevelMargin),
       child: GestureDetector(
         onHorizontalDragUpdate: (details) {
           final x = details.localPosition.dx;
-          final level = 12 - x / _cardWidth ~/ CardPos.levelDragFormulaDivider;
+          final level = 12 - x / _cardWidth ~/ CardLayout.levelDragFormulaDivider;
           if (level >= 1 && level <= 12) {
             _cardCreatorViewModel.setCardLevel(
-              12 - x / _cardWidth ~/ CardPos.levelDragFormulaDivider);
+              12 - x / _cardWidth ~/ CardLayout.levelDragFormulaDivider);
           }
         },
         onTapDown: (details) {
           final x = details.localPosition.dx;
-          final level = 12 - x / _cardWidth ~/ CardPos.levelDragFormulaDivider;
+          final level = 12 - x / _cardWidth ~/ CardLayout.levelDragFormulaDivider;
           if (level >= 1 && level <= 12) {
             _cardCreatorViewModel.setCardLevel(
-              12 - x / _cardWidth ~/ CardPos.levelDragFormulaDivider);
+              12 - x / _cardWidth ~/ CardLayout.levelDragFormulaDivider);
           }
         },
         behavior: HitTestBehavior.translucent,
         child: SizedBox(
-          width: _cardWidth * (1 - 2 * CardPos.monsterLevelMargin),
+          width: _cardWidth * (1 - 2 * CardLayout.monsterLevelMargin),
           child:
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
@@ -56,11 +56,11 @@ class LevelStar extends StatelessWidget {
   LevelStar({Key? key}) : super(key: key);
 
   final starSize = getIt<CardCreatorViewModel>().cardSize.width *
-      CardPos.levelStarWidth;
+      CardLayout.levelStarWidth;
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(left: CardPos.levelStarLeftMargin),
+      margin: const EdgeInsets.only(left: CardLayout.levelStarLeftMargin),
       width: starSize,
       height: starSize,
       decoration: const BoxDecoration(

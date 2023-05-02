@@ -27,7 +27,7 @@ class ImageContainer extends StatelessWidget with GetItMixin {
   ImageContainer({Key? key}) : super(key: key);
 
   final _cardImageSize = getIt<CardCreatorViewModel>().cardSize.width *
-      CardPos.cardImageSize;
+      CardLayout.cardImageSize;
 
   @override
   Widget build(BuildContext context) {

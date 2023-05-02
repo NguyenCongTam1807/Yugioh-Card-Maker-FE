@@ -12,6 +12,7 @@ class Strings {
   static const defaultCreatorName = 'Your Name';
   static const useCamera = 'Use Camera';
   static const loadFromStorage = 'Load From Storage';
+  static const cardUnknownAtkDef = '?';
 
   //settings screen
   static const settingsScreenTitle = 'Settings';

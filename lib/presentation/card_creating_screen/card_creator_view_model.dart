@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:yugioh_card_creator/application/extensions.dart';
 import 'package:yugioh_card_creator/data/models/yugioh_card.dart';
 
 class CardCreatorViewModel extends ChangeNotifier {
@@ -61,12 +62,12 @@ class CardCreatorViewModel extends ChangeNotifier {
   }
 
   setCardAtk(String atk) {
-    _currentCard.atk = atk;
+    _currentCard.atk = atk.checkUnknownFigure();
     notifyListeners();
   }
 
   setCardDef(String def) {
-    _currentCard.def = def;
+    _currentCard.def = def.checkUnknownFigure();
     notifyListeners();
   }
 

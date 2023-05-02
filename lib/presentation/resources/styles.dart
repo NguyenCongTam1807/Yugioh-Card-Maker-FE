@@ -1,3 +1,6 @@
+import 'dart:math';
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -19,9 +22,13 @@ final TextStyle kCardDescTextStyle = TextStyle(
   fontFamily: FontFamily.matrix,
 );
 
-final TextStyle kAtkDefTextStyle = TextStyle(
-  fontSize: 26.8.sp,
+TextStyle kAtkDefTextStyle = const TextStyle(
   fontFamily: FontFamily.matrixBoldSmallCaps,
+  height: 1.0,
+);
+
+TextStyle kUnknownAtkDefTextStyle = const TextStyle(
+  fontFamily: FontFamily.stoneSerifBold,
 );
 
 final TextStyle kCreatorNameTextStyle = TextStyle(

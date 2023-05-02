@@ -55,13 +55,13 @@ class CardImageButton extends StatelessWidget {
       decoration: BoxDecoration(boxShadow: [
         BoxShadow(
           color: Theme.of(context).shadowColor,
-          spreadRadius: Layouts.editButtonSpreadRadius,
-          blurRadius: Layouts.editButtonBlurRadius,
+          spreadRadius: ScreenLayout.editButtonSpreadRadius,
+          blurRadius: ScreenLayout.editButtonBlurRadius,
         )
       ]),
       child: Image.asset(
         ImagePath.cardImageEditButton,
-        width: Layouts.editButtonWidth,
+        width: ScreenLayout.editButtonWidth,
         fit: BoxFit.contain,
       ),
     ));

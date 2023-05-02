@@ -1,4 +1,4 @@
-class CardPos {
+class CardLayout {
   //Card Image Button
   static const cardImageEditButtonTop = 0.968;
   static const cardImageEditButtonLeft = 0.05;
@@ -7,6 +7,10 @@ class CardPos {
   static const attributeScaleFactor = 1.3;
   static const attributeIconsPerRow = 3;
   static const attributeIconsPerColumn = 3;
+
+  //Card Atk-Def TextField
+  static const atkDefBaseFontSize = 13.5/423.6;
+  static const unknownAtkDefBaseFontSize = 11/423.6;
 
   //Relative positions inside a card, proportional to the card's width
   static const cardImageTop = 0.2685;
@@ -37,12 +41,12 @@ class CardPos {
   static const cardDescriptionWidth = 0.857;
   static const cardDescriptionHeight = 0.2;
 
-  static const atkTop = 1.331;
+  static const atkTop = 1.325;
   static const atkLeft = 0.625;
   static const atkWidth = 0.1;
-  static const atkHeight = 0.035;
+  static const atkHeight = 0.048;
 
-  static const defLeft = 0.83;
+  static const defLeft = 0.828;
 
   static const creatorNameTop = 1.386;
   static const creatorNameLeft = 0.5;

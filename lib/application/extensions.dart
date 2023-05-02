@@ -2,10 +2,19 @@ import 'dart:ui';
 
 import '../data/models/yugioh_card.dart';
 import '../presentation/resources/card_defaults.dart';
+import '../presentation/resources/strings.dart';
 
 extension NullableString on String? {
   String nullSafe() {
     return this ?? "";
+  }
+}
+
+extension EmptyString on String {
+  String checkUnknownFigure() {
+    if (isEmpty) {
+      return Strings.cardUnknownAtkDef;
+    } return this;
   }
 }
 

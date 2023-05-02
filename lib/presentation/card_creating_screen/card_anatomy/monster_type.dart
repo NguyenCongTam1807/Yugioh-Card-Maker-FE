@@ -38,8 +38,8 @@ class _MonsterTypeState extends State<MonsterType> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: _cardWidth*CardPos.monsterTypeWidth,
-      height: _cardWidth*CardPos.monsterTypeHeight,
+      width: _cardWidth*CardLayout.monsterTypeWidth,
+      height: _cardWidth*CardLayout.monsterTypeHeight,
       child: TextField(
         controller: monsterTypeController,
         onSubmitted: (String value) {

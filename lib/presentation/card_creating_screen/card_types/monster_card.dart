@@ -1,6 +1,9 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 
 import '../../../application/dependency_injection.dart';
+import '../../resources/styles.dart';
 import '../card_anatomy/atk.dart';
 import '../card_anatomy/card_attribute.dart';
 import '../card_anatomy/card_description.dart';
@@ -22,69 +25,63 @@ class MonsterCard extends StatefulWidget {
 }
 
 class _MonsterCardState extends State<MonsterCard> {
-
-  final cardWidth = getIt<CardCreatorViewModel>().cardSize.width;
+  final _cardWidth = getIt<CardCreatorViewModel>().cardSize.width;
+  final _cardHeight = getIt<CardCreatorViewModel>().cardSize.height;
 
   @override
   Widget build(BuildContext context) {
-
     return Stack(children: [
       //Card Image
       Positioned(
-        top: CardPos.cardImageTop * cardWidth,
-        left: CardPos.cardImageLeft * cardWidth,
+        top: CardLayout.cardImageTop * _cardWidth,
+        left: CardLayout.cardImageLeft * _cardWidth,
         child: const CardImage(),
       ),
       //Card Frame Theme By Type
       CardType(),
-      // Container(
-      //   color: Colors.red.withOpacity(0.5),
-      //   child: Image.asset(_cardCreatorViewModel.getCardTypeAssetImage(), fit: BoxFit.cover,) ,
-      // ),
       //Card Name
       Positioned(
-        top: CardPos.cardNameTop * cardWidth,
-        left: CardPos.cardNameLeft * cardWidth,
-        child:
-        const CardName(),
+        top: CardLayout.cardNameTop * _cardWidth,
+        left: CardLayout.cardNameLeft * _cardWidth,
+        child: const CardName(),
       ),
       //Card Attribute
       Positioned(
-        top: CardPos.cardAttributeIconTop * cardWidth,
-        left: CardPos.cardAttributeIconLeft * cardWidth,
+        top: CardLayout.cardAttributeIconTop * _cardWidth,
+        left: CardLayout.cardAttributeIconLeft * _cardWidth,
         child: CardAttributeIcon(),
       ),
       //Monster Level
       Positioned(
-        top: CardPos.monsterLevelTop * cardWidth,
+        top: CardLayout.monsterLevelTop * _cardWidth,
         child: MonsterLevel(),
       ),
       //Monster Type
       Positioned(
-          top: cardWidth * CardPos.monsterTypeTop,
-          left: cardWidth * CardPos.monsterTypeLeft,
+          top: _cardWidth * CardLayout.monsterTypeTop,
+          left: _cardWidth * CardLayout.monsterTypeLeft,
           child: const MonsterType()),
       //Card description
       Positioned(
-          top: cardWidth * CardPos.cardDescriptionTop,
-          left: cardWidth * CardPos.cardNameLeft,
+          top: _cardWidth * CardLayout.cardDescriptionTop,
+          left: _cardWidth * CardLayout.cardNameLeft,
           child: const CardDescription()),
       //Card ATK
       Positioned(
-        top: cardWidth * CardPos.atkTop,
-        left: cardWidth * CardPos.atkLeft,
-        child: const Atk(),
+        top: _cardWidth * CardLayout.atkTop,
+        left: _cardWidth * CardLayout.atkLeft,
+        child: Atk(),
       ),
       //Card DEF
       Positioned(
-        top: cardWidth * CardPos.atkTop,
-        left: cardWidth * CardPos.defLeft,
-        child: const Def(),
+        top: _cardWidth * CardLayout.atkTop,
+        left: _cardWidth * CardLayout.defLeft,
+        child: Def(),
       ),
-      //Creator Name
+      // //Creator Name
       Positioned(
-        top: cardWidth * CardPos.creatorNameTop,
-        left: cardWidth * CardPos.creatorNameLeft,
+        top: _cardWidth * CardLayout.creatorNameTop,
+        left: _cardWidth * CardLayout.creatorNameLeft,
         child: const CreatorName(),
       )
     ]);

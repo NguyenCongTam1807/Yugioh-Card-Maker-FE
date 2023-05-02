@@ -25,13 +25,13 @@ class CardTypeButton extends StatelessWidget with GetItMixin {
           decoration: BoxDecoration(boxShadow: [
             BoxShadow(
               color: Theme.of(context).shadowColor,
-              spreadRadius: Layouts.editButtonSpreadRadius,
-              blurRadius: Layouts.editButtonBlurRadius,
+              spreadRadius: ScreenLayout.editButtonSpreadRadius,
+              blurRadius: ScreenLayout.editButtonBlurRadius,
             )
           ]),
           child: Image.asset(
             ImagePath.cardTypeEditButton,
-            width: Layouts.editButtonWidth,
+            width: ScreenLayout.editButtonWidth,
             fit: BoxFit.contain,
           ),
         ),
@@ -159,7 +159,7 @@ class CardTypeButton extends StatelessWidget with GetItMixin {
                 blurRadius: 15.sp,
               )
           ]),
-      width: _cardCreatorViewModel.cardSize.width * Layouts.editPopupMenuWidth,
+      width: _cardCreatorViewModel.cardSize.width * ScreenLayout.editPopupMenuWidth,
       child: Row(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -170,8 +170,8 @@ class CardTypeButton extends StatelessWidget with GetItMixin {
           ),
           Image(
               image: ResizeImage(AssetImage(type.getAssetPath()),
-                  width: (Layouts.editButtonWidth *
-                          Layouts.editPopupItemScaleFactor)
+                  width: (ScreenLayout.editButtonWidth *
+                          ScreenLayout.editPopupItemScaleFactor)
                       .toInt()))
         ],
       ),
