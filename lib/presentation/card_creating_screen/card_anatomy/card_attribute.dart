@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it_mixin/get_it_mixin.dart';
 import 'package:yugioh_card_creator/application/extensions.dart';
@@ -9,7 +8,6 @@ import 'package:yugioh_card_creator/presentation/card_creating_screen/positions.
 import '../../../application/dependency_injection.dart';
 import '../../resources/colors.dart';
 import '../../resources/durations.dart';
-import '../../resources/const_metrics.dart';
 import '../card_creator_view_model.dart';
 
 class CardAttributeIcon extends StatefulWidget with GetItStatefulWidgetMixin {
@@ -57,7 +55,7 @@ class _CardAttributeIconState extends State<CardAttributeIcon>
                 return const SizedBox();
               },
               transitionBuilder: (ctx, a1, a2, widget) {
-                const iconMargin = ConstInsets.i2;
+                const iconMargin = 2.0;
                 final iconWidth = _cardWidth *
                     CardPos.cardAttributeIconSize *
                     CardPos.attributeScaleFactor;
@@ -131,8 +129,8 @@ class _CardAttributeIconState extends State<CardAttributeIcon>
             if (decorated)
               BoxShadow(
                 color: Theme.of(context).primaryColor,
-                spreadRadius: ConstSizes.s10.sp,
-                blurRadius: ConstSizes.s15.sp,
+                spreadRadius: 10.sp,
+                blurRadius: 15.sp,
               )
           ],
           image: DecorationImage(

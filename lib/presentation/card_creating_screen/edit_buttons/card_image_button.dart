@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:yugioh_card_creator/presentation/card_creating_screen/card_creator_view_model.dart';
 import '../../../application/dependency_injection.dart';
-import '../../resources/const_metrics.dart';
 import '../../resources/images.dart';
 import '../../resources/layout.dart';
 import '../../resources/strings.dart';
@@ -41,7 +40,7 @@ class CardImageButton extends StatelessWidget {
                       _chooseImage(ImageSource.camera, context);
                     },
                   ),
-                  const Divider(thickness: ConstSizes.s2, color: Colors.black,),
+                  const Divider(thickness: 2, color: Colors.black,),
                   ListTile(
                       leading: const Icon(Icons.folder),
                       title: const Text(Strings.loadFromStorage),

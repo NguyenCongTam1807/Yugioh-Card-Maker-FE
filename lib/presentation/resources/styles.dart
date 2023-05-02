@@ -20,7 +20,7 @@ final TextStyle kCardDescTextStyle = TextStyle(
 );
 
 final TextStyle kAtkDefTextStyle = TextStyle(
-  fontSize: 24.2.sp,
+  fontSize: 26.8.sp,
   fontFamily: FontFamily.matrixBoldSmallCaps,
 );
 

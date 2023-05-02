@@ -17,6 +17,14 @@ class CardCreatorViewModel extends ChangeNotifier {
     _cardSize = size;
     notifyListeners();
   }
+
+  Offset _cardOffset = const Offset(0,0);
+  Offset get cardOffset => _cardOffset;
+
+  set cardOffset(offset) {
+    _cardOffset = offset;
+    notifyListeners();
+  }
   
   setCardType(CardType type) {
     _currentCard.cardType = type;

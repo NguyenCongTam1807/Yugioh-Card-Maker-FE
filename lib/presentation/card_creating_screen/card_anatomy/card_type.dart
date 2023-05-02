@@ -14,9 +14,8 @@ class CardType extends StatelessWidget with GetItMixin{
 
   @override
   Widget build(BuildContext context) {
-
     final cardType = watchOnly((CardCreatorViewModel vm) => vm.currentCard.cardType);
-    print("cardType: $cardType - ${cardType.nullSafe().getAssetPath()}");
+
     return ClipPath(
       clipper: RectangleHoleClipper(
           left: CardPos.cardImageLeft * _cardWidth,

@@ -1,7 +1,3 @@
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-import 'const_metrics.dart';
-
 class ImagePath {
   static const basePath = 'assets/images';
   static const cardImagePlaceHolder = '$basePath/loading1.jpg';

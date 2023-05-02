@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it_mixin/get_it_mixin.dart';
 import 'package:yugioh_card_creator/application/extensions.dart';
 import 'package:yugioh_card_creator/data/models/yugioh_card.dart';
-import 'package:yugioh_card_creator/presentation/resources/const_metrics.dart';
 import 'package:yugioh_card_creator/presentation/resources/styles.dart';
 
 import '../../../application/dependency_injection.dart';
@@ -47,7 +46,7 @@ class CardTypeButton extends StatelessWidget with GetItMixin {
             value: cardType,
                     height: double.minPositive,
                     padding: const EdgeInsets.only(
-                        top: ConstInsets.i5, bottom: ConstInsets.i5),
+                        top: 5, bottom: 5),
                     child: _cardTypeMenuItem(cardType, context,
                         decorated: cardType ==
                             currentCardType),
@@ -146,7 +145,7 @@ class CardTypeButton extends StatelessWidget with GetItMixin {
   Widget _cardTypeMenuItem(CardType type, BuildContext context,
       {bool decorated = false}) {
     return Container(
-      padding: const EdgeInsets.only(left: ConstInsets.i12),
+      padding: const EdgeInsets.only(left: 12),
       decoration: BoxDecoration(
           gradient: LinearGradient(
               begin: Alignment.topLeft,
@@ -156,8 +155,8 @@ class CardTypeButton extends StatelessWidget with GetItMixin {
             if (decorated)
               BoxShadow(
                 color: Theme.of(context).primaryColor,
-                spreadRadius: ConstSizes.s10.sp,
-                blurRadius: ConstSizes.s15.sp,
+                spreadRadius: 10.sp,
+                blurRadius: 15.sp,
               )
           ]),
       width: _cardCreatorViewModel.cardSize.width * Layouts.editPopupMenuWidth,

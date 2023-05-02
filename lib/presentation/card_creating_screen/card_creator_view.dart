@@ -6,6 +6,8 @@ import 'package:yugioh_card_creator/application/extensions.dart';
 
 import '../../application/dependency_injection.dart';
 import '../../data/models/yugioh_card.dart';
+import '../resources/images.dart';
+import '../resources/layout.dart';
 import 'edit_buttons/card_type_button.dart';
 import 'positions.dart';
 import '../resources/routes.dart';
@@ -27,18 +29,7 @@ class _CardCreatorViewState extends State<CardCreatorView>
     with GetItStateMixin {
   final _cardCreatorViewModel = getIt<CardCreatorViewModel>();
 
-  final screenWidth =
-      window.physicalSize.shortestSide / window.devicePixelRatio;
-  final screenHeight =
-      window.physicalSize.longestSide / window.devicePixelRatio;
-
-  @override
-  void initState() {
-    _setCardSize();
-    super.initState();
-  }
-
-  void _setCardSize() {
+  void _setCardLayout(double screenWidth, double screenHeight) {
     const cardWidthRatio = ScreenPos.cardWidthRatio;
     const cardHeightRatio = ScreenPos.cardHeightRatio;
     const widthHeightRatio =
@@ -49,21 +40,22 @@ class _CardCreatorViewState extends State<CardCreatorView>
     late final double cardWidth;
 
     if (screenHeight / cardHeightRatio > screenWidth / cardWidthRatio) {
-      cardHeight = screenHeight * (1 - marginRatio);
-      cardWidth = cardHeight * widthHeightRatio;
-    } else {
       cardWidth = screenWidth * (1 - marginRatio);
       cardHeight = cardWidth / widthHeightRatio;
+      //_cardCreatorViewModel.standardSize = cardWidth;
+    } else {
+      cardHeight = screenHeight * (1 - marginRatio);
+      cardWidth = cardHeight * widthHeightRatio;
+      //_cardCreatorViewModel.standardSize = cardHeight;
     }
 
     _cardCreatorViewModel.cardSize = Size(cardWidth, cardHeight);
+    _cardCreatorViewModel.cardOffset =
+        Offset((screenWidth - cardWidth) / 2, (screenHeight - cardHeight) / 2);
   }
 
   @override
   Widget build(BuildContext context) {
-    final cardSize = _cardCreatorViewModel.cardSize;
-    final cardWidth = cardSize.width;
-    final cardHeight = cardSize.height;
     final appBar = AppBar(
       title: const Text(Strings.appName),
       actions: [
@@ -74,58 +66,70 @@ class _CardCreatorViewState extends State<CardCreatorView>
             icon: const Icon(Icons.settings)),
       ],
     );
-    final appBarHeight =
-        appBar.preferredSize.height + MediaQuery.of(context).padding.top;
 
     return Scaffold(
       appBar: appBar,
-      body: Center(
-          child: SingleChildScrollView(
-        child: SizedBox(
-          width: screenWidth,
-          height: screenHeight - appBarHeight,
-          child: Stack(
-            children: [
-              Positioned(
-                  top: screenWidth *
-                      ScreenPos.cardTypeEditButtonTop,
-                  left: screenWidth *
-                      ScreenPos.cardEditButtonLeft,
-                  child: CardTypeButton()),
-              Positioned(
-                  top: screenWidth *
-                      ScreenPos.cardImageEditButtonTop,
-                  left: screenWidth *
-                      ScreenPos.cardEditButtonLeft,
-                  child: CardImageButton()),
-              Positioned(
-                top: (screenHeight - cardHeight - appBarHeight) / 2,
-                left: (screenWidth - cardWidth) / 2,
-                child: SizedBox(
-                  width: cardWidth,
-                  height: cardHeight,
-                  child: LayoutBuilder(
-                    builder: (ctx, constraints) {
-                      final cardType = watchOnly((CardCreatorViewModel vm) =>
-                          vm.currentCard.cardType);
-                      return Stack(children: [
-                        //Card background by card type
-                        _yugiohCardOfType(cardType.nullSafe()),
-                        //Card Image Button
-                        // Positioned(
-                        //     top: cardWidth *
-                        //         CardConstants.cardImageEditButtonTop,
-                        //     left: cardWidth *
-                        //         CardConstants.cardImageEditButtonLeft,
-                        //     child: CardImageButton())
-                      ]);
-                    },
+      body: Center(child: SingleChildScrollView(
+        child: LayoutBuilder(builder: (ctx, constraint) {
+          final deviceHeight =
+              window.physicalSize.longestSide / window.devicePixelRatio;
+
+          final screenHeight = deviceHeight -
+              appBar.preferredSize.height -
+              MediaQuery.of(context).padding.top;
+          final screenWidth = constraint.maxWidth;
+
+          if (screenWidth >= screenHeight) {
+            return Center(
+                child: Image.asset(
+              ImagePath.cardImagePlaceHolder,
+              fit: BoxFit.scaleDown,
+            ));
+          }
+          _setCardLayout(screenWidth, screenHeight);
+          return SizedBox(
+            width: screenWidth,
+            height: screenHeight,
+            child: LayoutBuilder(builder: (context, constraint) {
+              final cardWidth = _cardCreatorViewModel.cardSize.width;
+              final cardHeight = _cardCreatorViewModel.cardSize.height;
+              final cardLeft = _cardCreatorViewModel.cardOffset.dx;
+              final cardTop = _cardCreatorViewModel.cardOffset.dy;
+              final iconLeft =
+                  (screenWidth - cardWidth - Layouts.editButtonWidth * 2) / 4;
+
+              return Stack(
+                children: [
+                  Positioned(
+                      top: cardTop, left: iconLeft, child: CardTypeButton()),
+                  Positioned(
+                      top: cardTop + cardHeight - Layouts.editButtonHeight,
+                      left: iconLeft,
+                      child: CardImageButton()),
+                  Positioned(
+                    top: cardTop,
+                    left: cardLeft,
+                    child: SizedBox(
+                      width: cardWidth,
+                      height: cardHeight,
+                      child: Builder(
+                        builder: (ctx) {
+                          final cardType = watchOnly(
+                              (CardCreatorViewModel vm) =>
+                                  vm.currentCard.cardType);
+                          return Stack(children: [
+                            //Card frame by card type
+                            _yugiohCardOfType(cardType.nullSafe()),
+                          ]);
+                        },
+                      ),
+                    ),
                   ),
-                ),
-              ),
-            ],
-          ),
-        ),
+                ],
+              );
+            }),
+          );
+        }),
       )),
     );
   }

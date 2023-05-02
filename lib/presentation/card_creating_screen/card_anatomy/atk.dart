@@ -53,7 +53,7 @@ class _AtkState extends State<Atk> {
         style: kAtkDefTextStyle,
         decoration: const InputDecoration(
           isDense: true,
-          contentPadding: EdgeInsets.all(0),
+          contentPadding: EdgeInsets.zero,
           border: InputBorder.none,
           counterText: "",
         ),

@@ -15,6 +15,12 @@ extension NullableInt on int? {
   }
 }
 
+extension NullableDouble on double? {
+  double nullSafe() {
+    return this ?? 0.0;
+  }
+}
+
 extension NullableCardType on CardType? {
   CardType nullSafe() {
     return this ?? CardDefaults.defaultCardType;

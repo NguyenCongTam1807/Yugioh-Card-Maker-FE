@@ -4,7 +4,7 @@ class CardPos {
   static const cardImageEditButtonLeft = 0.05;
 
   //CardAttribute icons in popup menu
-  static const attributeScaleFactor = 1.5;
+  static const attributeScaleFactor = 1.3;
   static const attributeIconsPerRow = 3;
   static const attributeIconsPerColumn = 3;
 
@@ -53,7 +53,7 @@ class CardPos {
 class ScreenPos {
   static const cardWidthRatio = 813.0;
   static const cardHeightRatio = 1185.0;
-  static const cardMarginRatio = 0.34;
+  static const cardMarginRatio = 0.26;
 
   //Card Image Button
   static const cardImageEditButtonTop = 0.943;

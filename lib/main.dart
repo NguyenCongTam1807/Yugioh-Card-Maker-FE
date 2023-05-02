@@ -4,9 +4,9 @@ import 'package:yugioh_card_creator/application/dependency_injection.dart';
 
 import 'application/app.dart';
 
-void main() {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  SystemChrome.setPreferredOrientations(
+  await SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   initAppModule();
   runApp(const MyApp());
