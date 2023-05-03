@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it_mixin/get_it_mixin.dart';
 import 'package:yugioh_card_creator/application/extensions.dart';
+import 'package:yugioh_card_creator/presentation/resources/card_defaults.dart';
 
 import '../../../application/dependency_injection.dart';
 import '../../resources/strings.dart';
@@ -37,8 +38,10 @@ class _DefState extends State<Def> with GetItStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    final def = watchOnly((CardCreatorViewModel vm) => vm.currentCard.def);
-    defController.text = def.nullSafe();
+    final defStream = watchStream((CardCreatorViewModel vm) => vm.defStreamController, Strings.defaultDef);
+    final def = defStream.data.nullSafe();
+    defController.text = def;
+    final isDefUnknown = def == Strings.cardUnknownAtkDef;
 
     return SizedBox(
       width: _cardWidth*CardLayout.atkWidth,
@@ -48,9 +51,10 @@ class _DefState extends State<Def> with GetItStateMixin {
         textAlign: TextAlign.right,
         controller: defController,
         onTap: () {
-          // if (defController.text == Strings.cardUnknownAtkDef) {
-          //   defController.text = '';
-          // }
+          if (isDefUnknown) {
+            defController.text = '';
+
+          }
         },
         onSubmitted: (def) {
           FocusManager.instance.primaryFocus?.unfocus();
@@ -60,7 +64,7 @@ class _DefState extends State<Def> with GetItStateMixin {
           FocusManager.instance.primaryFocus?.unfocus();
           _cardCreatorViewModel.setCardDef(defController.text);
         },
-        style: def=="?"?kUnknownAtkDefTextStyle:kAtkDefTextStyle,
+        style: isDefUnknown?kUnknownAtkDefTextStyle:kAtkDefTextStyle,
         decoration: const InputDecoration(
           isDense: true,
           contentPadding: EdgeInsets.zero,

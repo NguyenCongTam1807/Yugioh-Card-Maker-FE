@@ -9,19 +9,23 @@ import '../../resources/styles.dart';
 import '../positions.dart';
 import '../card_creator_view_model.dart';
 
-class Atk extends StatefulWidget with GetItStatefulWidgetMixin{
+class Atk extends StatefulWidget with GetItStatefulWidgetMixin {
   Atk({Key? key}) : super(key: key);
 
   @override
   State<Atk> createState() => _AtkState();
 }
 
-class _AtkState extends State<Atk> with GetItStateMixin{
+class _AtkState extends State<Atk> with GetItStateMixin {
   TextEditingController atkController = TextEditingController();
+
+  final _cardCreatorViewModel = getIt<CardCreatorViewModel>();
+  final _cardWidth = getIt<CardCreatorViewModel>().cardSize.width;
 
   @override
   void initState() {
-    atkController.value = TextEditingValue(text: _cardCreatorViewModel.currentCard.atk.nullSafe());
+    atkController.value = TextEditingValue(
+        text: _cardCreatorViewModel.currentCard.atk.nullSafe());
     super.initState();
   }
 
@@ -31,22 +35,23 @@ class _AtkState extends State<Atk> with GetItStateMixin{
     super.dispose();
   }
 
-  final _cardCreatorViewModel = getIt<CardCreatorViewModel>();
-  final _cardWidth = getIt<CardCreatorViewModel>().cardSize.width;
-
   @override
   Widget build(BuildContext context) {
-    final atk = watchOnly((CardCreatorViewModel vm) => vm.currentCard.atk).nullSafe();
+    final atk = watchStream(
+        (CardCreatorViewModel vm) => vm.atkStreamController,
+        Strings.defaultAtk).data.nullSafe();
     atkController.text = atk;
+    final isAtkUnknown = atk == Strings.cardUnknownAtkDef;
+
     return SizedBox(
-      width: _cardWidth*CardLayout.atkWidth,
-      height: _cardWidth*CardLayout.atkHeight,
+      width: _cardWidth * CardLayout.atkWidth,
+      height: _cardWidth * CardLayout.atkHeight,
       child: TextField(
         maxLength: 4,
         textAlign: TextAlign.right,
         controller: atkController,
         onTap: () {
-          if (atkController.text == Strings.cardUnknownAtkDef) {
+          if (isAtkUnknown) {
             atkController.text = '';
           }
         },
@@ -58,7 +63,7 @@ class _AtkState extends State<Atk> with GetItStateMixin{
           FocusManager.instance.primaryFocus?.unfocus();
           _cardCreatorViewModel.setCardAtk(atkController.text);
         },
-        style: atk=="?"?kUnknownAtkDefTextStyle:kAtkDefTextStyle,
+        style: isAtkUnknown?kUnknownAtkDefTextStyle:kAtkDefTextStyle,
         decoration: const InputDecoration(
           isDense: true,
           contentPadding: EdgeInsets.zero,

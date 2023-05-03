@@ -30,6 +30,12 @@ class _CardCreatorViewState extends State<CardCreatorView>
     with GetItStateMixin {
   final _cardCreatorViewModel = getIt<CardCreatorViewModel>();
 
+  @override
+  void dispose() {
+    _cardCreatorViewModel.dispose();
+    super.dispose();
+  }
+
   void _setCardLayout(
       double screenWidth, double screenHeight, double statusBarHeight) {
     const cardWidthRatio = ScreenPos.cardWidthRatio;
