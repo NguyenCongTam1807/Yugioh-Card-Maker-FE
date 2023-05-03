@@ -2,6 +2,9 @@ import 'dart:math';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:yugioh_card_creator/presentation/card_creating_screen/card_creator_view_model.dart';
+
+import '../../application/dependency_injection.dart';
 
 class ElasticTextField extends StatefulWidget {
   final double width;
@@ -34,6 +37,8 @@ class _ElasticTextFieldState extends State<ElasticTextField> {
   int _textLines = 0;
   bool _isEditable = false;
   double _textScaleY = 0.0;
+
+  final _cardCreatorViewModel = getIt<CardCreatorViewModel>();
 
   double _textWidthInOneLine(String text, TextStyle style) {
     final TextPainter textPainter = TextPainter(
@@ -73,21 +78,30 @@ class _ElasticTextFieldState extends State<ElasticTextField> {
     });
   }
 
+  void _setCardDescMaxLine() {
+    if (_textLines > widget.maxLines) {
+      _cardCreatorViewModel.setCardDescMaxLine(_textLines);
+    }
+  }
+
+  void _onEditingCompleteOrCancel() {
+    _scaleDownTextField(widget.controller.text);
+    widget.onEditingComplete(widget.controller.text);
+    _setCardDescMaxLine();
+    _isEditable = false;
+  }
+
   @override
   Widget build(BuildContext context) {
+    _textLines = _cardCreatorViewModel.cardDescMaxLine;
+
     return _isEditable
         ? TextField(
             controller: widget.controller,
             style: widget.style,
-            onEditingComplete: () {
-              _scaleDownTextField(widget.controller.text);
-              widget.onEditingComplete(widget.controller.text);
-              _isEditable = false;
-            },
+            onEditingComplete: _onEditingCompleteOrCancel,
             onTapOutside: (_) {
-              _scaleDownTextField(widget.controller.text);
-              widget.onEditingComplete(widget.controller.text);
-              _isEditable = false;
+              _onEditingCompleteOrCancel();
             },
             decoration: widget.decoration,
             autofocus: true,
@@ -121,14 +135,13 @@ class _ElasticTextFieldState extends State<ElasticTextField> {
                         ),
                       ))
                   : AutoSizeText(
-                widget.controller.text,
-                style: widget.style,
-                textAlign: TextAlign.justify,
-                textScaleFactor: _textLines > widget.maxLines
-                    ? sqrt(widget.maxLines / _textLines)
-                //? widget.maxLines / _textLines
-                    : 1,
-              ),
+                      widget.controller.text,
+                      style: widget.style,
+                      textAlign: TextAlign.justify,
+                      minFontSize: 0,
+                      stepGranularity: 0.1,
+                      maxLines: _textLines > widget.maxLines? _textLines:widget.maxLines,
+                    ),
             ),
           );
   }
