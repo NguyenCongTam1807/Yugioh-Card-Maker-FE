@@ -61,10 +61,8 @@ class CardCreatorViewModel extends ChangeNotifier {
     cardDescMaxLine = maxLine;
   }
 
-  setCardAtk(String atk, {TextStyle? style}) {
-    if (atk.isEmpty) {
-      atk = atk.checkUnknownFigure();
-    }
+  setCardAtk(String atk) {
+    atk = atk.checkUnknownFigure();
     currentCard.atk = atk;
     atkStreamController.sink.add(atk);
   }
