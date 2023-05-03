@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
 class ElasticTextField extends StatefulWidget {
@@ -119,14 +120,15 @@ class _ElasticTextFieldState extends State<ElasticTextField> {
                           style: widget.style,
                         ),
                       ))
-                  : Text(
-                      widget.controller.text,
-                      style: widget.style,
-                      textAlign: TextAlign.justify,
-                      textScaleFactor: _textLines > widget.maxLines
-                          ? sqrt(widget.maxLines / _textLines)
-                          : 1,
-                    ),
+                  : AutoSizeText(
+                widget.controller.text,
+                style: widget.style,
+                textAlign: TextAlign.justify,
+                textScaleFactor: _textLines > widget.maxLines
+                    ? sqrt(widget.maxLines / _textLines)
+                //? widget.maxLines / _textLines
+                    : 1,
+              ),
             ),
           );
   }
