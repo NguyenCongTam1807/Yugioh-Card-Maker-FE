@@ -11,12 +11,18 @@ class CardCreatorViewModel extends ChangeNotifier {
   Offset cardOffset = const Offset(0,0);
   int cardDescMaxLine = 0;
 
+  final cardTypeGroupStreamController = BehaviorSubject<CardTypeGroup>();
   final defStreamController = BehaviorSubject<String>();
   final atkStreamController = BehaviorSubject<String>();
   final atkDefTextStyleStreamController = BehaviorSubject<TextStyle>();
 
+  void init() {
+    cardTypeGroupStreamController.add(currentCard.cardType.nullSafe().group);
+  }
+
   @override
   void dispose() {
+    cardTypeGroupStreamController.close();
     defStreamController.close();
     atkStreamController.close();
     atkDefTextStyleStreamController.close();
@@ -25,6 +31,7 @@ class CardCreatorViewModel extends ChangeNotifier {
   
   setCardType(CardType type) {
     currentCard.cardType = type;
+    cardTypeGroupStreamController.add(currentCard.cardType.nullSafe().group);
     notifyListeners();
   }
 
@@ -61,8 +68,10 @@ class CardCreatorViewModel extends ChangeNotifier {
     cardDescMaxLine = maxLine;
   }
 
-  setCardAtk(String atk) {
-    atk = atk.checkUnknownFigure();
+  setCardAtk(String atk, {TextStyle? style}) {
+    if (atk.isEmpty) {
+      atk = atk.checkUnknownFigure();
+    }
     currentCard.atk = atk;
     atkStreamController.sink.add(atk);
   }

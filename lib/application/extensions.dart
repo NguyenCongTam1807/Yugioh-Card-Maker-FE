@@ -12,7 +12,7 @@ extension NullableString on String? {
 
 extension EmptyString on String {
   String checkUnknownFigure() {
-    if (trim().isEmpty) {
+    if (isEmpty) {
       return Strings.cardUnknownAtkDef;
     }
     return this;

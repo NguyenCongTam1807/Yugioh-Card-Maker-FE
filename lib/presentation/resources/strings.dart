@@ -9,7 +9,7 @@ class Strings {
   static const defaultDescription = 'Card Description';
   static const defaultAtk = '3000';
   static const defaultDef = '2500';
-  static const defaultCreatorName = 'YOUR NAME';
+  static const defaultCreatorName = 'Your Name';
   static const useCamera = 'Use Camera';
   static const loadFromStorage = 'Load From Storage';
   static const cardUnknownAtkDef = '?';
