@@ -84,10 +84,17 @@ class _CardAttributeIconState extends State<CardAttributeIcon>
                                 mainAxisSize: MainAxisSize.min,
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: List.generate(
-                                    CardLayout.attributeIconsPerRow, (colIndex) {
-                                  final attribute = CardAttribute.values[
-                                      rowIndex * CardLayout.attributeIconsPerRow +
-                                          colIndex];
+                                    rowIndex ==
+                                            CardLayout.attributeIconsPerColumn -
+                                                1
+                                        ? 1
+                                        : CardLayout.attributeIconsPerRow,
+                                    (colIndex) {
+                                      //Filter out spell and trap attributes
+                                  final attribute = CardAttribute.values
+                                      .sublist(0, 7)[rowIndex *
+                                          CardLayout.attributeIconsPerRow +
+                                      colIndex];
                                   return GestureDetector(
                                     onTap: () {
                                       _cardCreatorViewModel
@@ -96,7 +103,8 @@ class _CardAttributeIconState extends State<CardAttributeIcon>
                                     },
                                     child: _cardAttributeIcon(
                                       attribute.getAssetPath(),
-                                      scaleFactor: CardLayout.attributeScaleFactor,
+                                      scaleFactor:
+                                          CardLayout.attributeScaleFactor,
                                       margin: iconMargin,
                                       decorated: cardAttribute == attribute,
                                     ),

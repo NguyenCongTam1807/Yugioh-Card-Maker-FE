@@ -50,10 +50,10 @@ class CardLayout {
 
   static const defLeft = 0.828;
 
-  static const creatorNameTop = 1.386;
+  static const creatorNameTop = 1.378;
   static const creatorNameLeft = 0.5;
-  static const creatorNameWidth = 0.43;
-  static const creatorNameHeight = 0.035;
+  static const creatorNameWidth = 0.407;
+  static const creatorNameHeight = 0.06;
 }
 
 class ScreenPos {

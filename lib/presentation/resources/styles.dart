@@ -32,4 +32,4 @@ TextStyle kUnknownAtkDefTextStyle = const TextStyle(
 );
 
 final TextStyle kCreatorNameTextStyle = TextStyle(
-    fontSize: 26.3.sp, fontFamily: FontFamily.matrixSmallCaps);
+    fontSize: 28.sp, fontFamily: FontFamily.matrixSmallCaps, height: 1.0);

@@ -14,6 +14,7 @@ class ElasticTextField extends StatefulWidget {
   final TextStyle style;
   final int maxLines;
   final TextAlign textAlign;
+  final Alignment? scaleAlignment;
   final InputDecoration decoration;
 
   const ElasticTextField(
@@ -25,6 +26,7 @@ class ElasticTextField extends StatefulWidget {
       this.decoration = const InputDecoration(border: InputBorder.none),
       this.maxLines = 1,
       this.textAlign = TextAlign.left,
+      this.scaleAlignment,
       Key? key})
       : super(key: key);
 
@@ -57,14 +59,6 @@ class _ElasticTextFieldState extends State<ElasticTextField> {
       ..layout(maxWidth: widgetWidth);
 
     return textPainter.computeLineMetrics().length;
-  }
-
-  Alignment _scaleAlignment(int maxLines) {
-    if (maxLines == 1) {
-      return Alignment.centerLeft;
-    } else {
-      return Alignment.topLeft;
-    }
   }
 
   void _scaleDownTextField(String text) {
@@ -119,16 +113,17 @@ class _ElasticTextFieldState extends State<ElasticTextField> {
               });
             },
             behavior: HitTestBehavior.translucent,
-            child: SizedBox(
+            child: Container(
               width: widget.width,
               height: widget.height,
+              alignment: widget.scaleAlignment,
               child: widget.maxLines == 1
                   ? Transform.scale(
-                      scaleY: _textScaleY > 1 ? _textScaleY : 1,
-                      alignment: _scaleAlignment(widget.maxLines),
+                scaleY: 1,
+                     // scaleY: _textScaleY > 1 ? _textScaleY : 1,
+                     //  alignment: widget.scaleAlignment,
                       child: FittedBox(
-                        fit: BoxFit.scaleDown,
-                        alignment: _scaleAlignment(widget.maxLines),
+                        alignment: widget.scaleAlignment??Alignment.centerLeft,
                         child: Text(
                           widget.controller.text,
                           style: widget.style,
@@ -140,7 +135,9 @@ class _ElasticTextFieldState extends State<ElasticTextField> {
                       textAlign: TextAlign.justify,
                       minFontSize: 0,
                       stepGranularity: 0.1,
-                      maxLines: _textLines > widget.maxLines? _textLines:widget.maxLines,
+                      maxLines: _textLines > widget.maxLines
+                          ? _textLines
+                          : widget.maxLines,
                     ),
             ),
           );
