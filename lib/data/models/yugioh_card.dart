@@ -1,7 +1,4 @@
-
-
 import '../../presentation/resources/card_defaults.dart';
-import '../../presentation/resources/images.dart';
 import '../../presentation/resources/strings.dart';
 
 class YugiohCard {
@@ -57,6 +54,12 @@ enum CardType {
   synchro,
   xyz,
   link
+}
+
+enum CardTypeGroup {
+  monster,
+  spell,
+  trap
 }
 
 enum EffectType {

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:yugioh_card_creator/application/extensions.dart';
+import 'package:yugioh_card_creator/data/models/yugioh_card.dart';
 
 import '../../../application/dependency_injection.dart';
 import '../../custom_classes/elastic_text_field.dart';
@@ -23,12 +24,6 @@ class _CardDescriptionState extends State<CardDescription> {
   final cardSize = getIt<CardCreatorViewModel>().cardSize;
 
   @override
-  void initState() {
-    cardDescController.addListener(() {});
-    super.initState();
-  }
-
-  @override
   void dispose() {
     cardDescController.dispose();
     super.dispose();
@@ -36,13 +31,16 @@ class _CardDescriptionState extends State<CardDescription> {
 
   @override
   Widget build(BuildContext context) {
-    cardDescController.value =
-        TextEditingValue(text: currentCard.description.nullSafe());
+    cardDescController.text = currentCard.description.nullSafe();
+    final cardTypeGroup = currentCard.cardType.nullSafe().group;
     return SizedBox(
-      width: cardSize.width * CardLayout.cardDescriptionWidth,
-      height: cardSize.width * CardLayout.cardDescriptionHeight,
+      width: cardSize.width * (1 - 2 * CardLayout.cardDescriptionMargin),
+      height: cardSize.width *
+          (cardTypeGroup == CardTypeGroup.monster
+              ? CardLayout.cardDescriptionHeight
+              : CardLayout.cardDescriptionHeightWithoutType),
       child: ElasticTextField(
-        width: cardSize.width * CardLayout.cardDescriptionWidth,
+        width: cardSize.width * (1 - 2 * CardLayout.cardDescriptionMargin),
         height: cardSize.width * CardLayout.cardDescriptionHeight,
         controller: cardDescController,
         onEditingComplete: (cardDesc) {
@@ -56,7 +54,7 @@ class _CardDescriptionState extends State<CardDescription> {
           isDense: true,
           contentPadding: EdgeInsets.zero,
         ),
-        maxLines: 5,
+        maxLines: cardTypeGroup == CardTypeGroup.monster?5:8,
       ),
     );
   }

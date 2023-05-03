@@ -6,8 +6,8 @@ import '../../../application/dependency_injection.dart';
 import '../positions.dart';
 import '../card_creator_view_model.dart';
 
-class CardType extends StatelessWidget with GetItMixin{
-  CardType({Key? key}) : super(key: key);
+class CardFrame extends StatelessWidget with GetItMixin{
+  CardFrame({Key? key}) : super(key: key);
   final _cardWidth = getIt<CardCreatorViewModel>().cardSize.width;
   final _cardHeight = getIt<CardCreatorViewModel>().cardSize.height;
 

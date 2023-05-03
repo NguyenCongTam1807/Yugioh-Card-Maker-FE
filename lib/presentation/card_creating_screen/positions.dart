@@ -38,8 +38,10 @@ class CardLayout {
   static const monsterTypeHeight = 0.06;
 
   static const cardDescriptionTop = 1.13;
-  static const cardDescriptionWidth = 0.857;
+  static const cardDescriptionWithoutTypeTop = 1.095;
+  static const cardDescriptionMargin = 0.078;
   static const cardDescriptionHeight = 0.2;
+  static const cardDescriptionHeightWithoutType = 0.274;
 
   static const atkTop = 1.325;
   static const atkLeft = 0.625;

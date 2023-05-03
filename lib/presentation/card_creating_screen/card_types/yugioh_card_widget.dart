@@ -1,13 +1,13 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
+import 'package:get_it_mixin/get_it_mixin.dart';
+import 'package:yugioh_card_creator/application/extensions.dart';
 
 import '../../../application/dependency_injection.dart';
-import '../../resources/styles.dart';
+import '../../../data/models/yugioh_card.dart';
 import '../card_anatomy/atk.dart';
 import '../card_anatomy/card_attribute.dart';
 import '../card_anatomy/card_description.dart';
-import '../card_anatomy/card_type.dart';
+import '../card_anatomy/card_frame.dart';
 import '../card_anatomy/card_image.dart';
 import '../card_anatomy/card_name.dart';
 import '../card_anatomy/creator_name.dart';
@@ -17,19 +17,18 @@ import '../card_anatomy/monster_type.dart';
 import '../positions.dart';
 import '../card_creator_view_model.dart';
 
-class MonsterCard extends StatefulWidget {
-  const MonsterCard({Key? key}) : super(key: key);
+class YugiohCardWidget extends StatelessWidget with GetItMixin {
+  YugiohCardWidget({Key? key}) : super(key: key);
 
-  @override
-  State<MonsterCard> createState() => _MonsterCardState();
-}
-
-class _MonsterCardState extends State<MonsterCard> {
   final _cardWidth = getIt<CardCreatorViewModel>().cardSize.width;
-  final _cardHeight = getIt<CardCreatorViewModel>().cardSize.height;
 
   @override
   Widget build(BuildContext context) {
+    final cardTypeGroup =
+        watchOnly((CardCreatorViewModel vm) => vm.currentCard.cardType)
+            .nullSafe()
+            .group;
+
     return Stack(children: [
       //Card Image
       Positioned(
@@ -38,7 +37,7 @@ class _MonsterCardState extends State<MonsterCard> {
         child: const CardImage(),
       ),
       //Card Frame Theme By Type
-      CardType(),
+      CardFrame(),
       //Card Name
       Positioned(
         top: CardLayout.cardNameTop * _cardWidth,
@@ -46,38 +45,43 @@ class _MonsterCardState extends State<MonsterCard> {
         child: const CardName(),
       ),
       //Card Attribute
-      Positioned(
-        top: CardLayout.cardAttributeIconTop * _cardWidth,
-        left: CardLayout.cardAttributeIconLeft * _cardWidth,
-        child: CardAttributeIcon(),
-      ),
+      if (cardTypeGroup == CardTypeGroup.monster)
+        Positioned(
+          top: CardLayout.cardAttributeIconTop * _cardWidth,
+          left: CardLayout.cardAttributeIconLeft * _cardWidth,
+          child: CardAttributeIcon(),
+        ),
       //Monster Level
-      Positioned(
-        top: CardLayout.monsterLevelTop * _cardWidth,
-        child: MonsterLevel(),
-      ),
+      if (cardTypeGroup == CardTypeGroup.monster)
+        Positioned(
+          top: CardLayout.monsterLevelTop * _cardWidth,
+          child: MonsterLevel(),
+        ),
       //Monster Type
-      Positioned(
-          top: _cardWidth * CardLayout.monsterTypeTop,
-          left: _cardWidth * CardLayout.monsterTypeLeft,
-          child: const MonsterType()),
+      if (cardTypeGroup == CardTypeGroup.monster)
+        Positioned(
+            top: _cardWidth * CardLayout.monsterTypeTop,
+            left: _cardWidth * CardLayout.monsterTypeLeft,
+            child: const MonsterType()),
       //Card description
       Positioned(
-          top: _cardWidth * CardLayout.cardDescriptionTop,
-          left: _cardWidth * CardLayout.cardNameLeft,
+          top: _cardWidth * (cardTypeGroup == CardTypeGroup.monster?CardLayout.cardDescriptionTop: CardLayout.cardDescriptionWithoutTypeTop),
+          left: _cardWidth * CardLayout.cardDescriptionMargin,
           child: const CardDescription()),
       //Card ATK
-      Positioned(
-        top: _cardWidth * CardLayout.atkTop,
-        left: _cardWidth * CardLayout.atkLeft,
-        child: Atk(),
-      ),
+      if (cardTypeGroup == CardTypeGroup.monster)
+        Positioned(
+          top: _cardWidth * CardLayout.atkTop,
+          left: _cardWidth * CardLayout.atkLeft,
+          child: Atk(),
+        ),
       //Card DEF
-      Positioned(
-        top: _cardWidth * CardLayout.atkTop,
-        left: _cardWidth * CardLayout.defLeft,
-        child: Def(),
-      ),
+      if (cardTypeGroup == CardTypeGroup.monster)
+        Positioned(
+          top: _cardWidth * CardLayout.atkTop,
+          left: _cardWidth * CardLayout.defLeft,
+          child: Def(),
+        ),
       // //Creator Name
       Positioned(
         top: _cardWidth * CardLayout.creatorNameTop,

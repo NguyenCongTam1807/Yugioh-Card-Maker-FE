@@ -14,7 +14,8 @@ extension EmptyString on String {
   String checkUnknownFigure() {
     if (isEmpty) {
       return Strings.cardUnknownAtkDef;
-    } return this;
+    }
+    return this;
   }
 }
 
@@ -70,7 +71,19 @@ extension CardTypeExtension on CardType {
       'xyz': '#000000',
       'link': '#00008b'
     };
-    return (colorList[getName()]??CardDefaults.defaultCardThemeColor).toColor(alphaHex: 'bf');
+    return (colorList[getName()] ?? CardDefaults.defaultCardThemeColor)
+        .toColor(alphaHex: 'bf');
+  }
+
+  CardTypeGroup get group {
+    switch (this) {
+      case CardType.spell:
+        return CardTypeGroup.spell;
+      case CardType.trap:
+        return CardTypeGroup.trap;
+      default:
+        return CardTypeGroup.monster;
+    }
   }
 }
 
