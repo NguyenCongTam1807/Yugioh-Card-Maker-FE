@@ -119,9 +119,8 @@ class _ElasticTextFieldState extends State<ElasticTextField> {
               alignment: widget.scaleAlignment,
               child: widget.maxLines == 1
                   ? Transform.scale(
-                scaleY: 1,
-                     // scaleY: _textScaleY > 1 ? _textScaleY : 1,
-                     //  alignment: widget.scaleAlignment,
+                     scaleY: _textScaleY > 1 ? _textScaleY : 1,
+                      alignment: widget.scaleAlignment,
                       child: FittedBox(
                         alignment: widget.scaleAlignment??Alignment.centerLeft,
                         child: Text(
