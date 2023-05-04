@@ -3,12 +3,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it_mixin/get_it_mixin.dart';
 import 'package:yugioh_card_creator/application/extensions.dart';
 import 'package:yugioh_card_creator/data/models/yugioh_card.dart';
-import 'package:yugioh_card_creator/presentation/card_creating_screen/positions.dart';
+import 'package:yugioh_card_creator/presentation/card_creator_screen/positions.dart';
+import 'package:yugioh_card_creator/presentation/resources/routes.dart';
 
 import '../../../application/dependency_injection.dart';
 import '../../resources/colors.dart';
 import '../../resources/durations.dart';
 import '../card_creator_view_model.dart';
+import '../positions.dart';
 
 class CardAttributeIcon extends StatefulWidget with GetItStatefulWidgetMixin {
   CardAttributeIcon({Key? key}) : super(key: key);
@@ -99,7 +101,7 @@ class _CardAttributeIconState extends State<CardAttributeIcon>
                                     onTap: () {
                                       _cardCreatorViewModel
                                           .setCardAttribute(attribute);
-                                      Navigator.of(context).pop();
+                                      Navigator.of(context).popUntil(ModalRoute.withName(RouteNames.cardCreator));
                                     },
                                     child: _cardAttributeIcon(
                                       attribute.getAssetPath(),

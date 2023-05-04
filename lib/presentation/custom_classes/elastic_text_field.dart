@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:yugioh_card_creator/presentation/card_creating_screen/card_creator_view_model.dart';
+import 'package:yugioh_card_creator/presentation/card_creator_screen/card_creator_view_model.dart';
 
 import '../../application/dependency_injection.dart';
 
@@ -119,10 +119,14 @@ class _ElasticTextFieldState extends State<ElasticTextField> {
               alignment: widget.scaleAlignment,
               child: widget.maxLines == 1
                   ? Transform.scale(
-                     scaleY: _textScaleY > 1 ? _textScaleY : 1,
+                      //When the text span length exceeds the container's length, the FittedBox will scale down
+                      //the text horizontally and vertically, so we have to scale it back vertically to
+                      //preserve the original height of the text, leaving the width scaled down as per the requirement
+                      scaleY: _textScaleY > 1 ? _textScaleY : 1,
                       alignment: widget.scaleAlignment,
                       child: FittedBox(
-                        alignment: widget.scaleAlignment??Alignment.centerLeft,
+                        alignment:
+                            widget.scaleAlignment ?? Alignment.centerLeft,
                         child: Text(
                           widget.controller.text,
                           style: widget.style,

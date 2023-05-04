@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:yugioh_card_creator/application/extensions.dart';
-import 'package:yugioh_card_creator/presentation/card_creating_screen/positions.dart';
+import 'package:yugioh_card_creator/presentation/card_creator_screen/positions.dart';
 import 'package:yugioh_card_creator/presentation/custom_classes/elastic_text_field.dart';
 
 import '../../../application/dependency_injection.dart';

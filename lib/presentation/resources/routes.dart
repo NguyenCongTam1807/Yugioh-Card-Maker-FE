@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:yugioh_card_creator/presentation/resources/strings.dart';
 
-import '../../presentation/card_creating_screen/card_creator_view.dart';
+import '../../presentation/card_creator_screen/card_creator_view.dart';
 import '../../presentation/settings_screen/settings_view.dart';
 
 class RouteNames {

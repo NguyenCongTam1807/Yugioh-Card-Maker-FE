@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 
-import '../presentation/card_creating_screen/card_creator_view.dart';
-import '../presentation/card_creating_screen/positions.dart';
+import '../presentation/card_creator_screen/card_creator_view.dart';
+import '../presentation/card_creator_screen/positions.dart';
 import '../presentation/resources/routes.dart';
 import '../presentation/resources/themes.dart';
 

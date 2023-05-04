@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:yugioh_card_creator/presentation/card_creating_screen/card_creator_view_model.dart';
+import 'package:yugioh_card_creator/presentation/card_creator_screen/card_creator_view_model.dart';
 import '../../../application/dependency_injection.dart';
 import '../../resources/images.dart';
 import '../../resources/layout.dart';
