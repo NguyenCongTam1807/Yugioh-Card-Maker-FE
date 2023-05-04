@@ -5,7 +5,7 @@ class Strings {
   // card creator screen
   static const appName = 'Yugioh Card Creator';
   static const defaultCardName = 'Card Name';
-  static const defaultMonsterType = 'Dragon';
+  static const defaultMonsterType = 'Dragon / Normal';
   static const defaultDescription = 'Card Description';
   static const defaultAtk = '3000';
   static const defaultDef = '2500';

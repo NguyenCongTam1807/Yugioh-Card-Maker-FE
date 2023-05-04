@@ -21,11 +21,10 @@ class _AtkState extends State<Atk> with GetItStateMixin {
 
   final _cardCreatorViewModel = getIt<CardCreatorViewModel>();
   final _cardWidth = getIt<CardCreatorViewModel>().cardSize.width;
-
+  bool _focused = false;
   @override
   void initState() {
-    atkController.value = TextEditingValue(
-        text: _cardCreatorViewModel.currentCard.atk.nullSafe());
+    atkController.text = _cardCreatorViewModel.currentCard.atk.nullSafe();
     super.initState();
   }
 
@@ -40,8 +39,10 @@ class _AtkState extends State<Atk> with GetItStateMixin {
     final atk = watchStream(
         (CardCreatorViewModel vm) => vm.atkStreamController,
         Strings.defaultAtk).data.nullSafe();
-    atkController.text = atk;
     final isAtkUnknown = atk == Strings.cardUnknownAtkDef;
+    if (!isAtkUnknown || !_focused) {
+      atkController.value = atkController.value.copyWith(text: atk);
+    }
 
     return SizedBox(
       width: _cardWidth * CardLayout.atkWidth,
@@ -51,18 +52,36 @@ class _AtkState extends State<Atk> with GetItStateMixin {
         textAlign: TextAlign.right,
         controller: atkController,
         onTap: () {
-          if (isAtkUnknown) {
-            atkController.text = '';
+          setState(() {
+            if (isAtkUnknown) {
+              atkController.text = '';
+            }
+            _focused = true;
+          });
+        },
+        onChanged: (String atk) {
+          if (atk.isNotEmpty) {
+            _cardCreatorViewModel.setCardAtk(atk);
           }
         },
-        onSubmitted: (String atk) {
+        onSubmitted: (atk) {
           FocusManager.instance.primaryFocus?.unfocus();
-          _cardCreatorViewModel.setCardAtk(atk);
+          if (atk.isEmpty) {
+            _cardCreatorViewModel.setCardAtk(atk);
+          }
+          setState(() {
+            _focused = false;
+          });
         },
-        onTapOutside: (event) {
+        onTapOutside: _focused?(_) {
           FocusManager.instance.primaryFocus?.unfocus();
-          _cardCreatorViewModel.setCardAtk(atkController.text);
-        },
+          if (atkController.text.isEmpty) {
+            _cardCreatorViewModel.setCardAtk(atkController.text);
+          }
+          setState(() {
+            _focused = false;
+          });
+        }:null,
         style: isAtkUnknown?kUnknownAtkDefTextStyle:kAtkDefTextStyle,
         decoration: const InputDecoration(
           isDense: true,

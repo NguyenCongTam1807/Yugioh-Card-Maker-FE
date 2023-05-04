@@ -24,9 +24,11 @@ class _DefState extends State<Def> with GetItStateMixin {
   final _currentCard = getIt<CardCreatorViewModel>().currentCard;
   final _cardWidth = getIt<CardCreatorViewModel>().cardSize.width;
 
+  bool _focused = false;
+
   @override
   void initState() {
-    defController.value = TextEditingValue(text: _currentCard.def.nullSafe());
+    defController.text = _currentCard.def.nullSafe();
     super.initState();
   }
 
@@ -38,33 +40,56 @@ class _DefState extends State<Def> with GetItStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    final defStream = watchStream((CardCreatorViewModel vm) => vm.defStreamController, Strings.defaultDef);
-    final def = defStream.data.nullSafe();
-    defController.text = def;
+    final def = watchStream((CardCreatorViewModel vm) => vm.defStreamController,
+            Strings.defaultDef)
+        .data
+        .nullSafe();
     final isDefUnknown = def == Strings.cardUnknownAtkDef;
+    if (!isDefUnknown || !_focused) {
+      defController.value = defController.value.copyWith(text: def);
+    }
+
+
 
     return SizedBox(
-      width: _cardWidth*CardLayout.atkWidth,
-      height: _cardWidth*CardLayout.atkHeight,
+      width: _cardWidth * CardLayout.atkWidth,
+      height: _cardWidth * CardLayout.atkHeight,
       child: TextField(
         maxLength: 4,
         textAlign: TextAlign.right,
         controller: defController,
         onTap: () {
-          if (isDefUnknown) {
-            defController.text = '';
-
+          setState(() {
+            if (isDefUnknown) {
+              defController.text = '';
+            }
+            _focused = true;
+          });
+        },
+        onChanged: (String def) {
+          if (def.isNotEmpty) {
+            _cardCreatorViewModel.setCardDef(def);
           }
         },
         onSubmitted: (def) {
           FocusManager.instance.primaryFocus?.unfocus();
-          _cardCreatorViewModel.setCardDef(def);
+          if (def.isEmpty) {
+            _cardCreatorViewModel.setCardDef(def);
+          }
+          setState(() {
+            _focused = false;
+          });
         },
-        onTapOutside: (event) {
+        onTapOutside: _focused?(_) {
           FocusManager.instance.primaryFocus?.unfocus();
-          _cardCreatorViewModel.setCardDef(defController.text);
-        },
-        style: isDefUnknown?kUnknownAtkDefTextStyle:kAtkDefTextStyle,
+          if (defController.text.isEmpty) {
+            _cardCreatorViewModel.setCardDef(defController.text);
+          }
+          setState(() {
+            _focused = false;
+          });
+        }:null,
+        style: isDefUnknown ? kUnknownAtkDefTextStyle : kAtkDefTextStyle,
         decoration: const InputDecoration(
           isDense: true,
           contentPadding: EdgeInsets.zero,

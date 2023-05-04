@@ -3,7 +3,6 @@ import 'package:rxdart/rxdart.dart';
 import 'package:yugioh_card_creator/application/extensions.dart';
 import 'package:yugioh_card_creator/data/models/yugioh_card.dart';
 
-import '../resources/styles.dart';
 
 class CardCreatorViewModel extends ChangeNotifier {
   YugiohCard currentCard = YugiohCard();
@@ -43,10 +42,6 @@ class CardCreatorViewModel extends ChangeNotifier {
   setCardMonsterType(String monsterType) {
     currentCard.monsterType = monsterType;
     notifyListeners();
-  }
-
-  String toUpperCamelCase(String s) {
-    return s[0].toUpperCase()+s.toLowerCase().substring(1);
   }
 
   setCardName(String name) {
