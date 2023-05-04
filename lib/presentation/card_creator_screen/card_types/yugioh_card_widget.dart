@@ -20,30 +20,15 @@ import '../card_anatomy/monster_type.dart';
 import '../positions.dart';
 import '../card_creator_view_model.dart';
 
-class YugiohCardWidget extends StatefulWidget {
-  const YugiohCardWidget({Key? key}) : super(key: key);
+class YugiohCardWidget extends StatelessWidget {
+  YugiohCardWidget({Key? key}) : super(key: key);
 
-  @override
-  State<YugiohCardWidget> createState() => _YugiohCardWidgetState();
-}
-
-class _YugiohCardWidgetState extends State<YugiohCardWidget> {
   final _cardCreatorViewModel = getIt<CardCreatorViewModel>();
+
   final _cardWidth = getIt<CardCreatorViewModel>().cardSize.width;
 
   @override
-  void initState() {
-    _cardCreatorViewModel.init();
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    // final cardTypeGroup =
-    //     watchOnly((CardCreatorViewModel vm) => vm.currentCard.cardType)
-    //         .nullSafe()
-    //         .group;
-    //final cardTypeGroup = getIt<CardCreatorViewModel>().currentCard.cardType.nullSafe().group;
 
     return StreamBuilder<CardTypeGroup>(
       stream: _cardCreatorViewModel.cardTypeGroupStreamController.stream,

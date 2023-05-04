@@ -25,6 +25,12 @@ class _CardCreatorViewState extends State<CardCreatorView> {
   final _cardCreatorViewModel = getIt<CardCreatorViewModel>();
 
   @override
+  void initState() {
+    _cardCreatorViewModel.init();
+    super.initState();
+  }
+
+  @override
   void dispose() {
     _cardCreatorViewModel.dispose();
     super.dispose();
@@ -117,7 +123,7 @@ class _CardCreatorViewState extends State<CardCreatorView> {
                     child: SizedBox(
                       width: cardWidth,
                       height: cardHeight,
-                      child: const YugiohCardWidget()
+                      child: YugiohCardWidget()
                     ),
                   ),
                 ],
