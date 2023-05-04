@@ -105,7 +105,7 @@ class _YugiohCardWidgetState extends State<YugiohCardWidget> {
           Positioned(
             top: _cardWidth * CardLayout.creatorNameTop,
             left: _cardWidth * CardLayout.creatorNameLeft,
-            child: const CreatorName(),
+            child: CreatorName(),
           )
         ]);
       }

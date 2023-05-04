@@ -16,7 +16,7 @@ class RouteGenerator {
       case RouteNames.cardCreator:
         return MaterialPageRoute(
             settings: const RouteSettings(name: RouteNames.cardCreator),
-            builder: (_) => CardCreatorView());
+            builder: (_) => const CardCreatorView());
       case RouteNames.settings:
         return MaterialPageRoute(builder: (_) => const SettingsView());
       default:

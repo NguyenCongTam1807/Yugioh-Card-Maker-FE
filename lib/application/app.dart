@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
         return MaterialApp(
           theme: getAppTheme(AppTheme.egyptian),
           onGenerateRoute: RouteGenerator.getRoute,
-          home: CardCreatorView(),
+          home: const CardCreatorView(),
           debugShowCheckedModeBanner: false,
         );
       },

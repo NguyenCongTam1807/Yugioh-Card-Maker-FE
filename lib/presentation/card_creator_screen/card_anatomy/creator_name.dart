@@ -1,22 +1,31 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it_mixin/get_it_mixin.dart';
 import 'package:yugioh_card_creator/application/extensions.dart';
 
 import '../../../application/dependency_injection.dart';
 import '../../custom_classes/elastic_text_field.dart';
+import '../../resources/strings.dart';
 import '../../resources/styles.dart';
 import '../positions.dart';
 import '../card_creator_view_model.dart';
 
-class CreatorName extends StatefulWidget {
-  const CreatorName({Key? key}) : super(key: key);
+class CreatorName extends StatefulWidget with GetItStatefulWidgetMixin{
+  CreatorName({Key? key}) : super(key: key);
 
   @override
   State<CreatorName> createState() => _CreatorNameState();
 }
 
-class _CreatorNameState extends State<CreatorName> {
+class _CreatorNameState extends State<CreatorName> with GetItStateMixin{
   TextEditingController creatorNameController = TextEditingController();
+
+  @override
+  void initState() {
+    creatorNameController.text =
+        _cardCreatorViewModel.currentCard.creatorName.nullSafe();
+    super.initState();
+  }
 
   @override
   void dispose() {
@@ -29,8 +38,11 @@ class _CreatorNameState extends State<CreatorName> {
 
   @override
   Widget build(BuildContext context) {
-    creatorNameController.text =
-        _cardCreatorViewModel.currentCard.creatorName.nullSafe();
+
+    final creatorName = watchOnly(
+            (CardCreatorViewModel vm) => vm.currentCard.creatorName).nullSafe();
+    creatorNameController.text = creatorName;
+
 
     return SizedBox(
         width: _cardSize.width * CardLayout.creatorNameWidth,
@@ -52,7 +64,6 @@ class _CreatorNameState extends State<CreatorName> {
             isDense: true,
             contentPadding: EdgeInsets.zero,
           ),
-        )
-        );
+        ));
   }
 }

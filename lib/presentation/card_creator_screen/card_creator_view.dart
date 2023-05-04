@@ -1,11 +1,8 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:get_it_mixin/get_it_mixin.dart';
-import 'package:yugioh_card_creator/application/extensions.dart';
 
 import '../../application/dependency_injection.dart';
-import '../../data/models/yugioh_card.dart';
 import '../resources/images.dart';
 import '../resources/layout.dart';
 import '../resources/styles.dart';
@@ -15,19 +12,16 @@ import 'positions.dart';
 import '../resources/routes.dart';
 import '../resources/strings.dart';
 import 'card_creator_view_model.dart';
-import 'card_types/spell_card.dart';
-import 'card_types/trap_card.dart';
 import 'edit_buttons/card_image_button.dart';
 
-class CardCreatorView extends StatefulWidget with GetItStatefulWidgetMixin {
-  CardCreatorView({Key? key}) : super(key: key);
+class CardCreatorView extends StatefulWidget {
+  const CardCreatorView({Key? key}) : super(key: key);
 
   @override
   State<CardCreatorView> createState() => _CardCreatorViewState();
 }
 
-class _CardCreatorViewState extends State<CardCreatorView>
-    with GetItStateMixin {
+class _CardCreatorViewState extends State<CardCreatorView> {
   final _cardCreatorViewModel = getIt<CardCreatorViewModel>();
 
   @override
@@ -37,7 +31,7 @@ class _CardCreatorViewState extends State<CardCreatorView>
   }
 
   void _setCardLayout(
-      double screenWidth, double screenHeight, double statusBarHeight) {
+      double screenWidth, double screenHeight) {
     const cardWidthRatio = ScreenPos.cardWidthRatio;
     const cardHeightRatio = ScreenPos.cardHeightRatio;
     const widthHeightRatio =
@@ -83,9 +77,7 @@ class _CardCreatorViewState extends State<CardCreatorView>
         child: LayoutBuilder(builder: (ctx, constraint) {
           final deviceHeight =
               window.physicalSize.longestSide / window.devicePixelRatio;
-
-          final statusBarHeight = MediaQuery.of(context).padding.top;
-
+          final double statusBarHeight = window.padding.top / window.devicePixelRatio;
           final screenHeight =
               deviceHeight - appBar.preferredSize.height - statusBarHeight;
 
@@ -98,7 +90,7 @@ class _CardCreatorViewState extends State<CardCreatorView>
               fit: BoxFit.scaleDown,
             ));
           }
-          _setCardLayout(screenWidth, screenHeight, statusBarHeight);
+          _setCardLayout(screenWidth, screenHeight);
           return SizedBox(
             width: screenWidth,
             height: screenHeight,
