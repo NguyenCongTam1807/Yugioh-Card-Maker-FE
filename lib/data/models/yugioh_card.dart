@@ -86,3 +86,16 @@ const trapCardTypes = [
   EffectType.continuous,
   EffectType.counter,
 ];
+
+const colorMap = {
+  'normal': '#fde68a',
+  'spell': '#1d9e74',
+  'trap': '#bc5a84',
+  'ritual': '#9db5cc',
+  'effect': '#ff8b53',
+  'fusion': '#a086b7',
+  'token': '#c0c0c0',
+  'synchro': '#cccccc',
+  'xyz': '#000000',
+  'link': '#00008b'
+};

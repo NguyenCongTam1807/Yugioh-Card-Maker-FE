@@ -76,7 +76,7 @@ class CardTypeButton extends StatelessWidget with GetItMixin {
           gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
-              colors: [type.getMainColor(), Colors.black]),
+              colors: [type.getMainColor(alphaHex: 'bf'), Colors.black]),
           boxShadow: [
             if (decorated)
               BoxShadow(

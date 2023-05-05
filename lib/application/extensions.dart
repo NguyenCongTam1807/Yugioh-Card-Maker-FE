@@ -1,5 +1,7 @@
 import 'dart:ui';
 
+import 'package:flutter/material.dart';
+
 import '../data/models/yugioh_card.dart';
 import '../presentation/resources/card_defaults.dart';
 import '../presentation/resources/strings.dart';
@@ -64,21 +66,13 @@ extension CardTypeExtension on CardType {
     return 'assets/images/theme/${getName()}.png';
   }
 
-  Color getMainColor() {
-    const colorList = {
-      'normal': '#fde68a',
-      'spell': '#1d9e74',
-      'trap': '#bc5a84',
-      'ritual': '#9db5cc',
-      'effect': '#ff8b53',
-      'fusion': '#a086b7',
-      'token': '#c0c0c0',
-      'synchro': '#cccccc',
-      'xyz': '#000000',
-      'link': '#00008b'
-    };
-    return (colorList[getName()] ?? CardDefaults.defaultCardThemeColor)
-        .toColor(alphaHex: 'bf');
+  Color getMainColor({String alphaHex = 'ff'}) {
+    return (colorMap[getName()] ?? CardDefaults.defaultCardThemeColor)
+        .toColor(alphaHex: alphaHex);
+  }
+
+  Color getForegroundColor() {
+    return getMainColor().computeLuminance()<0.5?Colors.white:Colors.black;
   }
 
   CardTypeGroup get group {

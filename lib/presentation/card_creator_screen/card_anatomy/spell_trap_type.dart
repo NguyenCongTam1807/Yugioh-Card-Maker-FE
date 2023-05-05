@@ -89,7 +89,7 @@ class SpellTrapType extends StatelessWidget with GetItMixin {
           gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
-              colors: [cardType.getMainColor(), Colors.black]),
+              colors: [cardType.getMainColor(alphaHex: 'bf'), Colors.black]),
           boxShadow: [
             if (decorated)
               BoxShadow(
