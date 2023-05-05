@@ -97,7 +97,14 @@ class _CardCreatorViewState extends State<CardCreatorView> {
             ));
           }
           _setCardLayout(screenWidth, screenHeight);
-          return SizedBox(
+          return Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(colors: [
+                Theme.of(context).colorScheme.primary,
+                Theme.of(context).colorScheme.secondary,
+                Theme.of(context).colorScheme.primary,
+              ], begin: Alignment.topCenter, end: Alignment.bottomCenter),
+            ),
             width: screenWidth,
             height: screenHeight,
             child: LayoutBuilder(builder: (context, constraint) {

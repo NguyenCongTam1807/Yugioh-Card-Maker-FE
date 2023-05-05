@@ -21,8 +21,13 @@ ThemeData _getEgyptianTheme() {
     primaryColorDark: AppColor.egyptPrimaryDark,
     primaryColorLight: AppColor.egyptPrimaryLight,
     accentColor: AppColor.egyptAccent,
+    //Scaffold Background gradient
+    colorScheme: const ColorScheme.light(
+      primary: AppColor.egyptFieldEnds,
+      secondary: AppColor.egyptFieldMiddle
+    ),
     appBarTheme: AppBarTheme(
-        color: AppColor.egyptPrimaryLight,
+        color: AppColor.egyptPrimary,
         titleTextStyle:
             kCardNameTextStyle.copyWith(color: AppColor.textColor),
         actionsIconTheme: IconThemeData(
@@ -50,12 +55,51 @@ ThemeData _getEgyptianTheme() {
     shadowColor: AppColor.egyptSecondary,
     splashColor: AppColor.egyptAccent,
     dividerColor: AppColor.egyptSecondary,
-
   );
 }
 
 ThemeData _getBewdTheme() {
-  return ThemeData();
+  return ThemeData(
+    primaryColor: AppColor.bewdPrimary,
+    primaryColorDark: AppColor.bewdPrimaryDark,
+    primaryColorLight: AppColor.bewdPrimaryLight,
+    accentColor: AppColor.bewdAccent,
+    //Scaffold Background gradient
+    colorScheme: const ColorScheme.light(
+        primary: AppColor.bewdFieldEnds,
+        secondary: AppColor.bewdFieldMiddle,
+        tertiary: AppColor.bewdMenuBackground // menu background
+    ),
+    appBarTheme: AppBarTheme(
+        color: AppColor.bewdPrimary,
+        titleTextStyle:
+        kCardNameTextStyle.copyWith(color: AppColor.textColor),
+        actionsIconTheme: IconThemeData(
+            color: AppColor.bewdIconColor,
+            size: ScreenLayout.bigIconSize,
+            shadows: [
+              BoxShadow(
+                color: AppColor.bewdIconBorder,
+                spreadRadius: ScreenLayout.bigIconShadowRadius,
+                blurRadius: ScreenLayout.bigIconShadowRadius,
+              )
+            ])),
+    iconTheme:
+    IconThemeData(color: AppColor.bewdIconColor, shadows: [
+      BoxShadow(
+        color: AppColor.bewdIconBorder,
+        spreadRadius: ScreenLayout.smallIconShadowRadius,
+        blurRadius: ScreenLayout.smallIconShadowRadius,
+      ),
+    ]),
+    iconButtonTheme: IconButtonThemeData(
+        style: IconButton.styleFrom(
+          foregroundColor: AppColor.bewdIconColor,
+        )),
+    shadowColor: AppColor.bewdSecondary,
+    splashColor: AppColor.bewdAccent,
+    dividerColor: AppColor.bewdSecondary,
+  );
 }
 
 enum AppTheme {
