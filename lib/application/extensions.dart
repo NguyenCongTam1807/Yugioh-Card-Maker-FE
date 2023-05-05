@@ -106,3 +106,15 @@ extension HexColor on String {
     return Color(int.parse(hexInt, radix: 16));
   }
 }
+
+extension NullSafeArrowList on List<bool>? {
+  List<bool> nullSafe() {
+    return this??CardDefaults.defaultLinkArrows;
+  }
+}
+
+extension ListBoolExtension on List<bool> {
+  int getRating() {
+    return where((element) => element).length;
+  }
+}

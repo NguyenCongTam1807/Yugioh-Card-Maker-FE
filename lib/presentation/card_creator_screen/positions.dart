@@ -16,6 +16,16 @@ class CardLayout {
   static const cardImageTop = 0.2685;
   static const cardImageLeft = 0.121;
   static const cardImageSize = 0.759;
+  static const linkCardImageClipSize = 0.0;
+
+  static const arrowCornerTop = 0.233;
+  static const arrowCornerHorizontalMargin = cardImageLeft - cardImageTop + arrowCornerTop;
+  static const arrowCornerBottom = arrowCornerTop+cardImageSize+(cardImageTop - arrowCornerTop)*2;
+  static const arrowCornerSize = 0.093;
+  static const arrowVerticalCentroidLeft = cardImageLeft + cardImageSize/2;
+  static const arrowHorizontalCentroidTop = cardImageTop + cardImageSize/2;
+  static const arrowSideHalfBaseLength = 0.113;
+  static const arrowSideHeight = 0.052;
 
   static const cardNameTop = 0.07;
   static const cardNameLeft = 0.074;
@@ -55,6 +65,11 @@ class CardLayout {
   static const atkHeight = 0.048;
 
   static const defLeft = 0.828;
+
+  static const linkRatingTop = 1.334;
+  static const linkRatingLeft = 0.889;
+  static const linkRatingHeight = 0.048;
+  static const linkRatingWidth = 0.035;
 
   static const creatorNameTop = 1.378;
   static const creatorNameLeft = 0.5;

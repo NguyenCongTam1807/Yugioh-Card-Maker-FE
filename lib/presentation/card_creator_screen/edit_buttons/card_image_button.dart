@@ -33,15 +33,14 @@ class CardImageButton extends StatelessWidget {
               builder: (ctx) {
                 return Container(
                   decoration: BoxDecoration(
-                    gradient: LinearGradient(colors: [
-                      Theme.of(context).primaryColor,
-                      Theme.of(context).primaryColorDark,
-                    ],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    stops: const [
-                      0.5,1
-                    ]),
+                    gradient: LinearGradient(
+                        colors: [
+                          Theme.of(context).primaryColor,
+                          Theme.of(context).primaryColorDark,
+                        ],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        stops: const [0.5, 1]),
                   ),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
@@ -55,7 +54,8 @@ class CardImageButton extends StatelessWidget {
                         ),
                         title: Text(
                           Strings.useCamera,
-                          style: kCardNameTextStyle.copyWith(fontSize: ScreenLayout.smallIconSize),
+                          style: kCardNameTextStyle.copyWith(
+                              fontSize: ScreenLayout.smallIconSize),
                         ),
                         onTap: () async {
                           _chooseImage(ImageSource.camera, context);
@@ -73,7 +73,8 @@ class CardImageButton extends StatelessWidget {
                           ),
                           title: Text(
                             Strings.loadFromStorage,
-                            style: kCardNameTextStyle.copyWith(fontSize: ScreenLayout.smallIconSize),
+                            style: kCardNameTextStyle.copyWith(
+                                fontSize: ScreenLayout.smallIconSize),
                           ),
                           onTap: () async {
                             _chooseImage(ImageSource.gallery, context);

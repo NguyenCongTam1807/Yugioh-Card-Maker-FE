@@ -112,6 +112,9 @@ flutter:
     - family: StoneSerifSemiBold
       fonts:
         - asset: fonts/STONESERIF-SEMIBOLD.OTF
+    - family: RoGSanSerifStd
+      fonts:
+        - asset: fonts/RoGSanSerifStd-B.otf
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

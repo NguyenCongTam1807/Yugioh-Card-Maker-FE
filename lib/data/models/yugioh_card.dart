@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import '../../presentation/resources/card_defaults.dart';
 import '../../presentation/resources/strings.dart';
 
@@ -14,6 +16,7 @@ class YugiohCard {
   CardType? cardType;
   int? level;
   EffectType? effectType;
+  List<bool>? linkArrows;
 
   YugiohCard({
     this.id,
@@ -28,6 +31,7 @@ class YugiohCard {
     this.cardType = CardDefaults.defaultCardType,
     this.level = CardDefaults.defaultCardLevel,
     this.effectType = EffectType.normal,
+    this.linkArrows = CardDefaults.defaultLinkArrows,
   });
 }
 
@@ -99,3 +103,12 @@ const colorMap = {
   'xyz': '#000000',
   'link': '#00008b'
 };
+
+class LinkArrow {
+  final int index;
+  final String imagePath;
+  final List<Offset> vertices;
+  final Offset offset;
+
+  const LinkArrow({required this.index, required this.imagePath, required this.vertices, required this.offset});
+}

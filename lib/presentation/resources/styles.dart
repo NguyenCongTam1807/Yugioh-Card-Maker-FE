@@ -33,3 +33,7 @@ TextStyle kUnknownAtkDefTextStyle = const TextStyle(
 
 final TextStyle kCreatorNameTextStyle = TextStyle(
     fontSize: 28.sp, fontFamily: FontFamily.matrixSmallCaps, height: 1.0);
+
+final kLinkRatingTextStyle = TextStyle(
+    fontSize: 18.sp, fontFamily: FontFamily.rogSanSerifStd, height: 1
+);

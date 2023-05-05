@@ -3,6 +3,7 @@ class FontFamily {
 // MatrixBook Regular - Description/Pendulum
 // STONESERIF-BOLD - Card Type/Spell/Trap
 // matrixboldfractions_bold - ATK/DEF/Pendulum Number
+// RoGSanSeridStd-B - Link Rating
 
   static const stoneSerifSmallCapsBold = 'StoneSerifSmallCapsBold';
   static const stoneSerif = 'StoneSerif';
@@ -12,4 +13,5 @@ class FontFamily {
   static const matrix = 'Matrix';
   static const matrixBoldSmallCaps = 'MatrixBoldSmallCaps';
   static const matrixBold = 'MatrixBold';
+  static const rogSanSerifStd = 'RoGSanSerifStd';
 }

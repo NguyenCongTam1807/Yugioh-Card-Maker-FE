@@ -3,34 +3,36 @@ import 'package:rxdart/rxdart.dart';
 import 'package:yugioh_card_creator/application/extensions.dart';
 import 'package:yugioh_card_creator/data/models/yugioh_card.dart';
 
+import '../resources/card_defaults.dart';
 
 class CardCreatorViewModel extends ChangeNotifier {
   YugiohCard currentCard = YugiohCard();
-  Size cardSize = const Size(0,0);
-  Offset cardOffset = const Offset(0,0);
+  Size cardSize = const Size(0, 0);
+  Offset cardOffset = const Offset(0, 0);
   int cardDescMaxLine = 0;
+  int linkRating = 0;
 
-  final cardTypeGroupStreamController = BehaviorSubject<CardTypeGroup>();
+  final cardTypeStreamController = BehaviorSubject<CardType>();
   final defStreamController = BehaviorSubject<String>();
   final atkStreamController = BehaviorSubject<String>();
   final atkDefTextStyleStreamController = BehaviorSubject<TextStyle>();
 
   void init() {
-    cardTypeGroupStreamController.add(currentCard.cardType.nullSafe().group);
+    cardTypeStreamController.add(currentCard.cardType.nullSafe());
   }
 
   @override
   void dispose() {
-    cardTypeGroupStreamController.close();
+    cardTypeStreamController.close();
     defStreamController.close();
     atkStreamController.close();
     atkDefTextStyleStreamController.close();
     super.dispose();
   }
-  
+
   setCardType(CardType type) {
     currentCard.cardType = type;
-    cardTypeGroupStreamController.add(currentCard.cardType.nullSafe().group);
+    cardTypeStreamController.add(currentCard.cardType.nullSafe());
     notifyListeners();
   }
 
@@ -49,7 +51,7 @@ class CardCreatorViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  setCardLevel(int level){
+  setCardLevel(int level) {
     currentCard.level = level;
     notifyListeners();
   }
@@ -75,7 +77,7 @@ class CardCreatorViewModel extends ChangeNotifier {
     if (def.isEmpty) {
       def = def.checkUnknownFigure();
     }
-    currentCard.def =  def;
+    currentCard.def = def;
     defStreamController.sink.add(def);
   }
 
@@ -95,6 +97,68 @@ class CardCreatorViewModel extends ChangeNotifier {
 
   setEffectType(EffectType type) {
     currentCard.effectType = type;
+    notifyListeners();
+  }
+
+  setLinkArrowAt(int index) {
+    final linkArrows = currentCard.linkArrows.nullSafe();
+    final newLinkArrowList = <bool>[];
+    for (int i = 0; i < linkArrows.length; i++) {
+      if (i == index) {
+        newLinkArrowList.add(!linkArrows[i]);
+        if (newLinkArrowList[i]) {
+          linkRating++;
+        } else {
+          linkRating--;
+        }
+      } else {
+        newLinkArrowList.add(linkArrows[i]);
+      }
+    }
+    currentCard.linkArrows = newLinkArrowList;
+    notifyListeners();
+  }
+
+  restartLinkArrow() {
+    currentCard.linkArrows = CardDefaults.defaultLinkArrows;
+    notifyListeners();
+  }
+
+  turnOnAllArrows() {
+    currentCard.linkArrows = [true, true, true, true, true, true, true, true];
+    notifyListeners();
+  }
+
+  setLinkRating(String rating) {
+    final parseResult = int.tryParse(rating).nullSafe();
+    linkRating = parseResult == 9 ? 8 : parseResult;
+    final linkArrows = currentCard.linkArrows.nullSafe();
+    int diff = linkRating - linkArrows.getRating();
+    if (diff == 0) {
+      return;
+    }
+    final newLinkArrowList = <bool>[];
+    int i = 0;
+    if (diff > 0) {
+      for (i; i < 8 && diff > 0; i++) {
+        if (!linkArrows[i]) {
+          diff--;
+        }
+        newLinkArrowList.add(true);
+      }
+    } else {
+      diff *= -1;
+      for (i; i < 8 && diff > 0; i++) {
+        if (linkArrows[i]) {
+          diff--;
+        }
+        newLinkArrowList.add(false);
+      }
+    }
+    for (i; i < 8; i++) {
+      newLinkArrowList.add(linkArrows[i]);
+    }
+    currentCard.linkArrows = newLinkArrowList;
     notifyListeners();
   }
 }
