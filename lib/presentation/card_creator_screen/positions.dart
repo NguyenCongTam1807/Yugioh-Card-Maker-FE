@@ -66,7 +66,7 @@ class CardLayout {
 
   static const defLeft = 0.828;
 
-  static const linkRatingTop = 1.334;
+  static const linkRatingTop = 1.3335;
   static const linkRatingLeft = 0.889;
   static const linkRatingHeight = 0.048;
   static const linkRatingWidth = 0.035;
