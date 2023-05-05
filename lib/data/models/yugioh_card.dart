@@ -27,7 +27,7 @@ class YugiohCard {
     this.creatorName = Strings.defaultCreatorName,
     this.cardType = CardDefaults.defaultCardType,
     this.level = CardDefaults.defaultCardLevel,
-    this.effectType,
+    this.effectType = EffectType.normal,
   });
 }
 
@@ -63,11 +63,26 @@ enum CardTypeGroup {
 }
 
 enum EffectType {
+  normal,
   continuous,
   counter,
   equip,
   field,
   quickPlay,
   ritual,
-  none,
 }
+
+const spellCardTypes = [
+  EffectType.normal,
+  EffectType.continuous,
+  EffectType.equip,
+  EffectType.field,
+  EffectType.ritual,
+  EffectType.quickPlay,
+];
+
+const trapCardTypes = [
+  EffectType.normal,
+  EffectType.continuous,
+  EffectType.counter,
+];

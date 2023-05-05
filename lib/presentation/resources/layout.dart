@@ -6,7 +6,13 @@ class ScreenLayout {
   static final editButtonSpreadRadius = 3.sp;
   static final editButtonBlurRadius = 5.sp;
 
-  static const editPopupMenuWidth = 0.35;
-  static const editPopupMenuMargin = 3;
-  static const editPopupItemScaleFactor = 1.3;
+  static const editPopupMenuWidth = 0.37;
+  static final editPopupItemPadding = 10.sp;
+  static final editPopupItemPaddingSmall = editPopupItemPadding*3/4;
+  static const editPopupItemScale = 1.3;
+
+  static const effectTypePopupMenuWidth = 0.45;
+
+  static final menuItemSpreadRadius = 10.sp;
+  static final menuItemBlurRadius = 15.sp;
 }

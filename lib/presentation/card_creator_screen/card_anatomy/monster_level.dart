@@ -56,7 +56,7 @@ class LevelStar extends StatelessWidget {
   LevelStar({Key? key}) : super(key: key);
 
   final starSize = getIt<CardCreatorViewModel>().cardSize.width *
-      CardLayout.levelStarWidth;
+      CardLayout.levelStarSize;
   @override
   Widget build(BuildContext context) {
     return Container(

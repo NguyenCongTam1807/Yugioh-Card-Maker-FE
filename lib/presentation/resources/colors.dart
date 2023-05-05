@@ -22,5 +22,6 @@ class AppColor {
   static const editButtonShadowColor = '#000000';
 
   static const editMenuBgColor = '#9F000000';
+  static const editSpellTrapEffectBgColor = '#BF463227';
 }
 

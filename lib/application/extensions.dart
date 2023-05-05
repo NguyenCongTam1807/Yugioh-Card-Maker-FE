@@ -43,6 +43,12 @@ extension NullableCardAttribute on CardAttribute? {
   }
 }
 
+extension NullableEffectType on EffectType? {
+  EffectType nullSafe() {
+    return this ?? CardDefaults.defaultEffectType;
+  }
+}
+
 extension CardAttributeExtension on CardAttribute {
   String getAssetPath() {
     return 'assets/images/attribute/${toString().split('.').last}_en.png';
@@ -84,6 +90,16 @@ extension CardTypeExtension on CardType {
       default:
         return CardTypeGroup.monster;
     }
+  }
+}
+
+extension EffectTypeExtension on EffectType {
+  String getName() {
+    return toString().split('.').last;
+  }
+
+  String getAssetPath() {
+    return 'assets/images/icons/${getName()}.png';
   }
 }
 

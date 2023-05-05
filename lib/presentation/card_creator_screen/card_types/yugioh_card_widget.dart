@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:get_it_mixin/get_it_mixin.dart';
 import 'package:yugioh_card_creator/application/extensions.dart';
+import 'package:yugioh_card_creator/presentation/card_creator_screen/card_anatomy/spell_trap_type.dart';
 
 import '../../../application/dependency_injection.dart';
 import '../../../data/models/yugioh_card.dart';
@@ -60,6 +61,12 @@ class YugiohCardWidget extends StatelessWidget {
             Positioned(
               top: CardLayout.monsterLevelTop * _cardWidth,
               child: MonsterLevel(),
+            ),
+          if (snapshot.data != CardTypeGroup.monster)
+            Positioned(
+              top: _cardWidth*CardLayout.effectTypeTop,
+              right: _cardWidth*CardLayout.effectTypeRight,
+              child: SpellTrapType(),
             ),
           //Monster Type
           if (snapshot.data == CardTypeGroup.monster)

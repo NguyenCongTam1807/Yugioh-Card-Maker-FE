@@ -93,7 +93,7 @@ class CardCreatorViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  setCardEffectType(EffectType type) {
+  setEffectType(EffectType type) {
     currentCard.effectType = type;
     notifyListeners();
   }

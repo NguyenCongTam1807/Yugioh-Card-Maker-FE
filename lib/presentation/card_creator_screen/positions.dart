@@ -4,7 +4,7 @@ class CardLayout {
   static const cardImageEditButtonLeft = 0.05;
 
   //CardAttribute icons in popup menu
-  static const attributeScaleFactor = 1.3;
+  static const attributeScale = 1.3;
   static const attributeIconsPerRow = 3;
   static const attributeIconsPerColumn = 3;
 
@@ -29,8 +29,14 @@ class CardLayout {
   static const monsterLevelTop = 0.181;
   static const monsterLevelMargin = 0.106;
   static const levelDragFormulaDivider = 0.06566;
-  static const levelStarWidth = 0.065;
+  static const levelStarSize = 0.065;
   static const levelStarLeftMargin = 0.000663;
+
+  static const effectTypeTop = monsterLevelTop + (levelStarSize - effectTypeHeight*effectTypeIconScale)/2;
+  static const effectTypeRight = monsterLevelMargin;
+  static const effectTypeHeight = 0.042;
+  static const effectTypeIconRight = 0.016;
+  static const effectTypeIconScale = 1.15;
 
   static const monsterTypeTop = 1.09;
   static const monsterTypeLeft = 0.078;

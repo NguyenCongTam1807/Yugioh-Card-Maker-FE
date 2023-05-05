@@ -9,6 +9,7 @@ import 'package:yugioh_card_creator/presentation/resources/routes.dart';
 import '../../../application/dependency_injection.dart';
 import '../../resources/colors.dart';
 import '../../resources/durations.dart';
+import '../../resources/layout.dart';
 import '../card_creator_view_model.dart';
 import '../positions.dart';
 
@@ -60,7 +61,7 @@ class _CardAttributeIconState extends State<CardAttributeIcon>
                 const iconMargin = 2.0;
                 final iconWidth = _cardWidth *
                     CardLayout.cardAttributeIconSize *
-                    CardLayout.attributeScaleFactor;
+                    CardLayout.attributeScale;
                 final halfDialogWidth =
                     iconWidth * CardLayout.attributeIconsPerRow / 2 +
                         iconMargin * CardLayout.attributeIconsPerRow;
@@ -106,7 +107,7 @@ class _CardAttributeIconState extends State<CardAttributeIcon>
                                     child: _cardAttributeIcon(
                                       attribute.getAssetPath(),
                                       scaleFactor:
-                                          CardLayout.attributeScaleFactor,
+                                          CardLayout.attributeScale,
                                       margin: iconMargin,
                                       decorated: cardAttribute == attribute,
                                     ),
@@ -139,8 +140,8 @@ class _CardAttributeIconState extends State<CardAttributeIcon>
             if (decorated)
               BoxShadow(
                 color: Theme.of(context).primaryColor,
-                spreadRadius: 10.sp,
-                blurRadius: 15.sp,
+                spreadRadius: ScreenLayout.menuItemSpreadRadius,
+                blurRadius: ScreenLayout.menuItemBlurRadius,
               )
           ],
           image: DecorationImage(
