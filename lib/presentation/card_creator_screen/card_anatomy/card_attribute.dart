@@ -78,7 +78,7 @@ class _CardAttributeIconState extends State<CardAttributeIcon>
                       child: Transform.scale(
                         scale: curve,
                         child: Container(
-                          color: AppColor.editMenuBgColor.toColor(),
+                          color: AppColor.editMenuBgColor,
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             children: List.generate(

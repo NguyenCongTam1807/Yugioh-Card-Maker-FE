@@ -15,4 +15,9 @@ class ScreenLayout {
 
   static final menuItemSpreadRadius = 10.sp;
   static final menuItemBlurRadius = 15.sp;
+
+  static final bigIconSize = 55.sp;
+  static final bigIconShadowRadius = bigIconSize/2;
+  static final smallIconSize = 35.sp;
+  static final smallIconShadowRadius = smallIconSize/2;
 }

@@ -27,7 +27,7 @@ class CardTypeButton extends StatelessWidget with GetItMixin {
         padding: EdgeInsets.zero,
         constraints: BoxConstraints(
             maxWidth: _cardWidth * ScreenLayout.editPopupMenuWidth),
-        color: AppColor.editMenuBgColor.toColor(),
+        color: AppColor.editMenuBgColor,
         child: Container(
           decoration: BoxDecoration(boxShadow: [
             BoxShadow(

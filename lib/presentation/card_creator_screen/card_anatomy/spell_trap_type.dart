@@ -41,7 +41,7 @@ class SpellTrapType extends StatelessWidget with GetItMixin {
           constraints: BoxConstraints(
               maxWidth: _cardCreatorViewModel.cardSize.width *
                   ScreenLayout.effectTypePopupMenuWidth),
-          color: AppColor.editMenuBgColor.toColor(),
+          color: AppColor.editMenuBgColor,
           child: Container(
             height: _cardWidth *
                 CardLayout.effectTypeHeight *

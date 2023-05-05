@@ -47,7 +47,7 @@ class YugiohCardWidget extends StatelessWidget {
           Positioned(
             top: CardLayout.cardNameTop * _cardWidth,
             left: CardLayout.cardNameLeft * _cardWidth,
-            child: const CardName(),
+            child: CardName(),
           ),
           //Card Attribute
           if (snapshot.data == CardTypeGroup.monster)

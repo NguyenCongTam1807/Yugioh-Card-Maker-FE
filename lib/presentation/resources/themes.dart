@@ -4,44 +4,53 @@ import 'package:yugioh_card_creator/application/extensions.dart';
 import 'package:yugioh_card_creator/presentation/resources/styles.dart';
 
 import 'colors.dart';
+import 'layout.dart';
 
 ThemeData getAppTheme(AppTheme theme) {
   switch (theme) {
     case AppTheme.egyptian:
       return _getEgyptianTheme();
-    default: return _getBewdTheme();
+    default:
+      return _getBewdTheme();
   }
 }
 
 ThemeData _getEgyptianTheme() {
   return ThemeData(
-    primaryColor: AppColor.egyptPrimary.toColor(),
-    primaryColorDark: AppColor.egyptPrimaryDark.toColor(),
-    primaryColorLight: AppColor.egyptPrimaryLight.toColor(),
-    accentColor: AppColor.egyptAccent.toColor(),
+    primaryColor: AppColor.egyptPrimary,
+    primaryColorDark: AppColor.egyptPrimaryDark,
+    primaryColorLight: AppColor.egyptPrimaryLight,
+    accentColor: AppColor.egyptAccent,
     appBarTheme: AppBarTheme(
-        color: AppColor.egyptPrimary.toColor(),
-        titleTextStyle: kCardNameTextStyle.copyWith(
-          color: AppColor.textColor.toColor()
-        ),
-      actionsIconTheme: IconThemeData(
-        color: AppColor.egyptIconColor.toColor(),
-        size: 55.sp,
-          shadows: [
-            BoxShadow(
-              color: AppColor.egyptIconBorder.toColor(),
-              spreadRadius: 25.sp,
-              blurRadius: 25.sp,
-            )
-          ]
-      )
-    ),
+        color: AppColor.egyptPrimaryLight,
+        titleTextStyle:
+            kCardNameTextStyle.copyWith(color: AppColor.textColor),
+        actionsIconTheme: IconThemeData(
+            color: AppColor.egyptIconColor,
+            size: ScreenLayout.bigIconSize,
+            shadows: [
+              BoxShadow(
+                color: AppColor.egyptIconBorder,
+                spreadRadius: ScreenLayout.bigIconShadowRadius,
+                blurRadius: ScreenLayout.bigIconShadowRadius,
+              )
+            ])),
+    iconTheme:
+        IconThemeData(color: AppColor.egyptIconColor, shadows: [
+      BoxShadow(
+        color: AppColor.egyptIconBorder,
+        spreadRadius: ScreenLayout.smallIconShadowRadius,
+        blurRadius: ScreenLayout.smallIconShadowRadius,
+      ),
+    ]),
     iconButtonTheme: IconButtonThemeData(
-      style: IconButton.styleFrom(
-        foregroundColor: AppColor.egyptIconColor.toColor(),
-      )
-    ),
-    shadowColor: AppColor.editButtonShadowColor.toColor(),
+        style: IconButton.styleFrom(
+      foregroundColor: AppColor.egyptIconColor,
+    )),
+    shadowColor: AppColor.egyptSecondary,
+    splashColor: AppColor.egyptAccent,
+    dividerColor: AppColor.egyptSecondary,
+
   );
 }
 
@@ -50,5 +59,6 @@ ThemeData _getBewdTheme() {
 }
 
 enum AppTheme {
-  egyptian, blueEyesWhiteDragon,
+  egyptian,
+  blueEyesWhiteDragon,
 }
