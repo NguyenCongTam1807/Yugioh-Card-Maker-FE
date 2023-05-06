@@ -81,7 +81,7 @@ extension CardTypeExtension on CardType {
   }
 
   Color getForegroundColor() {
-    return getMainColor().computeLuminance()<0.5?Colors.white:Colors.black;
+    return getMainColor().getForegroundColor();
   }
 
   CardTypeGroup get group {
@@ -151,5 +151,11 @@ extension AppThemeExtension on AppTheme {
 
   String getAssetPath() {
     return 'assets/images/app_theme_previews/${getValue()}.png';
+  }
+}
+
+extension ColorExtension on Color {
+  Color getForegroundColor() {
+    return computeLuminance()<0.5?Colors.white:Colors.black;
   }
 }

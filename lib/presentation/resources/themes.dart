@@ -19,7 +19,7 @@ ThemeData getAppTheme(AppTheme theme) {
     case AppTheme.blueEyesWhiteDragon:
       return _getTheme(AppColor.bewdTheme);
     case AppTheme.urbanStreet:
-      return _getTheme(AppColor.bewdTheme);
+      return _getTheme(AppColor.streetTheme);
     default:
       return _getTheme(AppColor.egyptTheme);
   }
@@ -41,7 +41,7 @@ ThemeData _getTheme(Map<String, Color> colorMap) {
     appBarTheme: AppBarTheme(
         color: colorMap[appBar],
         titleTextStyle:
-        kCardNameTextStyle.copyWith(color: Colors.black),
+        kCardNameTextStyle.copyWith(color: colorMap[appBarText]),
         iconTheme: IconThemeData(
             color: colorMap[icon],
             size: ScreenLayout.smallIconSize,
@@ -81,7 +81,7 @@ ThemeData _getTheme(Map<String, Color> colorMap) {
     shadowColor: colorMap[fieldIconShadow],
     splashColor: colorMap[splash],
     dividerTheme: DividerThemeData(
-      color: AppColor.egyptSecondary,
+      color: colorMap[divider],
       thickness: 3.sp,
     )
   );
