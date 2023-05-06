@@ -54,7 +54,13 @@ extension NullableEffectType on EffectType? {
 
 extension NullableColor on Color? {
   Color nullSafe() {
-    return this??Colors.green;
+    return this ?? Colors.green;
+  }
+}
+
+extension NullableAppTheme on AppTheme? {
+  AppTheme nullSafe() {
+    return this ?? AppDefaults.defaultAppTheme;
   }
 }
 
@@ -68,7 +74,7 @@ extension CardTypeExtension on CardType {
   String getName() {
     final s = toString();
     final index = s.lastIndexOf('.');
-    return s.substring(index+1);
+    return s.substring(index + 1);
   }
 
   String getAssetPath() {
@@ -100,7 +106,7 @@ extension EffectTypeExtension on EffectType {
   String getName() {
     final s = toString();
     final index = s.lastIndexOf('.');
-    return s.substring(index+1);
+    return s.substring(index + 1);
   }
 
   String getAssetPath() {
@@ -120,7 +126,7 @@ extension HexColor on String {
 
 extension NullableArrowList on List<bool>? {
   List<bool> nullSafe() {
-    return this??CardDefaults.defaultLinkArrows;
+    return this ?? CardDefaults.defaultLinkArrows;
   }
 }
 
@@ -134,11 +140,11 @@ extension AppThemeExtension on AppTheme {
   String getName() {
     final value = getValue();
     String res = value[0].toUpperCase();
-    for (int i = 1;i < getValue().length; i++) {
+    for (int i = 1; i < getValue().length; i++) {
       if (value[i] == value[i].toUpperCase()) {
-        res+=' ';
+        res += ' ';
       }
-      res+=value[i];
+      res += value[i];
     }
     return res;
   }
@@ -146,7 +152,7 @@ extension AppThemeExtension on AppTheme {
   String getValue() {
     final s = toString();
     final index = s.lastIndexOf('.');
-    return s.substring(index+1);
+    return s.substring(index + 1);
   }
 
   String getAssetPath() {
@@ -156,6 +162,21 @@ extension AppThemeExtension on AppTheme {
 
 extension ColorExtension on Color {
   Color getForegroundColor() {
-    return computeLuminance()<0.5?Colors.white:Colors.black;
+    return computeLuminance() < 0.5 ? Colors.white : Colors.black;
+  }
+}
+
+extension StringExtension on String {
+  AppTheme toAppTheme() {
+    switch (this) {
+      case 'ancientEgypt':
+        return AppTheme.ancientEgypt;
+      case 'blueEyesWhiteDragon':
+        return AppTheme.blueEyesWhiteDragon;
+      case 'urbanStreet':
+        return AppTheme.urbanStreet;
+      default:
+        return AppDefaults.defaultAppTheme;
+    }
   }
 }

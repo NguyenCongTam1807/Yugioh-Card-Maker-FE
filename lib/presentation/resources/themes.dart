@@ -5,6 +5,7 @@ import 'package:yugioh_card_creator/presentation/resources/styles.dart';
 
 import 'colors.dart';
 import 'layout.dart';
+import 'map_key.dart';
 
 enum AppTheme {
   ancientEgypt,
@@ -27,62 +28,62 @@ ThemeData getAppTheme(AppTheme theme) {
 
 ThemeData _getTheme(Map<String, Color> colorMap) {
   return ThemeData(
-    primaryColor: colorMap[appBar],
-      primaryColorLight: colorMap[modalBottomSheetStart],
-      primaryColorDark: colorMap[modalBottomSheetEnd],
-    colorScheme: ColorScheme.light(
-      primary: colorMap[mainFieldBody1].nullSafe(),
-      secondary: colorMap[mainFieldBody2].nullSafe(),
-      tertiary: colorMap[popupMenuBackground],
-      primaryContainer: colorMap[secondaryScaffoldBody1], //two colors of the secondary scaffold body
-      secondaryContainer: colorMap[secondaryScaffoldBody2],
-      onPrimaryContainer: colorMap[secondaryScaffoldText].nullSafe(), // text color of the secondary scaffold body
-    ),
-    appBarTheme: AppBarTheme(
-        color: colorMap[appBar],
-        titleTextStyle:
-        kCardNameTextStyle.copyWith(color: colorMap[appBarText]),
-        iconTheme: IconThemeData(
-            color: colorMap[icon],
-            size: ScreenLayout.smallIconSize,
-            shadows: [
-              BoxShadow(
-                color: colorMap[iconShadow].nullSafe(),
-                spreadRadius: ScreenLayout.bigIconShadowRadius,
-                blurRadius: ScreenLayout.bigIconShadowRadius,
-              )
-            ]
-        ),
-        actionsIconTheme: IconThemeData(
-            color: colorMap[icon],
-            size: ScreenLayout.bigIconSize,
-            shadows: [
-              BoxShadow(
-                color: colorMap[iconShadow].nullSafe(),
-                spreadRadius: ScreenLayout.bigIconShadowRadius,
-                blurRadius: ScreenLayout.bigIconShadowRadius,
-              )
-            ])),
-    iconTheme:
-    IconThemeData(color: colorMap[icon], shadows: [
-      BoxShadow(
-        color: colorMap[iconShadow].nullSafe(),
-        spreadRadius: ScreenLayout.smallIconShadowRadius,
-        blurRadius: ScreenLayout.smallIconShadowRadius,
+      primaryColor: colorMap[MapKey.appBar],
+      primaryColorLight: colorMap[MapKey.modalBottomSheetStart],
+      primaryColorDark: colorMap[MapKey.modalBottomSheetEnd],
+      colorScheme: ColorScheme.light(
+        primary: colorMap[MapKey.mainFieldBody1].nullSafe(),
+        secondary: colorMap[MapKey.mainFieldBody2].nullSafe(),
+        tertiary: colorMap[MapKey.popupMenuBackground],
+        primaryContainer: colorMap[MapKey.secondaryScaffoldBody1], //two colors of the secondary scaffold body
+        secondaryContainer: colorMap[MapKey.secondaryScaffoldBody2],
+        onPrimaryContainer: colorMap[MapKey.secondaryScaffoldText].nullSafe(), // text color of the secondary scaffold body
       ),
-    ]),
-    iconButtonTheme: IconButtonThemeData(
-        style: IconButton.styleFrom(
-          foregroundColor: colorMap[icon],
-        )),
-    listTileTheme: ListTileThemeData(
-        iconColor: colorMap[icon]
-    ),
-    shadowColor: colorMap[fieldIconShadow],
-    splashColor: colorMap[splash],
-    dividerTheme: DividerThemeData(
-      color: colorMap[divider],
-      thickness: 3.sp,
-    )
+      appBarTheme: AppBarTheme(
+          color: colorMap[MapKey.appBar],
+          titleTextStyle:
+          kCardNameTextStyle.copyWith(color: colorMap[MapKey.appBarText]),
+          iconTheme: IconThemeData(
+              color: colorMap[MapKey.icon],
+              size: ScreenLayout.smallIconSize,
+              shadows: [
+                BoxShadow(
+                  color: colorMap[MapKey.iconShadow].nullSafe(),
+                  spreadRadius: ScreenLayout.bigIconShadowRadius,
+                  blurRadius: ScreenLayout.bigIconShadowRadius,
+                )
+              ]
+          ),
+          actionsIconTheme: IconThemeData(
+              color: colorMap[MapKey.icon],
+              size: ScreenLayout.bigIconSize,
+              shadows: [
+                BoxShadow(
+                  color: colorMap[MapKey.iconShadow].nullSafe(),
+                  spreadRadius: ScreenLayout.bigIconShadowRadius,
+                  blurRadius: ScreenLayout.bigIconShadowRadius,
+                )
+              ])),
+      iconTheme:
+      IconThemeData(color: colorMap[MapKey.icon], shadows: [
+        BoxShadow(
+          color: colorMap[MapKey.iconShadow].nullSafe(),
+          spreadRadius: ScreenLayout.smallIconShadowRadius,
+          blurRadius: ScreenLayout.smallIconShadowRadius,
+        ),
+      ]),
+      iconButtonTheme: IconButtonThemeData(
+          style: IconButton.styleFrom(
+            foregroundColor: colorMap[MapKey.icon],
+          )),
+      listTileTheme: ListTileThemeData(
+          iconColor: colorMap[MapKey.icon]
+      ),
+      shadowColor: colorMap[MapKey.fieldIconShadow],
+      splashColor: colorMap[MapKey.splash],
+      dividerTheme: DividerThemeData(
+        color: colorMap[MapKey.divider],
+        thickness: 3.sp,
+      )
   );
 }

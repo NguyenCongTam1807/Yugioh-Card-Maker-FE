@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it_mixin/get_it_mixin.dart';
+import 'package:yugioh_card_creator/application/extensions.dart';
 import 'package:yugioh_card_creator/presentation/settings_screen/settings_view_model.dart';
 
 
@@ -8,9 +9,25 @@ import '../presentation/card_creator_screen/card_creator_view.dart';
 import '../presentation/card_creator_screen/positions.dart';
 import '../presentation/resources/routes.dart';
 import '../presentation/resources/themes.dart';
+import 'app_preferences.dart';
+import 'dependency_injection.dart';
 
-class MyApp extends StatelessWidget with GetItMixin{
+class MyApp extends StatefulWidget with GetItStatefulWidgetMixin{
   MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> with GetItStateMixin{
+  final _appPref = getIt<AppPreferences>();
+  AppTheme? savedTheme;
+
+  @override
+  void initState() {
+    savedTheme = _appPref.getAppTheme();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,10 +35,10 @@ class MyApp extends StatelessWidget with GetItMixin{
       designSize: const Size(ScreenPos.cardWidthRatio, ScreenPos.cardHeightRatio),
       minTextAdapt: true,
       builder: (BuildContext context, Widget? child) {
-        final appTheme = watchOnly((SettingsViewModel vm) => vm.appTheme);
+        final updatedTheme = watchOnly((SettingsViewModel vm) => vm.appTheme);
 
         return MaterialApp(
-          theme: getAppTheme(appTheme),
+          theme: getAppTheme(updatedTheme??savedTheme.nullSafe()),
           onGenerateRoute: RouteGenerator.getRoute,
           home: const CardCreatorView(),
           debugShowCheckedModeBanner: false,

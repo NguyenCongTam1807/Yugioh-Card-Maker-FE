@@ -2,21 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-const appBar = 'appBar';
-const appBarText = 'appBarText';
-const modalBottomSheetStart = 'modalBottomSheetStart';
-const modalBottomSheetEnd = 'modalBottomSheetEnd';
-const icon = 'icon';
-const iconShadow = 'iconShadow';
-const splash = 'splash';
-const fieldIconShadow = 'fieldIconShadow';
-const mainFieldBody1 = 'mainFieldBody1';
-const mainFieldBody2 = 'mainFieldBody2';
-const popupMenuBackground = 'popupMenuBackground';
-const secondaryScaffoldBody1 = 'secondaryScaffoldBody1';
-const secondaryScaffoldBody2 = 'secondaryScaffoldBody2';
-const secondaryScaffoldText = 'secondaryScaffoldText';
-const divider = 'divider';
+import 'map_key.dart';
 
 class AppColor {
   // Ancient Egypt theme
@@ -42,21 +28,21 @@ class AppColor {
   static const Color _egyptSettingsEnd = Color(0xCF823917);
   //////Mapping of above colors
   static const Map<String, Color> egyptTheme = {
-    appBar: _egyptPrimary,
-    appBarText: Colors.black,
-    modalBottomSheetStart: _egyptPrimary,
-    modalBottomSheetEnd: _egyptPrimaryDark,
-    icon: _egyptIconColor,
-    iconShadow: _egyptIconShadow,
-    splash: _egyptAccent,
-    fieldIconShadow: _egyptSecondary,
-    mainFieldBody1: _egyptFieldEnds,
-    mainFieldBody2: _egyptFieldMiddle,
-    popupMenuBackground: _egyptMenuBackground,
-    secondaryScaffoldBody1: _egyptSettingsStart,
-    secondaryScaffoldBody2: _egyptSettingsEnd,
-    secondaryScaffoldText: _egyptTextColor,
-    divider: _egyptSecondary
+    MapKey.appBar: _egyptPrimary,
+    MapKey.appBarText: Colors.black,
+    MapKey.modalBottomSheetStart: _egyptPrimary,
+    MapKey.modalBottomSheetEnd: _egyptPrimaryDark,
+    MapKey.icon: _egyptIconColor,
+    MapKey.iconShadow: _egyptIconShadow,
+    MapKey.splash: _egyptAccent,
+    MapKey.fieldIconShadow: _egyptSecondary,
+    MapKey.mainFieldBody1: _egyptFieldEnds,
+    MapKey.mainFieldBody2: _egyptFieldMiddle,
+    MapKey.popupMenuBackground: _egyptMenuBackground,
+    MapKey.secondaryScaffoldBody1: _egyptSettingsStart,
+    MapKey.secondaryScaffoldBody2: _egyptSettingsEnd,
+    MapKey.secondaryScaffoldText: _egyptTextColor,
+    MapKey.divider: _egyptSecondary
   };
 
   // Blue eyes white dragon theme
@@ -77,24 +63,24 @@ class AppColor {
   static const Color _bewdFieldMiddle = Color(0x80DE9169);
   static const Color _bewdMenuBackground = Color(0x9F0A3060);
   static const Color _bewdSettingsStart = Color(0xAFE8F1FF);
-  static const Color _bewdSettingsEnd = Color(0xAF06CE51);
+  static const Color _bewdSettingsEnd = Color(0xAF00E0FC);
 
   static const Map<String, Color> bewdTheme = {
-    appBar: _bewdPrimary,
-    appBarText: Colors.black,
-    modalBottomSheetStart: _bewdPrimary,
-    modalBottomSheetEnd: _bewdPrimaryDark,
-    icon: _bewdIconColor,
-    iconShadow: _bewdIconShadow,
-    splash: _bewdAccent,
-    fieldIconShadow: _bewdSecondary,
-    mainFieldBody1: _bewdFieldEnds,
-    mainFieldBody2: _bewdFieldMiddle,
-    popupMenuBackground: _bewdMenuBackground,
-    secondaryScaffoldBody1: _bewdSettingsStart,
-    secondaryScaffoldBody2: _bewdSettingsEnd,
-    secondaryScaffoldText: _bewdTextColor,
-    divider: _bewdSecondary
+    MapKey.appBar: _bewdPrimary,
+    MapKey.appBarText: Colors.black,
+    MapKey.modalBottomSheetStart: _bewdPrimary,
+    MapKey.modalBottomSheetEnd: _bewdPrimaryDark,
+    MapKey.icon: _bewdIconColor,
+    MapKey.iconShadow: _bewdIconShadow,
+    MapKey.splash: _bewdAccent,
+    MapKey.fieldIconShadow: _bewdSecondary,
+    MapKey.mainFieldBody1: _bewdFieldEnds,
+    MapKey.mainFieldBody2: _bewdFieldMiddle,
+    MapKey.popupMenuBackground: _bewdMenuBackground,
+    MapKey.secondaryScaffoldBody1: _bewdSettingsStart,
+    MapKey.secondaryScaffoldBody2: _bewdSettingsEnd,
+    MapKey.secondaryScaffoldText: _bewdTextColor,
+    MapKey.divider: _bewdSecondary
   };
 
   // Urban street theme
@@ -118,20 +104,20 @@ class AppColor {
   static const Color _streetSettingsEnd = Color(0xAF3B4755);
 
   static const Map<String, Color> streetTheme = {
-    appBar: _streetPrimary,
-    appBarText: Colors.white,
-    modalBottomSheetStart: _streetPrimary,
-    modalBottomSheetEnd: _streetPrimaryDark,
-    icon: _streetIconColor,
-    iconShadow: _streetIconShadow,
-    splash: _streetAccent,
-    fieldIconShadow: _streetSecondary,
-    mainFieldBody1: _streetFieldEnds,
-    mainFieldBody2: _streetFieldMiddle,
-    popupMenuBackground: _streetMenuBackground,
-    secondaryScaffoldBody1: _streetSettingsStart,
-    secondaryScaffoldBody2: _streetSettingsEnd,
-    secondaryScaffoldText: _streetTextColor,
-    divider: _streetSecondary
+    MapKey.appBar: _streetPrimary,
+    MapKey.appBarText: Colors.white,
+    MapKey.modalBottomSheetStart: _streetPrimary,
+    MapKey.modalBottomSheetEnd: _streetPrimaryDark,
+    MapKey.icon: _streetIconColor,
+    MapKey.iconShadow: _streetIconShadow,
+    MapKey.splash: _streetAccent,
+    MapKey.fieldIconShadow: _streetSecondary,
+    MapKey.mainFieldBody1: _streetFieldEnds,
+    MapKey.mainFieldBody2: _streetFieldMiddle,
+    MapKey.popupMenuBackground: _streetMenuBackground,
+    MapKey.secondaryScaffoldBody1: _streetSettingsStart,
+    MapKey.secondaryScaffoldBody2: _streetSettingsEnd,
+    MapKey.secondaryScaffoldText: _streetTextColor,
+    MapKey.divider: _streetSecondary
   };
 }
