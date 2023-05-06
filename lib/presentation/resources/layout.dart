@@ -20,4 +20,6 @@ class ScreenLayout {
   static final bigIconShadowRadius = bigIconSize/2;
   static final smallIconSize = 35.sp;
   static final smallIconShadowRadius = smallIconSize/2;
+
+  static final themePreviewSize = 100.sp;
 }

@@ -23,5 +23,4 @@ class ImagePath {
   static const linkArrowRight = '$basePath/link_right.png';
   static const linkArrowBottomLeft = '$basePath/link_bottom_left.png';
   static const linkArrowBottom = '$basePath/link_bottom.png';
-  static const linkArrowBottomRight = '$basePath/link_bottom_right.png';
-}
+  static const linkArrowBottomRight = '$basePath/link_bottom_right.png';}

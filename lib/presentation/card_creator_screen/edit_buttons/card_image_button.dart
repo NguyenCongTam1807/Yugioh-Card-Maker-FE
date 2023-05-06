@@ -35,7 +35,7 @@ class CardImageButton extends StatelessWidget {
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
                         colors: [
-                          Theme.of(context).primaryColor,
+                          Theme.of(context).primaryColorLight,
                           Theme.of(context).primaryColorDark,
                         ],
                         begin: Alignment.topLeft,

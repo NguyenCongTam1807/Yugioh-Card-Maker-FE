@@ -3,7 +3,7 @@ import 'package:rxdart/rxdart.dart';
 import 'package:yugioh_card_creator/application/extensions.dart';
 import 'package:yugioh_card_creator/data/models/yugioh_card.dart';
 
-import '../resources/card_defaults.dart';
+import '../resources/defaults.dart';
 
 class CardCreatorViewModel extends ChangeNotifier {
   YugiohCard currentCard = YugiohCard();

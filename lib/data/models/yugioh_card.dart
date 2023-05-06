@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import '../../presentation/resources/card_defaults.dart';
+import '../../presentation/resources/defaults.dart';
 import '../../presentation/resources/strings.dart';
 
 class YugiohCard {

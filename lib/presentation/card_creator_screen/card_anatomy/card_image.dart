@@ -6,7 +6,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:yugioh_card_creator/application/extensions.dart';
 
 import '../../../application/dependency_injection.dart';
-import '../../resources/card_defaults.dart';
+import '../../resources/defaults.dart';
 import '../../resources/images.dart';
 import '../../resources/strings.dart';
 import '../positions.dart';

@@ -3,8 +3,9 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 import '../data/models/yugioh_card.dart';
-import '../presentation/resources/card_defaults.dart';
+import '../presentation/resources/defaults.dart';
 import '../presentation/resources/strings.dart';
+import '../presentation/resources/themes.dart';
 
 extension NullableString on String? {
   String nullSafe() {
@@ -51,6 +52,12 @@ extension NullableEffectType on EffectType? {
   }
 }
 
+extension NullableColor on Color? {
+  Color nullSafe() {
+    return this??Colors.green;
+  }
+}
+
 extension CardAttributeExtension on CardAttribute {
   String getAssetPath() {
     return 'assets/images/attribute/${toString().split('.').last}_en.png';
@@ -59,7 +66,9 @@ extension CardAttributeExtension on CardAttribute {
 
 extension CardTypeExtension on CardType {
   String getName() {
-    return toString().split('.').last;
+    final s = toString();
+    final index = s.lastIndexOf('.');
+    return s.substring(index+1);
   }
 
   String getAssetPath() {
@@ -89,7 +98,9 @@ extension CardTypeExtension on CardType {
 
 extension EffectTypeExtension on EffectType {
   String getName() {
-    return toString().split('.').last;
+    final s = toString();
+    final index = s.lastIndexOf('.');
+    return s.substring(index+1);
   }
 
   String getAssetPath() {
@@ -107,7 +118,7 @@ extension HexColor on String {
   }
 }
 
-extension NullSafeArrowList on List<bool>? {
+extension NullableArrowList on List<bool>? {
   List<bool> nullSafe() {
     return this??CardDefaults.defaultLinkArrows;
   }
@@ -116,5 +127,29 @@ extension NullSafeArrowList on List<bool>? {
 extension ListBoolExtension on List<bool> {
   int getRating() {
     return where((element) => element).length;
+  }
+}
+
+extension AppThemeExtension on AppTheme {
+  String getName() {
+    final value = getValue();
+    String res = value[0].toUpperCase();
+    for (int i = 1;i < getValue().length; i++) {
+      if (value[i] == value[i].toUpperCase()) {
+        res+=' ';
+      }
+      res+=value[i];
+    }
+    return res;
+  }
+
+  String getValue() {
+    final s = toString();
+    final index = s.lastIndexOf('.');
+    return s.substring(index+1);
+  }
+
+  String getAssetPath() {
+    return 'assets/images/app_theme_previews/${getValue()}.png';
   }
 }

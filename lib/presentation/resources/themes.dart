@@ -6,103 +6,83 @@ import 'package:yugioh_card_creator/presentation/resources/styles.dart';
 import 'colors.dart';
 import 'layout.dart';
 
+enum AppTheme {
+  ancientEgypt,
+  blueEyesWhiteDragon,
+  urbanStreet,
+}
+
 ThemeData getAppTheme(AppTheme theme) {
   switch (theme) {
-    case AppTheme.egyptian:
-      return _getEgyptianTheme();
+    case AppTheme.ancientEgypt:
+      return _getTheme(AppColor.egyptTheme);
+    case AppTheme.blueEyesWhiteDragon:
+      return _getTheme(AppColor.bewdTheme);
+    case AppTheme.urbanStreet:
+      return _getTheme(AppColor.bewdTheme);
     default:
-      return _getBewdTheme();
+      return _getTheme(AppColor.egyptTheme);
   }
 }
 
-ThemeData _getEgyptianTheme() {
+ThemeData _getTheme(Map<String, Color> colorMap) {
   return ThemeData(
-    primaryColor: AppColor.egyptPrimary,
-    primaryColorDark: AppColor.egyptPrimaryDark,
-    primaryColorLight: AppColor.egyptPrimaryLight,
-    accentColor: AppColor.egyptAccent,
-    //Scaffold Background gradient
-    colorScheme: const ColorScheme.light(
-      primary: AppColor.egyptFieldEnds,
-      secondary: AppColor.egyptFieldMiddle
+    primaryColor: colorMap[appBar],
+      primaryColorLight: colorMap[modalBottomSheetStart],
+      primaryColorDark: colorMap[modalBottomSheetEnd],
+    colorScheme: ColorScheme.light(
+      primary: colorMap[mainFieldBody1].nullSafe(),
+      secondary: colorMap[mainFieldBody2].nullSafe(),
+      tertiary: colorMap[popupMenuBackground],
+      primaryContainer: colorMap[secondaryScaffoldBody1], //two colors of the secondary scaffold body
+      secondaryContainer: colorMap[secondaryScaffoldBody2],
+      onPrimaryContainer: colorMap[secondaryScaffoldText].nullSafe(), // text color of the secondary scaffold body
     ),
     appBarTheme: AppBarTheme(
-        color: AppColor.egyptPrimary,
+        color: colorMap[appBar],
         titleTextStyle:
-            kCardNameTextStyle.copyWith(color: AppColor.textColor),
+        kCardNameTextStyle.copyWith(color: Colors.black),
+        iconTheme: IconThemeData(
+            color: colorMap[icon],
+            size: ScreenLayout.smallIconSize,
+            shadows: [
+              BoxShadow(
+                color: colorMap[iconShadow].nullSafe(),
+                spreadRadius: ScreenLayout.bigIconShadowRadius,
+                blurRadius: ScreenLayout.bigIconShadowRadius,
+              )
+            ]
+        ),
         actionsIconTheme: IconThemeData(
-            color: AppColor.egyptIconColor,
+            color: colorMap[icon],
             size: ScreenLayout.bigIconSize,
             shadows: [
               BoxShadow(
-                color: AppColor.egyptIconBorder,
+                color: colorMap[iconShadow].nullSafe(),
                 spreadRadius: ScreenLayout.bigIconShadowRadius,
                 blurRadius: ScreenLayout.bigIconShadowRadius,
               )
             ])),
     iconTheme:
-        IconThemeData(color: AppColor.egyptIconColor, shadows: [
+    IconThemeData(color: colorMap[icon], shadows: [
       BoxShadow(
-        color: AppColor.egyptIconBorder,
+        color: colorMap[iconShadow].nullSafe(),
         spreadRadius: ScreenLayout.smallIconShadowRadius,
         blurRadius: ScreenLayout.smallIconShadowRadius,
       ),
     ]),
     iconButtonTheme: IconButtonThemeData(
         style: IconButton.styleFrom(
-      foregroundColor: AppColor.egyptIconColor,
-    )),
-    shadowColor: AppColor.egyptSecondary,
-    splashColor: AppColor.egyptAccent,
-    dividerColor: AppColor.egyptSecondary,
-  );
-}
-
-ThemeData _getBewdTheme() {
-  return ThemeData(
-    primaryColor: AppColor.bewdPrimary,
-    primaryColorDark: AppColor.bewdPrimaryDark,
-    primaryColorLight: AppColor.bewdPrimaryLight,
-    accentColor: AppColor.bewdAccent,
-    //Scaffold Background gradient
-    colorScheme: const ColorScheme.light(
-        primary: AppColor.bewdFieldEnds,
-        secondary: AppColor.bewdFieldMiddle,
-        tertiary: AppColor.bewdMenuBackground // menu background
-    ),
-    appBarTheme: AppBarTheme(
-        color: AppColor.bewdPrimary,
-        titleTextStyle:
-        kCardNameTextStyle.copyWith(color: AppColor.textColor),
-        actionsIconTheme: IconThemeData(
-            color: AppColor.bewdIconColor,
-            size: ScreenLayout.bigIconSize,
-            shadows: [
-              BoxShadow(
-                color: AppColor.bewdIconBorder,
-                spreadRadius: ScreenLayout.bigIconShadowRadius,
-                blurRadius: ScreenLayout.bigIconShadowRadius,
-              )
-            ])),
-    iconTheme:
-    IconThemeData(color: AppColor.bewdIconColor, shadows: [
-      BoxShadow(
-        color: AppColor.bewdIconBorder,
-        spreadRadius: ScreenLayout.smallIconShadowRadius,
-        blurRadius: ScreenLayout.smallIconShadowRadius,
-      ),
-    ]),
-    iconButtonTheme: IconButtonThemeData(
-        style: IconButton.styleFrom(
-          foregroundColor: AppColor.bewdIconColor,
+          foregroundColor: colorMap[icon],
         )),
-    shadowColor: AppColor.bewdSecondary,
-    splashColor: AppColor.bewdAccent,
-    dividerColor: AppColor.bewdSecondary,
+    listTileTheme: ListTileThemeData(
+        iconColor: colorMap[icon]
+    ),
+    shadowColor: colorMap[fieldIconShadow],
+    splashColor: colorMap[splash],
+    dividerTheme: DividerThemeData(
+      color: AppColor.egyptSecondary,
+      thickness: 3.sp,
+    )
   );
-}
-
-enum AppTheme {
-  egyptian,
-  blueEyesWhiteDragon,
 }

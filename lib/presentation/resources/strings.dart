@@ -11,9 +11,14 @@ class Strings {
   static const defaultDef = '2500';
   static const defaultCreatorName = 'YOUR NAME';
   static const useCamera = 'Use Camera';
-  static const loadFromStorage = 'Load From Storage';
+  static const loadFromStorage = 'Load From Gallery';
   static const cardUnknownAtkDef = '?';
 
   //settings screen
   static const settingsScreenTitle = 'Settings';
+  static const customization = 'Customization';
+  static const theme = 'Theme';
+  static const ancientEgypt = 'Ancient Egypt';
+  static const blueEyeWhiteDragon = 'Blue Eyes White Dragon';
+  static const urbanStreet = 'Urban Street';
 }

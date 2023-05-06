@@ -1,3 +1,5 @@
+import 'package:yugioh_card_creator/presentation/resources/themes.dart';
+
 import '../../data/models/yugioh_card.dart';
 import 'images.dart';
 
@@ -12,4 +14,8 @@ class CardDefaults {
   static const defaultLinkArrows = [
     false, false, false, false, false, false, false, false,
   ];
+}
+
+class AppDefaults {
+  static const defaultAppTheme = AppTheme.ancientEgypt;
 }

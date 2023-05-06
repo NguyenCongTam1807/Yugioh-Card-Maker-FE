@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'fonts.dart';
+import 'layout.dart';
 
 final TextStyle kCardNameTextStyle = TextStyle(
     fontSize: 70.sp, fontFamily: FontFamily.matrixSmallCaps);
@@ -36,4 +37,14 @@ final TextStyle kCreatorNameTextStyle = TextStyle(
 
 final kLinkRatingTextStyle = TextStyle(
     fontSize: 18.sp, fontFamily: FontFamily.rogSanSerifStd, height: 1
+);
+
+final kSettingGroupTextStyle = TextStyle(
+    fontFamily: FontFamily.stoneSerifSmallCapsBold, fontSize: 35.sp
+);
+
+final kSettingTextStyle = TextStyle(
+  fontSize: 28.sp,
+  fontWeight: FontWeight.w500,
+  fontFamily: FontFamily.matrixIOOTBold,
 );

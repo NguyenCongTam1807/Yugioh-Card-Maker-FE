@@ -14,4 +14,5 @@ class FontFamily {
   static const matrixBoldSmallCaps = 'MatrixBoldSmallCaps';
   static const matrixBold = 'MatrixBold';
   static const rogSanSerifStd = 'RoGSanSerifStd';
+  static const matrixIOOTBold = 'MatrixIOOT-Bold';
 }

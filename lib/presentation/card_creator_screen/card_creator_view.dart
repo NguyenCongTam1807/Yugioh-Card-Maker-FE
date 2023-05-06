@@ -36,8 +36,7 @@ class _CardCreatorViewState extends State<CardCreatorView> {
     super.dispose();
   }
 
-  void _setCardLayout(
-      double screenWidth, double screenHeight) {
+  void _setCardLayout(double screenWidth, double screenHeight) {
     const cardWidthRatio = ScreenPos.cardWidthRatio;
     const cardHeightRatio = ScreenPos.cardHeightRatio;
     const widthHeightRatio =
@@ -67,7 +66,10 @@ class _CardCreatorViewState extends State<CardCreatorView> {
   @override
   Widget build(BuildContext context) {
     final appBar = AppBar(
-      title: const Text(Strings.appName),
+      title: Transform.scale(
+          scaleX: 0.9,
+          alignment: Alignment.centerLeft,
+          child: const Text(Strings.appName)),
       actions: [
         IconButton(
             onPressed: () {
@@ -83,7 +85,8 @@ class _CardCreatorViewState extends State<CardCreatorView> {
         child: LayoutBuilder(builder: (ctx, constraint) {
           final deviceHeight =
               window.physicalSize.longestSide / window.devicePixelRatio;
-          final double statusBarHeight = window.padding.top / window.devicePixelRatio;
+          final double statusBarHeight =
+              window.padding.top / window.devicePixelRatio;
           final screenHeight =
               deviceHeight - appBar.preferredSize.height - statusBarHeight;
 
@@ -128,10 +131,9 @@ class _CardCreatorViewState extends State<CardCreatorView> {
                     top: cardTop,
                     left: cardLeft,
                     child: SizedBox(
-                      width: cardWidth,
-                      height: cardHeight,
-                      child: YugiohCardWidget()
-                    ),
+                        width: cardWidth,
+                        height: cardHeight,
+                        child: YugiohCardWidget()),
                   ),
                 ],
               );

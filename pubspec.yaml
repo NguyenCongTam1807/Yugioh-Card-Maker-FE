@@ -41,6 +41,7 @@ dependencies:
   image_picker: ^0.8.7+4
   rxdart: ^0.27.7
   auto_size_text: ^3.0.0
+  shared_preferences: ^2.1.0
 
 dev_dependencies:
   flutter_test:
@@ -74,6 +75,7 @@ flutter:
     - assets/images/theme/
     - assets/images/stars/
     - assets/images/thumb/
+    - assets/images/app_theme_previews/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
@@ -105,7 +107,6 @@ flutter:
     - family: StoneSerifSmallCapsBold
       fonts:
         - asset: fonts/Stone_serif_small_caps_bold.ttf
-          weight: 700
     - family: StoneSerifBold
       fonts:
         - asset: fonts/STONESERIF-BOLD.OTF
@@ -115,6 +116,9 @@ flutter:
     - family: RoGSanSerifStd
       fonts:
         - asset: fonts/RoGSanSerifStd-B.otf
+    - family: RoGSanSerifStd
+      fonts:
+        - asset: fonts/MatrixIIOT-Bold.ttf
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
