@@ -13,6 +13,15 @@ class Strings {
   static const useCamera = 'Use Camera';
   static const loadFromStorage = 'Load From Gallery';
   static const cardUnknownAtkDef = '?';
+  static const ok = 'OK';
+  static const gotIt = 'Got it';
+  static const somethingWrong = 'Something is wrong, please try again later';
+  static const fileName = 'File name:';
+  static const save = 'Save';
+  static const useTimestamp = 'Use timestamp\nas name';
+  static const imageSaveSuccess = 'Card image has been successfully saved to';
+  static const share = 'Share';
+  static const goToDirectory = 'Go To Directory';
 
   //settings screen
   static const settingsScreenTitle = 'Settings';

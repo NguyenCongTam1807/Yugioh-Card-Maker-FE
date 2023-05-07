@@ -1,6 +1,15 @@
-import 'dart:ui';
+import 'dart:io';
+import 'dart:typed_data';
+import 'dart:ui' as ui;
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:gallery_saver/gallery_saver.dart';
+import 'package:intl/intl.dart';
+import 'package:share_plus/share_plus.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:yugioh_card_creator/application/extensions.dart';
 
 import '../../application/dependency_injection.dart';
 import '../resources/images.dart';
@@ -23,16 +32,32 @@ class CardCreatorView extends StatefulWidget {
 
 class _CardCreatorViewState extends State<CardCreatorView> {
   final _cardCreatorViewModel = getIt<CardCreatorViewModel>();
-
+  final _savedFileNameController = TextEditingController();
+  final _cardKey = GlobalKey();
+  late final String _appDirectoryPath;
   @override
   void initState() {
     _cardCreatorViewModel.init();
     super.initState();
   }
 
+  bool isInit = false;
+
+  @override
+  Future<void> didChangeDependencies() async {
+    if (!isInit) {
+      _appDirectoryPath =
+          await getApplicationDocumentsDirectory().then((value) => value.path);
+
+      isInit = true;
+    }
+    super.didChangeDependencies();
+  }
+
   @override
   void dispose() {
     _cardCreatorViewModel.dispose();
+    _savedFileNameController.dispose();
     super.dispose();
   }
 
@@ -63,6 +88,208 @@ class _CardCreatorViewState extends State<CardCreatorView> {
         Offset((screenWidth - cardWidth) / 2, (screenHeight - cardHeight) / 2);
   }
 
+  Future<void> _promptImageName() async {
+    await showDialog(
+        context: context,
+        builder: (ctx) {
+          return AlertDialog(
+            contentPadding: EdgeInsets.zero,
+            content: Container(
+              padding: EdgeInsets.all(ScreenLayout.alertDialogPadding),
+              decoration: BoxDecoration(
+                  gradient: LinearGradient(colors: [
+                Theme.of(context).dialogTheme.backgroundColor.nullSafe(),
+                Theme.of(context).dialogTheme.surfaceTintColor.nullSafe(),
+                Theme.of(context).dialogTheme.backgroundColor.nullSafe(),
+              ], begin: Alignment.topRight, end: Alignment.bottomLeft)),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  TextField(
+                    controller: _savedFileNameController,
+                    style: TextStyle(
+                      color:
+                          Theme.of(context).dialogTheme.contentTextStyle?.color,
+                    ),
+                    decoration: InputDecoration(
+                        labelText: Strings.fileName,
+                        labelStyle: TextStyle(
+                          color: Theme.of(context)
+                              .dialogTheme
+                              .contentTextStyle
+                              ?.color,
+                        ),
+                        enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                          color: (Theme.of(context)
+                                  .dialogTheme
+                                  .contentTextStyle
+                                  ?.color)
+                              .nullSafe(),
+                        ))),
+                    onTapOutside: (_) {
+                      FocusManager.instance.primaryFocus?.unfocus();
+                    },
+                  ),
+                  SizedBox(height: ScreenLayout.alertDialogPadding * 2),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor:
+                                Theme.of(context).dialogTheme.iconColor,
+                            foregroundColor: Theme.of(context)
+                                .dialogTheme
+                                .titleTextStyle
+                                ?.color,
+                          ),
+                          onPressed: () {
+                            _savedFileNameController.text =
+                                DateFormat('yyyy-MM-dd HH:mm:ss:SSS')
+                                    .format(DateTime.now());
+                          },
+                          child: const Text(
+                            Strings.useTimestamp,
+                            textAlign: TextAlign.center,
+                          )),
+                      ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor:
+                                Theme.of(context).dialogTheme.iconColor,
+                            foregroundColor: Theme.of(context)
+                                .dialogTheme
+                                .titleTextStyle
+                                ?.color,
+                          ),
+                          onPressed: () async {
+                            Navigator.of(context).pop();
+                            await _exportImage(_savedFileNameController.text);
+                          },
+                          child: const Text(Strings.save)),
+                    ],
+                  )
+                ],
+              ),
+            ),
+          );
+        });
+    _savedFileNameController.clear();
+  }
+
+  Future<bool> _exportImage(String fileName) async {
+    try {
+      final RenderRepaintBoundary boundary =
+          _cardKey.currentContext?.findRenderObject() as RenderRepaintBoundary;
+      final ui.Image image = await boundary.toImage(pixelRatio: 2.0);
+      final ByteData? byteData =
+          await image.toByteData(format: ui.ImageByteFormat.png);
+      final Uint8List? pngBytes = byteData?.buffer.asUint8List();
+
+      if (pngBytes != null) {
+        final savedFilePath = "$_appDirectoryPath/$fileName.png";
+        await File(savedFilePath).create(recursive: true).then(
+            (createdEmptyFile) => createdEmptyFile.writeAsBytes(pngBytes));
+        final result = await GallerySaver.saveImage(savedFilePath);
+
+        if (result == true && mounted) {
+          await showDialog(
+              context: context,
+              builder: (ctx) {
+                return AlertDialog(
+                  contentPadding: EdgeInsets.zero,
+                  content: Container(
+                    padding: EdgeInsets.all(ScreenLayout.alertDialogPadding),
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(colors: [
+                        Theme.of(context)
+                            .dialogTheme
+                            .backgroundColor
+                            .nullSafe(),
+                        Theme.of(context)
+                            .dialogTheme
+                            .surfaceTintColor
+                            .nullSafe(),
+                        Theme.of(context)
+                            .dialogTheme
+                            .backgroundColor
+                            .nullSafe(),
+                      ], begin: Alignment.topRight, end: Alignment.bottomLeft),
+                    ),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          '${Strings.imageSaveSuccess}\n$savedFilePath',
+                          style: kSettingTextStyle,
+                        ),
+                        SizedBox(
+                          height: ScreenLayout.alertDialogPadding * 2,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor:
+                                      Theme.of(context).dialogTheme.iconColor,
+                                  foregroundColor: Theme.of(context)
+                                      .dialogTheme
+                                      .titleTextStyle
+                                      ?.color,
+                                ),
+                                onPressed: () async {
+                                  await _shareImage(savedFilePath);
+                                },
+                                child: const Text(
+                                  Strings.share,
+                                )),
+                            ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor:
+                                      Theme.of(context).dialogTheme.iconColor,
+                                  foregroundColor: Theme.of(context)
+                                      .dialogTheme
+                                      .titleTextStyle
+                                      ?.color,
+                                ),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: const Text(Strings.gotIt)),
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                );
+              });
+          return true;
+        }
+        return false;
+      }
+      return false;
+    } catch (err) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: const Text(Strings.somethingWrong),
+        action: SnackBarAction(
+            label: Strings.ok,
+            onPressed: () {
+              ScaffoldMessenger.of(context).hideCurrentSnackBar();
+            }),
+      ));
+      return false;
+    }
+  }
+
+  Future<void> _shareImage(String sharedFilePath) async {
+    try {
+      await Share.shareXFiles([XFile(sharedFilePath)]);
+    } catch (err) {
+      rethrow;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final appBar = AppBar(
@@ -71,6 +298,10 @@ class _CardCreatorViewState extends State<CardCreatorView> {
           alignment: Alignment.centerLeft,
           child: const Text(Strings.appName)),
       actions: [
+        IconButton(
+          onPressed: _promptImageName,
+          icon: const Icon(Icons.save_alt),
+        ),
         IconButton(
             onPressed: () {
               Navigator.of(context).pushNamed(RouteNames.settings);
@@ -84,9 +315,9 @@ class _CardCreatorViewState extends State<CardCreatorView> {
       body: Center(child: SingleChildScrollView(
         child: LayoutBuilder(builder: (ctx, constraint) {
           final deviceHeight =
-              window.physicalSize.longestSide / window.devicePixelRatio;
+              ui.window.physicalSize.longestSide / ui.window.devicePixelRatio;
           final double statusBarHeight =
-              window.padding.top / window.devicePixelRatio;
+              ui.window.padding.top / ui.window.devicePixelRatio;
           final screenHeight =
               deviceHeight - appBar.preferredSize.height - statusBarHeight;
 
@@ -133,7 +364,8 @@ class _CardCreatorViewState extends State<CardCreatorView> {
                     child: SizedBox(
                         width: cardWidth,
                         height: cardHeight,
-                        child: YugiohCardWidget()),
+                        child: RepaintBoundary(
+                            key: _cardKey, child: YugiohCardWidget())),
                   ),
                 ],
               );

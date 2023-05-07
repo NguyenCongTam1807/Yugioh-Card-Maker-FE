@@ -13,5 +13,4 @@ Future<void> initAppModule() async {
   getIt.registerLazySingleton<AppPreferences>(() =>  AppPreferences(getIt()));
   getIt.registerLazySingleton<ImagePicker>(() => ImagePicker());
   getIt.registerLazySingleton<CardCreatorViewModel>(() => CardCreatorViewModel());
-  getIt.registerLazySingleton<SettingsViewModel>(() => SettingsViewModel(getIt()));
-}
+  getIt.registerLazySingleton<SettingsViewModel>(() => SettingsViewModel(getIt()));}

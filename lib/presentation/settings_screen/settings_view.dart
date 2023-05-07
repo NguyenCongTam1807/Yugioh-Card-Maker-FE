@@ -55,19 +55,9 @@ class _SettingsViewState extends State<SettingsView> {
                     context: context,
                     builder: (ctx) {
                       return Container(
+                        color: Theme.of(context).primaryColorDark,
                         constraints: BoxConstraints(maxHeight: window.physicalSize.longestSide/window.devicePixelRatio/2,),
                         padding: EdgeInsets.only(top: 20.sp),
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [
-                              Theme.of(context).primaryColorLight,
-                              Theme.of(context).primaryColorDark,
-                              Theme.of(context).primaryColorLight,
-                            ],
-                            begin: Alignment.topRight,
-                            end: Alignment.bottomLeft,
-                          ),
-                        ),
                         child: SingleChildScrollView(
                           child: Column(
                             mainAxisSize: MainAxisSize.min,

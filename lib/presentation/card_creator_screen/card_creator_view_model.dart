@@ -119,16 +119,6 @@ class CardCreatorViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  restartLinkArrow() {
-    currentCard.linkArrows = CardDefaults.defaultLinkArrows;
-    notifyListeners();
-  }
-
-  turnOnAllArrows() {
-    currentCard.linkArrows = [true, true, true, true, true, true, true, true];
-    notifyListeners();
-  }
-
   setLinkRating(String rating) {
     final parseResult = int.tryParse(rating).nullSafe();
     linkRating = parseResult == 9 ? 8 : parseResult;
