@@ -16,7 +16,7 @@ class CardLayout {
   static const cardImageTop = 0.2685;
   static const cardImageLeft = 0.121;
   static const cardImageSize = 0.759;
-  static const linkCardImageClipSize = 0.0;
+  static const linkCardImageClipSize = 0.022;
 
   static const arrowCornerTop = 0.233;
   static const arrowCornerHorizontalMargin = cardImageLeft - cardImageTop + arrowCornerTop;

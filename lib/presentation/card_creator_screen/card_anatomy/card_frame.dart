@@ -26,7 +26,7 @@ class CardFrame extends StatelessWidget with GetItMixin {
               innerHeight: CardLayout.cardImageSize * _cardWidth,
               outerWidth: _cardWidth,
               outerHeight: _cardHeight,
-              clipSize: 0.0)
+              clipSize: CardLayout.linkCardImageClipSize * _cardWidth)
           : RectangleHoleClipper(
               left: CardLayout.cardImageLeft * _cardWidth,
               top: CardLayout.cardImageTop * _cardWidth,
@@ -99,18 +99,19 @@ class OctagonHoleClipper extends CustomClipper<Path> {
   Path getClip(Size size) {
     final outerRect = Rect.fromLTWH(0, 0, outerWidth, outerHeight);
     final path = Path()
+      ..fillType = PathFillType.evenOdd
       ..addRect(outerRect)
-      ..shift(Offset(left, top))
       ..addPolygon([
-        Offset(clipSize, 0),
-        Offset(innerWidth - clipSize, 0),
-        Offset(innerWidth, clipSize),
-        Offset(innerWidth, innerHeight - clipSize),
-        Offset(innerWidth - clipSize, innerHeight),
-        Offset(clipSize, innerHeight),
-        Offset(0, innerHeight - clipSize),
-        Offset(0, clipSize),
-      ], true);
+        Offset(clipSize + left, top),
+        Offset(innerWidth - clipSize + left, top),
+        Offset(innerWidth + left, top),
+        Offset(innerWidth + left, innerHeight - clipSize + top),
+        Offset(innerWidth - clipSize + left, innerHeight + top),
+        Offset(clipSize + left, innerHeight + top),
+        Offset(left, innerHeight - clipSize + top),
+        Offset(left, clipSize + top),
+      ], true)
+    ;
 
     return path;
   }
