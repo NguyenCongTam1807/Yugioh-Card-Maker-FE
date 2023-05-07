@@ -22,4 +22,6 @@ class ScreenLayout {
   static final smallIconShadowRadius = smallIconSize/2;
 
   static final themePreviewSize = 100.sp;
+
+  static final alertDialogPadding = 40.sp;
 }

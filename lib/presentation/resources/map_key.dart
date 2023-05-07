@@ -15,6 +15,11 @@ class MapKey {
   static const secondaryScaffoldBody2 = 'secondaryScaffoldBody2';
   static const secondaryScaffoldText = 'secondaryScaffoldText';
   static const divider = 'divider';
+  static const dialog1 = 'dialog1';
+  static const dialog2 = 'dialog2';
+  static const dialogContent = 'dialogContent';
+  static const dialogButton = 'dialogButton';
+  static const dialogButtonText = 'dialogButtonText';
 
   //For shared preferences
   static const theme = 'theme';

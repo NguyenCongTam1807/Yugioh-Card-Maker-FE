@@ -42,7 +42,12 @@ class AppColor {
     MapKey.secondaryScaffoldBody1: _egyptSettingsStart,
     MapKey.secondaryScaffoldBody2: _egyptSettingsEnd,
     MapKey.secondaryScaffoldText: _egyptTextColor,
-    MapKey.divider: _egyptSecondary
+    MapKey.divider: _egyptSecondaryDark,
+    MapKey.dialog1: _egyptIconColor,
+    MapKey.dialog2: _egyptIconColor,
+    MapKey.dialogContent: Colors.black,
+    MapKey.dialogButton: _egyptTextColor,
+    MapKey.dialogButtonText: _egyptAccentLight,
   };
 
   // Blue eyes white dragon theme
@@ -80,7 +85,12 @@ class AppColor {
     MapKey.secondaryScaffoldBody1: _bewdSettingsStart,
     MapKey.secondaryScaffoldBody2: _bewdSettingsEnd,
     MapKey.secondaryScaffoldText: _bewdTextColor,
-    MapKey.divider: _bewdSecondary
+    MapKey.divider: _bewdSecondary,
+    MapKey.dialog1: _bewdIconColor,
+    MapKey.dialog2: _bewdSecondaryDark,
+    MapKey.dialogContent: _bewdPrimaryLight,
+    MapKey.dialogButton: _bewdSecondary,
+    MapKey.dialogButtonText: _bewdTextColor,
   };
 
   // Urban street theme
@@ -94,8 +104,8 @@ class AppColor {
   static const Color _streetAccentDark = Color(0xFF4AAEE3);
   static const Color _streetAccentLight = Color(0xFFFFFFFF);
   static const Color _streetTextColor = Color(0xFF246dca);
-  static const Color _streetIconColor = Color(0xFF78b6ed);
-  static const Color _streetIconShadow = Color(0xFFe7eff7);
+  static const Color _streetIconColor = Color(0xFFd2cfcb);
+  static const Color _streetIconShadow = Color(0xFF4b4a4c);
 
   static const Color _streetFieldEnds = Color(0x805A6E82);
   static const Color _streetFieldMiddle = Color(0x80e4f0f6);
@@ -118,6 +128,11 @@ class AppColor {
     MapKey.secondaryScaffoldBody1: _streetSettingsStart,
     MapKey.secondaryScaffoldBody2: _streetSettingsEnd,
     MapKey.secondaryScaffoldText: _streetTextColor,
-    MapKey.divider: _streetSecondary
+    MapKey.divider: _streetSecondary,
+    MapKey.dialog1: _streetSecondary,
+    MapKey.dialog2: _streetSecondaryLight,
+    MapKey.dialogContent: _streetPrimaryDark,
+    MapKey.dialogButton: _streetSecondaryDark,
+    MapKey.dialogButtonText: _streetAccentLight,
   };
 }

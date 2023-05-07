@@ -64,6 +64,21 @@ ThemeData _getTheme(Map<String, Color> colorMap) {
                   blurRadius: ScreenLayout.bigIconShadowRadius,
                 )
               ])),
+      dialogTheme: DialogTheme(
+        elevation: 10.0,
+        backgroundColor: colorMap[MapKey.dialog1],
+        surfaceTintColor: colorMap[MapKey.dialog2],
+        iconColor: colorMap[MapKey.dialogButton],
+        titleTextStyle: TextStyle(
+            color: colorMap[MapKey.dialogButtonText],
+        ),
+        contentTextStyle: TextStyle(
+          color: colorMap[MapKey.dialogContent]
+        ),
+      ),
+      snackBarTheme: SnackBarThemeData(
+        backgroundColor: colorMap[MapKey.icon],
+      ),
       iconTheme:
       IconThemeData(color: colorMap[MapKey.icon], shadows: [
         BoxShadow(

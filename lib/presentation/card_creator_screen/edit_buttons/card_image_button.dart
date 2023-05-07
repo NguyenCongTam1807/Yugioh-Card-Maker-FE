@@ -55,7 +55,7 @@ class CardImageButton extends StatelessWidget {
                         title: Text(
                           Strings.useCamera,
                           style: kCardNameTextStyle.copyWith(
-                              fontSize: ScreenLayout.smallIconSize),
+                              fontSize: ScreenLayout.smallIconSize, color: Theme.of(context).appBarTheme.titleTextStyle?.color),
                         ),
                         onTap: () async {
                           _chooseImage(ImageSource.camera, context);
@@ -74,7 +74,7 @@ class CardImageButton extends StatelessWidget {
                           title: Text(
                             Strings.loadFromStorage,
                             style: kCardNameTextStyle.copyWith(
-                                fontSize: ScreenLayout.smallIconSize),
+                                fontSize: ScreenLayout.smallIconSize, color: Theme.of(context).appBarTheme.titleTextStyle?.color),
                           ),
                           onTap: () async {
                             _chooseImage(ImageSource.gallery, context);
