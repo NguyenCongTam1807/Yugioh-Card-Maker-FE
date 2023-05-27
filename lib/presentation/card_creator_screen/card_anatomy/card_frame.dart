@@ -104,7 +104,7 @@ class OctagonHoleClipper extends CustomClipper<Path> {
       ..addPolygon([
         Offset(clipSize + left, top),
         Offset(innerWidth - clipSize + left, top),
-        Offset(innerWidth + left, top),
+        Offset(innerWidth + left, top + clipSize),
         Offset(innerWidth + left, innerHeight - clipSize + top),
         Offset(innerWidth - clipSize + left, innerHeight + top),
         Offset(clipSize + left, innerHeight + top),
