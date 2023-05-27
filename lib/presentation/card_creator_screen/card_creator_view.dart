@@ -105,6 +105,13 @@ class _CardCreatorViewState extends State<CardCreatorView> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
+                  Text(
+                    Strings.saveYugiohCard,
+                    style: kCardNameTextStyle.copyWith(
+                      color:
+                        Theme.of(context).dialogTheme.contentTextStyle?.color,
+                    ),
+                  ),
                   TextField(
                     controller: _savedFileNameController,
                     style: TextStyle(

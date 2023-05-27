@@ -16,6 +16,7 @@ class Strings {
   static const ok = 'OK';
   static const gotIt = 'Got it';
   static const somethingWrong = 'Something is wrong, please try again later';
+  static const saveYugiohCard = 'Export Yu-gi-oh Card';
   static const fileName = 'File name:';
   static const save = 'Save';
   static const useTimestamp = 'Use timestamp\nas name';
