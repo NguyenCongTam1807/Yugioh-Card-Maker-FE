@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get_it_mixin/get_it_mixin.dart';
 import 'package:yugioh_card_creator/application/extensions.dart';
-import 'package:yugioh_card_creator/presentation/card_creator_screen/positions.dart';
-import 'package:yugioh_card_creator/presentation/custom_classes/elastic_text_field.dart';
 
-import '../../../application/dependency_injection.dart';
-import '../../resources/styles.dart';
-import '../card_creator_view_model.dart';
+import '../../../../../application/dependency_injection.dart';
+import '../../../../resources/styles.dart';
+import '../../../custom_widget/elastic_text_field.dart';
+import '../../card_creator_view_model.dart';
+import '../../positions.dart';
 
 class CardName extends StatefulWidget with GetItStatefulWidgetMixin{
   CardName({Key? key}) : super(key: key);

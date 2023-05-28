@@ -1,10 +1,9 @@
-import 'dart:math';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:yugioh_card_creator/presentation/card_creator_screen/card_creator_view_model.dart';
 
-import '../../application/dependency_injection.dart';
+import '../../../application/dependency_injection.dart';
+import '../card_creator_page/card_creator_view_model.dart';
 
 class ElasticTextField extends StatefulWidget {
   final double width;

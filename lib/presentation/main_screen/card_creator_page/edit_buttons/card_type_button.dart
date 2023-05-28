@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it_mixin/get_it_mixin.dart';
 import 'package:yugioh_card_creator/application/extensions.dart';
 import 'package:yugioh_card_creator/data/models/yugioh_card.dart';
 import 'package:yugioh_card_creator/presentation/resources/defaults.dart';
 import 'package:yugioh_card_creator/presentation/resources/styles.dart';
 
-import '../../../application/dependency_injection.dart';
-import '../../resources/colors.dart';
-import '../../resources/images.dart';
-import '../../resources/layout.dart';
+import '../../../../application/dependency_injection.dart';
+import '../../../resources/images.dart';
+import '../../../resources/layout.dart';
 import '../card_creator_view_model.dart';
 
 class CardTypeButton extends StatelessWidget with GetItMixin {

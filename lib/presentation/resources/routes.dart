@@ -2,12 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:yugioh_card_creator/presentation/resources/strings.dart';
 
-import '../../presentation/card_creator_screen/card_creator_view.dart';
 import '../../presentation/settings_screen/settings_view.dart';
+import '../main_screen/card_creator_page/card_creator_view.dart';
 
 class RouteNames {
   static const String cardCreator = "/";
   static const String settings = "/settings";
+  static const String help = "/help";
 }
 
 class RouteGenerator {

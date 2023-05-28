@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:yugioh_card_creator/application/extensions.dart';
 import 'package:yugioh_card_creator/data/models/yugioh_card.dart';
 
-import '../../../application/dependency_injection.dart';
-import '../../custom_classes/elastic_text_field.dart';
-import '../../resources/styles.dart';
-import '../positions.dart';
-import '../card_creator_view_model.dart';
+import '../../../../../application/dependency_injection.dart';
+import '../../../../resources/styles.dart';
+import '../../../custom_widget/elastic_text_field.dart';
+import '../../positions.dart';
+import '../../card_creator_view_model.dart';
 
 class CardDescription extends StatefulWidget {
   const CardDescription({Key? key}) : super(key: key);

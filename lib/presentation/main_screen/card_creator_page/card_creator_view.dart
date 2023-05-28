@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:intl/intl.dart';
 import 'package:share_plus/share_plus.dart';
@@ -11,15 +10,15 @@ import 'package:flutter/rendering.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:yugioh_card_creator/application/extensions.dart';
 
-import '../../application/dependency_injection.dart';
-import '../resources/images.dart';
-import '../resources/layout.dart';
-import '../resources/styles.dart';
-import 'card_types/yugioh_card_widget.dart';
+import '../../../application/dependency_injection.dart';
+import '../../resources/images.dart';
+import '../../resources/layout.dart';
+import '../../resources/routes.dart';
+import '../../resources/strings.dart';
+import '../../resources/styles.dart';
+import 'card_widget/yugioh_card_widget.dart';
 import 'edit_buttons/card_type_button.dart';
 import 'positions.dart';
-import '../resources/routes.dart';
-import '../resources/strings.dart';
 import 'card_creator_view_model.dart';
 import 'edit_buttons/card_image_button.dart';
 
@@ -88,6 +87,10 @@ class _CardCreatorViewState extends State<CardCreatorView> {
         Offset((screenWidth - cardWidth) / 2, (screenHeight - cardHeight) / 2);
   }
 
+  Future<void> _uploadCard() async {
+
+  }
+
   Future<void> _promptImageName() async {
     await showDialog(
         context: context,
@@ -109,7 +112,7 @@ class _CardCreatorViewState extends State<CardCreatorView> {
                     Strings.saveYugiohCard,
                     style: kCardNameTextStyle.copyWith(
                       color:
-                        Theme.of(context).dialogTheme.contentTextStyle?.color,
+                          Theme.of(context).dialogTheme.contentTextStyle?.color,
                     ),
                   ),
                   TextField(
@@ -306,14 +309,35 @@ class _CardCreatorViewState extends State<CardCreatorView> {
           child: const Text(Strings.appName)),
       actions: [
         IconButton(
-          onPressed: _promptImageName,
-          icon: const Icon(Icons.save_alt),
-        ),
+            onPressed: () {
+              Navigator.of(context).pushNamed(RouteNames.settings);
+            },
+            icon: const Icon(Icons.edit)),
         IconButton(
             onPressed: () {
               Navigator.of(context).pushNamed(RouteNames.settings);
             },
-            icon: const Icon(Icons.settings)),
+            icon: const Icon(Icons.photo_library_rounded)),
+        PopupMenuButton(
+            icon: const Icon(Icons.menu),
+          itemBuilder: (BuildContext context) {
+              return [
+                PopupMenuItem<String>(
+                  value: RouteNames.settings,
+                  height: double.minPositive,
+                  padding: EdgeInsets.symmetric(
+                      vertical: ScreenLayout.editPopupItemPaddingSmall),
+                  child: const Text(RouteNames.settings),
+                ),
+                PopupMenuItem<String>(
+                  value: RouteNames.help,
+                  height: double.minPositive,
+                  padding: EdgeInsets.symmetric(
+                      vertical: ScreenLayout.editPopupItemPaddingSmall),
+                  child: const Text(RouteNames.help),
+                ),
+              ];
+          },),
       ],
     );
 
@@ -359,6 +383,19 @@ class _CardCreatorViewState extends State<CardCreatorView> {
 
               return Stack(
                 children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      IconButton(
+                        onPressed: _uploadCard,
+                        icon: const Icon(Icons.upload),
+                      ),
+                      IconButton(
+                        onPressed: _promptImageName,
+                        icon: const Icon(Icons.save),
+                      ),
+                    ],
+                  ),
                   Positioned(
                       top: cardTop, left: iconLeft, child: CardTypeButton()),
                   Positioned(

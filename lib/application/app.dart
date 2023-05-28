@@ -4,9 +4,8 @@ import 'package:get_it_mixin/get_it_mixin.dart';
 import 'package:yugioh_card_creator/application/extensions.dart';
 import 'package:yugioh_card_creator/presentation/settings_screen/settings_view_model.dart';
 
-
-import '../presentation/card_creator_screen/card_creator_view.dart';
-import '../presentation/card_creator_screen/positions.dart';
+import '../presentation/main_screen/card_creator_page/card_creator_view.dart';
+import '../presentation/main_screen/card_creator_page/positions.dart';
 import '../presentation/resources/routes.dart';
 import '../presentation/resources/themes.dart';
 import 'app_preferences.dart';

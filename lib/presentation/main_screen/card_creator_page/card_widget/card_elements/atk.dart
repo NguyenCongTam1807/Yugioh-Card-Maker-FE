@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:get_it_mixin/get_it_mixin.dart';
 import 'package:yugioh_card_creator/application/extensions.dart';
 
-import '../../../application/dependency_injection.dart';
-import '../../resources/strings.dart';
-import '../../resources/styles.dart';
-import '../positions.dart';
-import '../card_creator_view_model.dart';
+import '../../../../../application/dependency_injection.dart';
+import '../../../../resources/strings.dart';
+import '../../../../resources/styles.dart';
+import '../../positions.dart';
+import '../../card_creator_view_model.dart';
 
 class Atk extends StatefulWidget with GetItStatefulWidgetMixin {
   Atk({Key? key}) : super(key: key);

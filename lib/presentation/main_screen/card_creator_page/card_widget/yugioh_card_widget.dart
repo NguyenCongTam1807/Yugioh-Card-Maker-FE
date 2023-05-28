@@ -1,23 +1,21 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:yugioh_card_creator/application/extensions.dart';
-import 'package:yugioh_card_creator/presentation/card_creator_screen/card_anatomy/spell_trap_type.dart';
 
-import '../../../application/dependency_injection.dart';
-import '../../../data/models/yugioh_card.dart';
-import '../card_anatomy/atk.dart';
-import '../card_anatomy/card_attribute.dart';
-import '../card_anatomy/card_description.dart';
-import '../card_anatomy/card_frame.dart';
-import '../card_anatomy/card_image.dart';
-import '../card_anatomy/card_name.dart';
-import '../card_anatomy/creator_name.dart';
-import '../card_anatomy/def.dart';
-import '../card_anatomy/link_arrows.dart';
-import '../card_anatomy/link_rating.dart';
-import '../card_anatomy/monster_level.dart';
-import '../card_anatomy/monster_type.dart';
+import '../../../../application/dependency_injection.dart';
+import '../../../../data/models/yugioh_card.dart';
+import 'card_elements/atk.dart';
+import 'card_elements/card_attribute.dart';
+import 'card_elements/card_description.dart';
+import 'card_elements/card_frame.dart';
+import 'card_elements/card_image.dart';
+import 'card_elements/card_name.dart';
+import 'card_elements/creator_name.dart';
+import 'card_elements/def.dart';
+import 'card_elements/link_arrows.dart';
+import 'card_elements/link_rating.dart';
+import 'card_elements/monster_level.dart';
+import 'card_elements/monster_type.dart';
+import 'card_elements/spell_trap_type.dart';
 import '../positions.dart';
 import '../card_creator_view_model.dart';
 

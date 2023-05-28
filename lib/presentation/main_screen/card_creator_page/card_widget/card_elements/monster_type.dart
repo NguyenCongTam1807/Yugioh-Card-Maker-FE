@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:yugioh_card_creator/application/extensions.dart';
 import 'package:yugioh_card_creator/presentation/resources/styles.dart';
-import '../../../application/dependency_injection.dart';
-import '../positions.dart';
-import '../card_creator_view_model.dart';
+import '../../../../../application/dependency_injection.dart';
+import '../../positions.dart';
+import '../../card_creator_view_model.dart';
 
 
 //Actually Monster Type and Abilities (if any)

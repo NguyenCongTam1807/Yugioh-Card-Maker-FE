@@ -2,15 +2,12 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get_it_mixin/get_it_mixin.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:yugioh_card_creator/application/extensions.dart';
 
-import '../../../application/dependency_injection.dart';
-import '../../resources/defaults.dart';
-import '../../resources/images.dart';
-import '../../resources/strings.dart';
-import '../positions.dart';
-import '../card_creator_view_model.dart';
+import '../../../../../application/dependency_injection.dart';
+import '../../../../resources/defaults.dart';
+import '../../../../resources/images.dart';
+import '../../positions.dart';
+import '../../card_creator_view_model.dart';
 
 class CardImage extends StatelessWidget {
   const CardImage({Key? key}) : super(key: key);
@@ -18,6 +15,7 @@ class CardImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InteractiveViewer(
+      maxScale: 10,
       child: ImageContainer(),
     );
   }

@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get_it_mixin/get_it_mixin.dart';
 import 'package:yugioh_card_creator/application/extensions.dart';
 
-import '../../../application/dependency_injection.dart';
-import '../../../data/models/yugioh_card.dart';
-import '../../resources/images.dart';
-import '../card_creator_view_model.dart';
-import '../positions.dart';
+import '../../../../../application/dependency_injection.dart';
+import '../../../../../data/models/yugioh_card.dart';
+import '../../../../resources/images.dart';
+import '../../card_creator_view_model.dart';
+import '../../positions.dart';
 import 'card_frame.dart';
 
 class LinkArrows extends StatelessWidget with GetItMixin {

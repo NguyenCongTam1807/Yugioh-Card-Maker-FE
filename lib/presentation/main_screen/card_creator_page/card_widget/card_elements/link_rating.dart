@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get_it_mixin/get_it_mixin.dart';
 import 'package:yugioh_card_creator/application/extensions.dart';
-import 'package:yugioh_card_creator/presentation/card_creator_screen/card_creator_view_model.dart';
 import 'package:yugioh_card_creator/presentation/resources/styles.dart';
 
-import '../../../application/dependency_injection.dart';
-import '../positions.dart';
+import '../../../../../application/dependency_injection.dart';
+import '../../card_creator_view_model.dart';
+import '../../positions.dart';
 
 class LinkRating extends StatefulWidget with GetItStatefulWidgetMixin{
   LinkRating({Key? key}) : super(key: key);

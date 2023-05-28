@@ -3,7 +3,7 @@ class Strings {
   static const noRouteFound = 'No route found';
 
   // card creator screen
-  static const appName = 'Yugioh Card Creator';
+  static const appName = 'Yugioh Card Maker';
   static const defaultCardName = 'Card Name';
   static const defaultMonsterType = 'Dragon / Normal';
   static const defaultDescription = 'Card Description';
