@@ -7,6 +7,7 @@ class ScreenLayout {
   static final editButtonBlurRadius = 5.sp;
 
   static const editPopupMenuWidth = 0.37;
+  static final editPopupItemPaddingLarge = editPopupItemPadding*2;
   static final editPopupItemPadding = 10.sp;
   static final editPopupItemPaddingSmall = editPopupItemPadding*3/4;
   static const editPopupItemScale = 1.3;

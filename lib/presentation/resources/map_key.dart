@@ -11,6 +11,7 @@ class MapKey {
   static const mainFieldBody1 = 'mainFieldBody1';
   static const mainFieldBody2 = 'mainFieldBody2';
   static const popupMenuBackground = 'popupMenuBackground';
+  static const appBarMenuBackground = 'appBarMenuBackground';
   static const secondaryScaffoldBody1 = 'secondaryScaffoldBody1';
   static const secondaryScaffoldBody2 = 'secondaryScaffoldBody2';
   static const secondaryScaffoldText = 'secondaryScaffoldText';

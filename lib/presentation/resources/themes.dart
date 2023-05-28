@@ -37,7 +37,8 @@ ThemeData _getTheme(Map<String, Color> colorMap) {
         tertiary: colorMap[MapKey.popupMenuBackground],
         primaryContainer: colorMap[MapKey.secondaryScaffoldBody1], //two colors of the secondary scaffold body
         secondaryContainer: colorMap[MapKey.secondaryScaffoldBody2],
-        onPrimaryContainer: colorMap[MapKey.secondaryScaffoldText].nullSafe(), // text color of the secondary scaffold body
+        onPrimaryContainer: colorMap[MapKey.secondaryScaffoldText].nullSafe(),
+        onTertiaryContainer: colorMap[MapKey.appBarMenuBackground]// text color of the secondary scaffold body
       ),
       appBarTheme: AppBarTheme(
           color: colorMap[MapKey.appBar],

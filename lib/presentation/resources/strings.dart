@@ -16,13 +16,15 @@ class Strings {
   static const ok = 'OK';
   static const gotIt = 'Got it';
   static const somethingWrong = 'Something is wrong, please try again later';
-  static const saveYugiohCard = 'Export Yu-gi-oh Card';
+  static const saveYugiohCard = 'Save Yu-gi-oh Card';
   static const fileName = 'File name:';
   static const save = 'Save';
   static const useTimestamp = 'Use timestamp\nas name';
   static const imageSaveSuccess = 'Card image has been successfully saved to';
   static const share = 'Share';
   static const goToDirectory = 'Go To Directory';
+  static const settings = 'Settings';
+  static const help = 'Help';
 
   //settings screen
   static const settingsScreenTitle = 'Settings';

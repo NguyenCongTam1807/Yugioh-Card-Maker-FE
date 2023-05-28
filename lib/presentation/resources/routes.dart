@@ -8,7 +8,6 @@ import '../main_screen/card_creator_page/card_creator_view.dart';
 class RouteNames {
   static const String cardCreator = "/";
   static const String settings = "/settings";
-  static const String help = "/help";
 }
 
 class RouteGenerator {

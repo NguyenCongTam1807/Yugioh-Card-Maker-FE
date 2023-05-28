@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:intl/intl.dart';
 import 'package:share_plus/share_plus.dart';
@@ -85,10 +86,6 @@ class _CardCreatorViewState extends State<CardCreatorView> {
     _cardCreatorViewModel.cardSize = Size(cardWidth, cardHeight);
     _cardCreatorViewModel.cardOffset =
         Offset((screenWidth - cardWidth) / 2, (screenHeight - cardHeight) / 2);
-  }
-
-  Future<void> _uploadCard() async {
-
   }
 
   Future<void> _promptImageName() async {
@@ -300,6 +297,10 @@ class _CardCreatorViewState extends State<CardCreatorView> {
     }
   }
 
+  void _showHelp() {
+
+  }
+
   @override
   Widget build(BuildContext context) {
     final appBar = AppBar(
@@ -308,36 +309,34 @@ class _CardCreatorViewState extends State<CardCreatorView> {
           alignment: Alignment.centerLeft,
           child: const Text(Strings.appName)),
       actions: [
-        IconButton(
-            onPressed: () {
-              Navigator.of(context).pushNamed(RouteNames.settings);
+        Padding(
+          padding: EdgeInsets.only(right: 20.sp),
+          child: PopupMenuButton(
+            color: Theme.of(context).colorScheme.onTertiaryContainer,
+            padding: EdgeInsets.zero,
+            constraints: BoxConstraints(
+                maxWidth: _cardCreatorViewModel.cardSize.width *
+                    ScreenLayout.effectTypePopupMenuWidth),
+            onSelected: (value) {
+              switch (value) {
+                case 0:
+                  Navigator.of(context).pushNamed(RouteNames.settings);
+                  break;
+                case 1: _showHelp();
+                  break;
+                default:
+                  break;
+              }
             },
-            icon: const Icon(Icons.edit)),
-        IconButton(
-            onPressed: () {
-              Navigator.of(context).pushNamed(RouteNames.settings);
-            },
-            icon: const Icon(Icons.photo_library_rounded)),
-        PopupMenuButton(
-            icon: const Icon(Icons.menu),
-          itemBuilder: (BuildContext context) {
+            itemBuilder: (BuildContext context) {
               return [
-                PopupMenuItem<String>(
-                  value: RouteNames.settings,
-                  height: double.minPositive,
-                  padding: EdgeInsets.symmetric(
-                      vertical: ScreenLayout.editPopupItemPaddingSmall),
-                  child: const Text(RouteNames.settings),
-                ),
-                PopupMenuItem<String>(
-                  value: RouteNames.help,
-                  height: double.minPositive,
-                  padding: EdgeInsets.symmetric(
-                      vertical: ScreenLayout.editPopupItemPaddingSmall),
-                  child: const Text(RouteNames.help),
-                ),
+                appBarMenuItem(0, Strings.settings, Icons.settings),
+                appBarMenuItem(1, Strings.help, Icons.help),
               ];
-          },),
+            },
+            child: const Icon(Icons.menu),
+          ),
+        ),
       ],
     );
 
@@ -387,12 +386,11 @@ class _CardCreatorViewState extends State<CardCreatorView> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       IconButton(
-                        onPressed: _uploadCard,
-                        icon: const Icon(Icons.upload),
-                      ),
-                      IconButton(
                         onPressed: _promptImageName,
-                        icon: const Icon(Icons.save),
+                        icon: Icon(
+                          Icons.save,
+                          size: ScreenLayout.bigIconSize,
+                        ),
                       ),
                     ],
                   ),
@@ -417,6 +415,21 @@ class _CardCreatorViewState extends State<CardCreatorView> {
           );
         }),
       )),
+    );
+  }
+
+  PopupMenuItem<int> appBarMenuItem(int value, String title, IconData iconData) {
+    return PopupMenuItem<int>(
+      value: value,
+      height: double.minPositive,
+      padding: EdgeInsets.all(ScreenLayout.editPopupItemPaddingLarge),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(title, style: kSettingTextStyle,),
+          Icon(iconData),
+        ],
+      ),
     );
   }
 }

@@ -5,7 +5,7 @@ import 'package:yugioh_card_creator/application/extensions.dart';
 
 import '../../../../../application/dependency_injection.dart';
 import '../../../../resources/styles.dart';
-import '../../../custom_widget/elastic_text_field.dart';
+import '../../../custom_widgets/elastic_text_field.dart';
 import '../../positions.dart';
 import '../../card_creator_view_model.dart';
 
