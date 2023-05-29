@@ -99,7 +99,7 @@ class _CardAttributeIconState extends State<CardAttributeIcon>
                                     onTap: () {
                                       _cardCreatorViewModel
                                           .setCardAttribute(attribute);
-                                      Navigator.of(context).popUntil(ModalRoute.withName(RouteNames.cardCreator));
+                                      Navigator.of(context).popUntil(ModalRoute.withName(RouteNames.main));
                                     },
                                     child: _cardAttributeIcon(
                                       attribute.getAssetPath(),

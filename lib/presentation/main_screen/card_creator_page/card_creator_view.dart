@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:intl/intl.dart';
 import 'package:share_plus/share_plus.dart';
@@ -14,7 +13,6 @@ import 'package:yugioh_card_creator/application/extensions.dart';
 import '../../../application/dependency_injection.dart';
 import '../../resources/images.dart';
 import '../../resources/layout.dart';
-import '../../resources/routes.dart';
 import '../../resources/strings.dart';
 import '../../resources/styles.dart';
 import 'card_widget/yugioh_card_widget.dart';
@@ -297,139 +295,82 @@ class _CardCreatorViewState extends State<CardCreatorView> {
     }
   }
 
-  void _showHelp() {
-
-  }
-
   @override
   Widget build(BuildContext context) {
-    final appBar = AppBar(
-      title: Transform.scale(
-          scaleX: 0.9,
-          alignment: Alignment.centerLeft,
-          child: const Text(Strings.appName)),
-      actions: [
-        Padding(
-          padding: EdgeInsets.only(right: 20.sp),
-          child: PopupMenuButton(
-            color: Theme.of(context).colorScheme.onTertiaryContainer,
-            padding: EdgeInsets.zero,
-            constraints: BoxConstraints(
-                maxWidth: _cardCreatorViewModel.cardSize.width *
-                    ScreenLayout.effectTypePopupMenuWidth),
-            onSelected: (value) {
-              switch (value) {
-                case Strings.settings:
-                  Navigator.of(context).pushNamed(RouteNames.settings);
-                  break;
-                case Strings.help: _showHelp();
-                  break;
-                default:
-                  break;
-              }
-            },
-            itemBuilder: (BuildContext context) {
-              return [
-                appBarMenuItem(Strings.settings, Icons.settings),
-                appBarMenuItem(Strings.help, Icons.help),
-              ];
-            },
-            child: const Icon(Icons.menu),
+    return Center(child: SingleChildScrollView(
+      child: LayoutBuilder(builder: (ctx, constraint) {
+        final deviceHeight =
+            ui.window.physicalSize.longestSide / ui.window.devicePixelRatio;
+        final double statusBarHeight =
+            ui.window.padding.top / ui.window.devicePixelRatio;
+        final screenHeight =
+            deviceHeight - AppBar().preferredSize.height - statusBarHeight;
+
+        final screenWidth = constraint.maxWidth;
+
+        if (screenWidth >= screenHeight) {
+          return Center(
+              child: Image.asset(
+                ImagePath.cardImagePlaceHolder,
+                fit: BoxFit.scaleDown,
+              ));
+        }
+        _setCardLayout(screenWidth, screenHeight);
+        return Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(colors: [
+              Theme.of(context).colorScheme.primary,
+              Theme.of(context).colorScheme.secondary,
+              Theme.of(context).colorScheme.primary,
+            ], begin: Alignment.topCenter, end: Alignment.bottomCenter),
           ),
-        ),
-      ],
-    );
+          width: screenWidth,
+          height: screenHeight,
+          child: LayoutBuilder(builder: (context, constraint) {
+            final cardWidth = _cardCreatorViewModel.cardSize.width;
+            final cardHeight = _cardCreatorViewModel.cardSize.height;
+            final cardLeft = _cardCreatorViewModel.cardOffset.dx;
+            final cardTop = _cardCreatorViewModel.cardOffset.dy;
+            final iconLeft =
+                (screenWidth - cardWidth - ScreenLayout.editButtonWidth * 2) /
+                    4;
 
-    return Scaffold(
-      appBar: appBar,
-      body: Center(child: SingleChildScrollView(
-        child: LayoutBuilder(builder: (ctx, constraint) {
-          final deviceHeight =
-              ui.window.physicalSize.longestSide / ui.window.devicePixelRatio;
-          final double statusBarHeight =
-              ui.window.padding.top / ui.window.devicePixelRatio;
-          final screenHeight =
-              deviceHeight - appBar.preferredSize.height - statusBarHeight;
-
-          final screenWidth = constraint.maxWidth;
-
-          if (screenWidth >= screenHeight) {
-            return Center(
-                child: Image.asset(
-              ImagePath.cardImagePlaceHolder,
-              fit: BoxFit.scaleDown,
-            ));
-          }
-          _setCardLayout(screenWidth, screenHeight);
-          return Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(colors: [
-                Theme.of(context).colorScheme.primary,
-                Theme.of(context).colorScheme.secondary,
-                Theme.of(context).colorScheme.primary,
-              ], begin: Alignment.topCenter, end: Alignment.bottomCenter),
-            ),
-            width: screenWidth,
-            height: screenHeight,
-            child: LayoutBuilder(builder: (context, constraint) {
-              final cardWidth = _cardCreatorViewModel.cardSize.width;
-              final cardHeight = _cardCreatorViewModel.cardSize.height;
-              final cardLeft = _cardCreatorViewModel.cardOffset.dx;
-              final cardTop = _cardCreatorViewModel.cardOffset.dy;
-              final iconLeft =
-                  (screenWidth - cardWidth - ScreenLayout.editButtonWidth * 2) /
-                      4;
-
-              return Stack(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      IconButton(
-                        onPressed: _promptImageName,
-                        icon: Icon(
-                          Icons.save,
-                          size: ScreenLayout.bigIconSize,
-                        ),
+            return Stack(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    IconButton(
+                      onPressed: _promptImageName,
+                      icon: Icon(
+                        Icons.save,
+                        size: ScreenLayout.bigIconSize,
                       ),
-                    ],
-                  ),
-                  Positioned(
-                      top: cardTop, left: iconLeft, child: CardTypeButton()),
-                  Positioned(
-                      top: cardTop + cardHeight - ScreenLayout.editButtonHeight,
-                      left: iconLeft,
-                      child: CardImageButton()),
-                  Positioned(
-                    top: cardTop,
-                    left: cardLeft,
-                    child: SizedBox(
-                        width: cardWidth,
-                        height: cardHeight,
-                        child: RepaintBoundary(
-                            key: _cardKey, child: YugiohCardWidget())),
-                  ),
-                ],
-              );
-            }),
-          );
-        }),
-      )),
-    );
+                    ),
+                  ],
+                ),
+                Positioned(
+                    top: cardTop, left: iconLeft, child: CardTypeButton()),
+                Positioned(
+                    top: cardTop + cardHeight - ScreenLayout.editButtonHeight,
+                    left: iconLeft,
+                    child: CardImageButton()),
+                Positioned(
+                  top: cardTop,
+                  left: cardLeft,
+                  child: SizedBox(
+                      width: cardWidth,
+                      height: cardHeight,
+                      child: RepaintBoundary(
+                          key: _cardKey, child: YugiohCardWidget())),
+                ),
+              ],
+            );
+          }),
+        );
+      }),
+    ));
   }
 
-  PopupMenuItem<String> appBarMenuItem(String title, IconData iconData) {
-    return PopupMenuItem<String>(
-      value: title,
-      height: double.minPositive,
-      padding: EdgeInsets.all(ScreenLayout.editPopupItemPaddingLarge),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(title, style: kSettingTextStyle,),
-          Icon(iconData),
-        ],
-      ),
-    );
-  }
+
 }

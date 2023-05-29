@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it_mixin/get_it_mixin.dart';
 import 'package:yugioh_card_creator/application/extensions.dart';
+import 'package:yugioh_card_creator/presentation/main_screen/main_screen_view.dart';
 import 'package:yugioh_card_creator/presentation/settings_screen/settings_view_model.dart';
 
 import '../presentation/main_screen/card_creator_page/card_creator_view.dart';
@@ -39,7 +40,7 @@ class _MyAppState extends State<MyApp> with GetItStateMixin{
         return MaterialApp(
           theme: getAppTheme(updatedTheme??savedTheme.nullSafe()),
           onGenerateRoute: RouteGenerator.getRoute,
-          home: const CardCreatorView(),
+          home: MainScreenView(),
           debugShowCheckedModeBanner: false,
         );
       },
