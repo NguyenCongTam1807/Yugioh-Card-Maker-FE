@@ -319,10 +319,10 @@ class _CardCreatorViewState extends State<CardCreatorView> {
                     ScreenLayout.effectTypePopupMenuWidth),
             onSelected: (value) {
               switch (value) {
-                case 0:
+                case Strings.settings:
                   Navigator.of(context).pushNamed(RouteNames.settings);
                   break;
-                case 1: _showHelp();
+                case Strings.help: _showHelp();
                   break;
                 default:
                   break;
@@ -330,8 +330,8 @@ class _CardCreatorViewState extends State<CardCreatorView> {
             },
             itemBuilder: (BuildContext context) {
               return [
-                appBarMenuItem(0, Strings.settings, Icons.settings),
-                appBarMenuItem(1, Strings.help, Icons.help),
+                appBarMenuItem(Strings.settings, Icons.settings),
+                appBarMenuItem(Strings.help, Icons.help),
               ];
             },
             child: const Icon(Icons.menu),
@@ -418,9 +418,9 @@ class _CardCreatorViewState extends State<CardCreatorView> {
     );
   }
 
-  PopupMenuItem<int> appBarMenuItem(int value, String title, IconData iconData) {
-    return PopupMenuItem<int>(
-      value: value,
+  PopupMenuItem<String> appBarMenuItem(String title, IconData iconData) {
+    return PopupMenuItem<String>(
+      value: title,
       height: double.minPositive,
       padding: EdgeInsets.all(ScreenLayout.editPopupItemPaddingLarge),
       child: Row(
