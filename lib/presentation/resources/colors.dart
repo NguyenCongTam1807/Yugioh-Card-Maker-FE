@@ -138,4 +138,6 @@ class AppColor {
     MapKey.dialogButton: _streetSecondaryDark,
     MapKey.dialogButtonText: _streetAccentLight,
   };
+
+  static const helpOverlayColor = Color(0x7fff0000);
 }

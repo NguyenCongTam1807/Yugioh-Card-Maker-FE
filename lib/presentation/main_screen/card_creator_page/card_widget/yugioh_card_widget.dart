@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:get_it_mixin/get_it_mixin.dart';
 import 'package:yugioh_card_creator/application/extensions.dart';
 
 import '../../../../application/dependency_injection.dart';
 import '../../../../data/models/yugioh_card.dart';
+import '../../../resources/colors.dart';
+import '../../../resources/layout.dart';
+import '../help_step.dart';
 import 'card_elements/atk.dart';
 import 'card_elements/card_attribute.dart';
 import 'card_elements/card_description.dart';
@@ -19,7 +23,7 @@ import 'card_elements/spell_trap_type.dart';
 import '../positions.dart';
 import '../card_creator_view_model.dart';
 
-class YugiohCardWidget extends StatelessWidget {
+class YugiohCardWidget extends StatelessWidget with GetItMixin {
   YugiohCardWidget({Key? key}) : super(key: key);
 
   final _cardCreatorViewModel = getIt<CardCreatorViewModel>();
@@ -27,6 +31,7 @@ class YugiohCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final helpStep = watchOnly((CardCreatorViewModel vm) => vm.helpStep);
 
     return StreamBuilder<CardType>(
         stream: _cardCreatorViewModel.cardTypeStreamController.stream,
@@ -37,7 +42,19 @@ class YugiohCardWidget extends StatelessWidget {
             Positioned(
               top: CardLayout.cardImageTop * _cardWidth,
               left: CardLayout.cardImageLeft * _cardWidth,
-              child: const CardImage(),
+              child: helpStep == HelpStep.cardImage
+                  ? Container(
+                      decoration: BoxDecoration(
+                          color: AppColor.helpOverlayColor,
+                          boxShadow: [
+                            BoxShadow(
+                              color: AppColor.helpOverlayColor,
+                              blurRadius: ScreenLayout.editButtonBlurRadius,
+                              spreadRadius: ScreenLayout.editButtonSpreadRadius,
+                            )
+                          ]),
+                      child: const CardImage())
+                  : const CardImage(),
             ),
             //Card Frame Theme By Type
             CardFrame(),
@@ -45,31 +62,90 @@ class YugiohCardWidget extends StatelessWidget {
             Positioned(
               top: CardLayout.cardNameTop * _cardWidth,
               left: CardLayout.cardNameLeft * _cardWidth,
-              child: CardName(),
+              child: helpStep == HelpStep.cardName
+                  ? Container(
+                      decoration: BoxDecoration(
+                          color: AppColor.helpOverlayColor,
+                          boxShadow: [
+                            BoxShadow(
+                              color: AppColor.helpOverlayColor,
+                              blurRadius: ScreenLayout.editButtonBlurRadius,
+                              spreadRadius: ScreenLayout.editButtonSpreadRadius,
+                            )
+                          ]),
+                      child: CardName())
+                  : CardName(),
             ),
             //Card Attribute
             if (cardTypeGroup == CardTypeGroup.monster)
-              Positioned(
-                top: CardLayout.cardAttributeIconTop * _cardWidth,
-                left: CardLayout.cardAttributeIconLeft * _cardWidth,
-                child: CardAttributeIcon(),
-              ),
+              helpStep == HelpStep.cardAttribute
+                  ? Positioned(
+                      top: CardLayout.cardAttributeIconTop * _cardWidth -
+                          ScreenLayout.helperColorPadding,
+                      left: CardLayout.cardAttributeIconLeft * _cardWidth -
+                          ScreenLayout.helperColorPadding,
+                      child: Container(
+                        padding:
+                            EdgeInsets.all(ScreenLayout.helperColorPadding),
+                        decoration: BoxDecoration(
+                            color: AppColor.helpOverlayColor,
+                            boxShadow: [
+                              BoxShadow(
+                                color: AppColor.helpOverlayColor,
+                                blurRadius: ScreenLayout.editButtonBlurRadius,
+                                spreadRadius:
+                                    ScreenLayout.editButtonSpreadRadius,
+                              )
+                            ]),
+                        child: CardAttributeIcon(),
+                      ),
+                    )
+                  : Positioned(
+                      top: CardLayout.cardAttributeIconTop * _cardWidth,
+                      left: CardLayout.cardAttributeIconLeft * _cardWidth,
+                      child: CardAttributeIcon(),
+                    ),
             //Monster Level
             if (cardTypeGroup == CardTypeGroup.monster &&
                 snapshot.data != CardType.link)
               Positioned(
                 top: CardLayout.monsterLevelTop * _cardWidth,
-                child: MonsterLevel(),
+                child: helpStep == HelpStep.monsterLevel
+                    ? Container(
+                        decoration: BoxDecoration(
+                            color: AppColor.helpOverlayColor,
+                            boxShadow: [
+                              BoxShadow(
+                                color: AppColor.helpOverlayColor,
+                                blurRadius: ScreenLayout.editButtonBlurRadius,
+                                spreadRadius:
+                                    ScreenLayout.editButtonSpreadRadius,
+                              )
+                            ]),
+                        child: MonsterLevel())
+                    : MonsterLevel(),
               ),
             if (cardTypeGroup != CardTypeGroup.monster)
               Positioned(
                 top: _cardWidth * CardLayout.effectTypeTop,
                 right: _cardWidth * CardLayout.effectTypeRight,
-                child: SpellTrapType(),
+                child: helpStep == HelpStep.spellTrapType
+                    ? Container(
+                        decoration: BoxDecoration(
+                            color: AppColor.helpOverlayColor,
+                            boxShadow: [
+                              BoxShadow(
+                                color: AppColor.helpOverlayColor,
+                                blurRadius: ScreenLayout.editButtonBlurRadius,
+                                spreadRadius:
+                                    ScreenLayout.editButtonSpreadRadius,
+                              )
+                            ]),
+                        child: SpellTrapType())
+                    : SpellTrapType(),
               ),
             //Link arrows
-            if (snapshot.data == CardType.link)
-              LinkArrows(),
+            if (snapshot.data == CardType.link) LinkArrows(),
             //Monster Type
             if (cardTypeGroup == CardTypeGroup.monster)
               Positioned(

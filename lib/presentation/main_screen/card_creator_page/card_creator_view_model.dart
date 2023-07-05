@@ -3,12 +3,33 @@ import 'package:rxdart/rxdart.dart';
 import 'package:yugioh_card_creator/application/extensions.dart';
 import 'package:yugioh_card_creator/data/models/yugioh_card.dart';
 
+import 'help_step.dart';
+
 class CardCreatorViewModel extends ChangeNotifier {
   YugiohCard currentCard = YugiohCard();
   Size cardSize = const Size(0, 0);
   Offset cardOffset = const Offset(0, 0);
   int cardDescMaxLine = 0;
   int linkRating = 0;
+  GlobalKey cardKey = GlobalKey();
+  Map<int, GlobalKey> helpItemKeyMap = {
+    HelpStep.saveCardButton: GlobalKey(),
+    HelpStep.cardTypeButton: GlobalKey(),
+    HelpStep.cardImageButton: GlobalKey(),
+    HelpStep.cardName: GlobalKey(),
+    HelpStep.cardAttribute: GlobalKey(),
+    HelpStep.monsterLevel: GlobalKey(),
+    HelpStep.spellTrapType: GlobalKey(),
+    HelpStep.cardImage: GlobalKey(),
+    HelpStep.linkArrows: GlobalKey(),
+    HelpStep.monsterType: GlobalKey(),
+    HelpStep.cardDescription: GlobalKey(),
+    HelpStep.atk: GlobalKey(),
+    HelpStep.def: GlobalKey(),
+    HelpStep.linkRating: GlobalKey(),
+    HelpStep.creatorName: GlobalKey(),
+  };
+  int helpStep = HelpStep.none;
 
   final cardTypeStreamController = BehaviorSubject<CardType>();
   final defStreamController = BehaviorSubject<String>();
@@ -28,9 +49,93 @@ class CardCreatorViewModel extends ChangeNotifier {
     super.dispose();
   }
 
+  void startHelp() {
+    helpStep = 1;
+    notifyListeners();
+  }
+
+  void prevHelpStep() {
+    if (helpStep != 1) {
+      helpStep--;
+    } else {
+      helpStep = HelpStep.lastStep;
+    }
+    final cardType = currentCard.cardType;
+    while ((cardType.nullSafe().group == CardTypeGroup.monster &&
+        helpStep == HelpStep.spellTrapType) ||
+        (cardType.nullSafe().group != CardTypeGroup.monster &&
+            [
+              HelpStep.cardAttribute,
+              HelpStep.monsterLevel,
+              HelpStep.linkArrows,
+              HelpStep.monsterType,
+              HelpStep.atk,
+              HelpStep.def,
+              HelpStep.linkRating,
+            ].contains(helpStep)) ||
+        (cardType == CardType.link &&
+            [HelpStep.monsterLevel, HelpStep.def].contains(helpStep)) ||
+        (cardType != CardType.link &&
+            [HelpStep.linkArrows, HelpStep.linkRating].contains(helpStep))) {
+      helpStep--;
+    }
+    notifyListeners();
+  }
+
+  void nextHelpStep() {
+    if (helpStep != HelpStep.lastStep) {
+      helpStep++;
+    } else {
+      helpStep = 1;
+    }
+    final cardType = currentCard.cardType;
+    while ((cardType.nullSafe().group == CardTypeGroup.monster &&
+            helpStep == HelpStep.spellTrapType) ||
+        (cardType.nullSafe().group != CardTypeGroup.monster &&
+            [
+              HelpStep.cardAttribute,
+              HelpStep.monsterLevel,
+              HelpStep.linkArrows,
+              HelpStep.monsterType,
+              HelpStep.atk,
+              HelpStep.def,
+              HelpStep.linkRating,
+            ].contains(helpStep)) ||
+        (cardType == CardType.link &&
+            [HelpStep.monsterLevel, HelpStep.def].contains(helpStep)) ||
+        (cardType != CardType.link &&
+            [HelpStep.linkArrows, HelpStep.linkRating].contains(helpStep))) {
+      helpStep++;
+    }
+    notifyListeners();
+  }
+
+  void endHelp() {
+    helpStep = 0;
+    notifyListeners();
+  }
+
   setCardType(CardType type) {
     currentCard.cardType = type;
-    cardTypeStreamController.add(currentCard.cardType.nullSafe());
+    cardTypeStreamController.add(type);
+    while ((type.nullSafe().group == CardTypeGroup.monster &&
+        helpStep == HelpStep.spellTrapType) ||
+        (type.nullSafe().group != CardTypeGroup.monster &&
+            [
+              HelpStep.cardAttribute,
+              HelpStep.monsterLevel,
+              HelpStep.linkArrows,
+              HelpStep.monsterType,
+              HelpStep.atk,
+              HelpStep.def,
+              HelpStep.linkRating,
+            ].contains(helpStep)) ||
+        (type == CardType.link &&
+            [HelpStep.monsterLevel, HelpStep.def].contains(helpStep)) ||
+        (type != CardType.link &&
+            [HelpStep.linkArrows, HelpStep.linkRating].contains(helpStep))) {
+      helpStep--;
+    }
     notifyListeners();
   }
 

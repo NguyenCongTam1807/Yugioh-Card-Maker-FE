@@ -1,6 +1,8 @@
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ScreenLayout {
+  static final helperColorPadding = 25.sp;
+
   static final editButtonWidth = 34.5.sp;
   static final editButtonHeight = 52.5.sp;
   static final editButtonSpreadRadius = 3.sp;

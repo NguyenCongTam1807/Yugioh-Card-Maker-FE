@@ -4,8 +4,11 @@ import 'package:yugioh_card_creator/application/extensions.dart';
 
 import '../../../../../application/dependency_injection.dart';
 import '../../../../../data/models/yugioh_card.dart';
+import '../../../../resources/colors.dart';
 import '../../../../resources/images.dart';
+import '../../../../resources/layout.dart';
 import '../../card_creator_view_model.dart';
+import '../../help_step.dart';
 import '../../positions.dart';
 import 'card_frame.dart';
 
@@ -112,26 +115,51 @@ class LinkArrows extends StatelessWidget with GetItMixin {
     ];
 
     final linkArrowsStatus =
-        watchOnly((CardCreatorViewModel vm) => vm.currentCard.linkArrows).nullSafe();
+        watchOnly((CardCreatorViewModel vm) => vm.currentCard.linkArrows)
+            .nullSafe();
+    final helpStep =
+        watchOnly((CardCreatorViewModel vm) => vm.helpStep);
     return Stack(
       children: [
         ...linkArrows.map((linkArrow) => GestureDetector(
             onTap: () {
               _cardCreatorViewModel.setLinkArrowAt(linkArrow.index);
             },
-            child: ClipPath(
-              clipper: PolygonClipper(
-                vertices: linkArrow.vertices,
-                offset: linkArrow.offset,
-              ),
-              child: linkArrowsStatus[linkArrow.index] == true
-                  ? Image.asset(linkArrow.imagePath)
-                  : Container(
-                      color: Colors.transparent,
-                      width: _cardWidth,
-                      height: _cardHeight,
+            child: helpStep == HelpStep.linkArrows
+                ? ClipPath(
+                  clipper: PolygonClipper(
+                    vertices: linkArrow.vertices,
+                    offset: linkArrow.offset,
+                  ),
+                  child: linkArrowsStatus[linkArrow.index] == true
+                      ? Image.asset(linkArrow.imagePath, color: AppColor.helpOverlayColor, colorBlendMode: BlendMode.darken)
+                      : Container(
+                    decoration: BoxDecoration(
+                        color: AppColor.helpOverlayColor,
+                        boxShadow: [
+                          BoxShadow(
+                            color: AppColor.helpOverlayColor,
+                            blurRadius: ScreenLayout.editButtonBlurRadius,
+                            spreadRadius: ScreenLayout.editButtonSpreadRadius,
+                          )
+                        ]),
+                          width: _cardWidth,
+                          height: _cardHeight,
+                        ),
+                )
+                : ClipPath(
+                    clipper: PolygonClipper(
+                      vertices: linkArrow.vertices,
+                      offset: linkArrow.offset,
                     ),
-            )))
+                    child: linkArrowsStatus[linkArrow.index] == true
+                        ? Image.asset(linkArrow.imagePath)
+                        : Container(
+                            color: Colors.transparent,
+                            width: _cardWidth,
+                            height: _cardHeight,
+                          ),
+                  )))
       ],
     );
   }

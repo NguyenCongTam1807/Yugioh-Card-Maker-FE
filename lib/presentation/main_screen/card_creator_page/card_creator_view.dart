@@ -1,61 +1,43 @@
-import 'dart:io';
-import 'dart:typed_data';
 import 'dart:ui' as ui;
-import 'package:gallery_saver/gallery_saver.dart';
-import 'package:intl/intl.dart';
-import 'package:share_plus/share_plus.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:yugioh_card_creator/application/extensions.dart';
+import 'package:get_it_mixin/get_it_mixin.dart';
+import 'package:yugioh_card_creator/presentation/main_screen/card_creator_page/outer_buttons/save_card_button.dart';
 
 import '../../../application/dependency_injection.dart';
+import '../../resources/colors.dart';
 import '../../resources/images.dart';
 import '../../resources/layout.dart';
 import '../../resources/strings.dart';
 import '../../resources/styles.dart';
 import 'card_widget/yugioh_card_widget.dart';
-import 'edit_buttons/card_type_button.dart';
+import 'help_step.dart';
+import 'outer_buttons/card_image_button.dart';
+import 'outer_buttons/card_type_button.dart';
 import 'positions.dart';
 import 'card_creator_view_model.dart';
-import 'edit_buttons/card_image_button.dart';
 
-class CardCreatorView extends StatefulWidget {
-  const CardCreatorView({Key? key}) : super(key: key);
+class CardCreatorView extends StatefulWidget with GetItStatefulWidgetMixin {
+  CardCreatorView({Key? key}) : super(key: key);
 
   @override
   State<CardCreatorView> createState() => _CardCreatorViewState();
 }
 
-class _CardCreatorViewState extends State<CardCreatorView> {
+class _CardCreatorViewState extends State<CardCreatorView>
+    with GetItStateMixin {
   final _cardCreatorViewModel = getIt<CardCreatorViewModel>();
-  final _savedFileNameController = TextEditingController();
-  final _cardKey = GlobalKey();
-  late final String _appDirectoryPath;
+
   @override
   void initState() {
     _cardCreatorViewModel.init();
     super.initState();
   }
 
-  bool isInit = false;
-
-  @override
-  Future<void> didChangeDependencies() async {
-    if (!isInit) {
-      _appDirectoryPath =
-          await getApplicationDocumentsDirectory().then((value) => value.path);
-
-      isInit = true;
-    }
-    super.didChangeDependencies();
-  }
-
   @override
   void dispose() {
     _cardCreatorViewModel.dispose();
-    _savedFileNameController.dispose();
     super.dispose();
   }
 
@@ -86,217 +68,10 @@ class _CardCreatorViewState extends State<CardCreatorView> {
         Offset((screenWidth - cardWidth) / 2, (screenHeight - cardHeight) / 2);
   }
 
-  Future<void> _promptImageName() async {
-    await showDialog(
-        context: context,
-        builder: (ctx) {
-          return AlertDialog(
-            contentPadding: EdgeInsets.zero,
-            content: Container(
-              padding: EdgeInsets.all(ScreenLayout.alertDialogPadding),
-              decoration: BoxDecoration(
-                  gradient: LinearGradient(colors: [
-                Theme.of(context).dialogTheme.backgroundColor.nullSafe(),
-                Theme.of(context).dialogTheme.surfaceTintColor.nullSafe(),
-                Theme.of(context).dialogTheme.backgroundColor.nullSafe(),
-              ], begin: Alignment.topRight, end: Alignment.bottomLeft)),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    Strings.saveYugiohCard,
-                    style: kCardNameTextStyle.copyWith(
-                      color:
-                          Theme.of(context).dialogTheme.contentTextStyle?.color,
-                    ),
-                  ),
-                  TextField(
-                    controller: _savedFileNameController,
-                    style: TextStyle(
-                      color:
-                          Theme.of(context).dialogTheme.contentTextStyle?.color,
-                    ),
-                    decoration: InputDecoration(
-                        labelText: Strings.fileName,
-                        labelStyle: TextStyle(
-                          color: Theme.of(context)
-                              .dialogTheme
-                              .contentTextStyle
-                              ?.color,
-                        ),
-                        enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                          color: (Theme.of(context)
-                                  .dialogTheme
-                                  .contentTextStyle
-                                  ?.color)
-                              .nullSafe(),
-                        ))),
-                    onTapOutside: (_) {
-                      FocusManager.instance.primaryFocus?.unfocus();
-                    },
-                  ),
-                  SizedBox(height: ScreenLayout.alertDialogPadding * 2),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor:
-                                Theme.of(context).dialogTheme.iconColor,
-                            foregroundColor: Theme.of(context)
-                                .dialogTheme
-                                .titleTextStyle
-                                ?.color,
-                          ),
-                          onPressed: () {
-                            _savedFileNameController.text =
-                                DateFormat('yyyy-MM-dd HH:mm:ss:SSS')
-                                    .format(DateTime.now());
-                          },
-                          child: const Text(
-                            Strings.useTimestamp,
-                            textAlign: TextAlign.center,
-                          )),
-                      ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor:
-                                Theme.of(context).dialogTheme.iconColor,
-                            foregroundColor: Theme.of(context)
-                                .dialogTheme
-                                .titleTextStyle
-                                ?.color,
-                          ),
-                          onPressed: () async {
-                            Navigator.of(context).pop();
-                            await _exportImage(_savedFileNameController.text);
-                          },
-                          child: const Text(Strings.save)),
-                    ],
-                  )
-                ],
-              ),
-            ),
-          );
-        });
-    _savedFileNameController.clear();
-  }
-
-  Future<bool> _exportImage(String fileName) async {
-    try {
-      final RenderRepaintBoundary boundary =
-          _cardKey.currentContext?.findRenderObject() as RenderRepaintBoundary;
-      final ui.Image image = await boundary.toImage(pixelRatio: 2.0);
-      final ByteData? byteData =
-          await image.toByteData(format: ui.ImageByteFormat.png);
-      final Uint8List? pngBytes = byteData?.buffer.asUint8List();
-
-      if (pngBytes != null) {
-        final savedFilePath = "$_appDirectoryPath/$fileName.png";
-        await File(savedFilePath).create(recursive: true).then(
-            (createdEmptyFile) => createdEmptyFile.writeAsBytes(pngBytes));
-        final result = await GallerySaver.saveImage(savedFilePath);
-
-        if (result == true && mounted) {
-          await showDialog(
-              context: context,
-              builder: (ctx) {
-                return AlertDialog(
-                  contentPadding: EdgeInsets.zero,
-                  content: Container(
-                    padding: EdgeInsets.all(ScreenLayout.alertDialogPadding),
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(colors: [
-                        Theme.of(context)
-                            .dialogTheme
-                            .backgroundColor
-                            .nullSafe(),
-                        Theme.of(context)
-                            .dialogTheme
-                            .surfaceTintColor
-                            .nullSafe(),
-                        Theme.of(context)
-                            .dialogTheme
-                            .backgroundColor
-                            .nullSafe(),
-                      ], begin: Alignment.topRight, end: Alignment.bottomLeft),
-                    ),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          '${Strings.imageSaveSuccess}\n$savedFilePath',
-                          style: kSettingTextStyle,
-                        ),
-                        SizedBox(
-                          height: ScreenLayout.alertDialogPadding * 2,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor:
-                                      Theme.of(context).dialogTheme.iconColor,
-                                  foregroundColor: Theme.of(context)
-                                      .dialogTheme
-                                      .titleTextStyle
-                                      ?.color,
-                                ),
-                                onPressed: () async {
-                                  await _shareImage(savedFilePath);
-                                },
-                                child: const Text(
-                                  Strings.share,
-                                )),
-                            ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor:
-                                      Theme.of(context).dialogTheme.iconColor,
-                                  foregroundColor: Theme.of(context)
-                                      .dialogTheme
-                                      .titleTextStyle
-                                      ?.color,
-                                ),
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                                child: const Text(Strings.gotIt)),
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
-                );
-              });
-          return true;
-        }
-        return false;
-      }
-      return false;
-    } catch (err) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: const Text(Strings.somethingWrong),
-        action: SnackBarAction(
-            label: Strings.ok,
-            onPressed: () {
-              ScaffoldMessenger.of(context).hideCurrentSnackBar();
-            }),
-      ));
-      return false;
-    }
-  }
-
-  Future<void> _shareImage(String sharedFilePath) async {
-    try {
-      await Share.shareXFiles([XFile(sharedFilePath)]);
-    } catch (err) {
-      rethrow;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
+    final helpStep = watchOnly((CardCreatorViewModel vm) => vm.helpStep);
+
     return Center(child: SingleChildScrollView(
       child: LayoutBuilder(builder: (ctx, constraint) {
         final deviceHeight =
@@ -311,9 +86,9 @@ class _CardCreatorViewState extends State<CardCreatorView> {
         if (screenWidth >= screenHeight) {
           return Center(
               child: Image.asset(
-                ImagePath.cardImagePlaceHolder,
-                fit: BoxFit.scaleDown,
-              ));
+            ImagePath.cardImagePlaceHolder,
+            fit: BoxFit.scaleDown,
+          ));
         }
         _setCardLayout(screenWidth, screenHeight);
         return Container(
@@ -337,24 +112,143 @@ class _CardCreatorViewState extends State<CardCreatorView> {
 
             return Stack(
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    IconButton(
-                      onPressed: _promptImageName,
-                      icon: Icon(
-                        Icons.save,
-                        size: ScreenLayout.bigIconSize,
-                      ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            helpStep == HelpStep.saveCardButton
+                                ? Container(
+                                    decoration: BoxDecoration(
+                                        color: AppColor.helpOverlayColor,
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: AppColor.helpOverlayColor,
+                                            blurRadius: ScreenLayout
+                                                .editButtonBlurRadius,
+                                            spreadRadius: ScreenLayout
+                                                .editButtonSpreadRadius,
+                                          )
+                                        ]),
+                                    child: SaveCardButton())
+                                : SaveCardButton(),
+                          ],
+                        ),
+                        if (helpStep != HelpStep.none)
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              ElevatedButton(
+                                  onPressed: () {
+                                    _cardCreatorViewModel.prevHelpStep();
+                                  },
+                                  child: const Text(Strings.prev)),
+                              if (helpStep > HelpStep.none &&
+                                  helpStep <= HelpStep.linkArrows &&
+                                  helpStep != HelpStep.cardImageButton)
+                                _getHelperText(helpStep),
+                              ElevatedButton(
+                                  onPressed: () {
+                                    _cardCreatorViewModel.nextHelpStep();
+                                  },
+                                  child: const Text(Strings.next))
+                            ],
+                          ),
+                      ],
                     ),
+                    if (helpStep != HelpStep.none)
+                      Padding(
+                        padding:
+                            EdgeInsets.only(bottom: ScreenLayout.bigIconSize),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            const Opacity(
+                              opacity: 0,
+                              child: ElevatedButton(
+                                  onPressed: null,
+                                  child: Text(Strings.end)),
+                            ),
+                            if (helpStep > HelpStep.linkArrows ||
+                                helpStep == HelpStep.cardImageButton)
+                              _getHelperText(helpStep),
+                            ElevatedButton(
+                                onPressed: () {
+                                  _cardCreatorViewModel.endHelp();
+                                },
+                                child: const Text(Strings.end))
+                          ],
+                        ),
+                      ),
                   ],
                 ),
-                Positioned(
-                    top: cardTop, left: iconLeft, child: CardTypeButton()),
-                Positioned(
-                    top: cardTop + cardHeight - ScreenLayout.editButtonHeight,
-                    left: iconLeft,
-                    child: CardImageButton()),
+                helpStep == HelpStep.cardTypeButton
+                    ? Positioned(
+                        top: cardTop - ScreenLayout.helperColorPadding,
+                        left: iconLeft - ScreenLayout.helperColorPadding,
+                        child: Container(
+                            decoration: BoxDecoration(
+                                color: AppColor.helpOverlayColor,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: AppColor.helpOverlayColor,
+                                    blurRadius:
+                                        ScreenLayout.editButtonBlurRadius,
+                                    spreadRadius:
+                                        ScreenLayout.editButtonSpreadRadius,
+                                  )
+                                ]),
+                            padding:
+                                EdgeInsets.all(ScreenLayout.helperColorPadding),
+                            child: CardTypeButton()))
+                    : Positioned(
+                        top: cardTop, left: iconLeft, child: CardTypeButton()),
+                helpStep == HelpStep.cardImageButton
+                    ? Positioned(
+                        top: cardTop +
+                            cardHeight -
+                            ScreenLayout.editButtonHeight -
+                            ScreenLayout.helperColorPadding,
+                        left: iconLeft - ScreenLayout.helperColorPadding,
+                        child: Container(
+                            decoration: BoxDecoration(
+                                color: AppColor.helpOverlayColor,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: AppColor.helpOverlayColor,
+                                    blurRadius:
+                                        ScreenLayout.editButtonBlurRadius,
+                                    spreadRadius:
+                                        ScreenLayout.editButtonSpreadRadius,
+                                  )
+                                ]),
+                            padding:
+                                EdgeInsets.all(ScreenLayout.helperColorPadding),
+                            child: CardImageButton()))
+                    : Positioned(
+                        top: cardTop +
+                            cardHeight -
+                            ScreenLayout.editButtonHeight,
+                        left: iconLeft,
+                        child: Container(
+                            decoration: BoxDecoration(
+                                color: AppColor.helpOverlayColor,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: AppColor.helpOverlayColor,
+                                    blurRadius:
+                                        ScreenLayout.editButtonBlurRadius,
+                                    spreadRadius:
+                                        ScreenLayout.editButtonSpreadRadius,
+                                  )
+                                ]),
+                            child: CardImageButton())),
                 Positioned(
                   top: cardTop,
                   left: cardLeft,
@@ -362,7 +256,8 @@ class _CardCreatorViewState extends State<CardCreatorView> {
                       width: cardWidth,
                       height: cardHeight,
                       child: RepaintBoundary(
-                          key: _cardKey, child: YugiohCardWidget())),
+                          key: _cardCreatorViewModel.cardKey,
+                          child: YugiohCardWidget())),
                 ),
               ],
             );
@@ -372,5 +267,116 @@ class _CardCreatorViewState extends State<CardCreatorView> {
     ));
   }
 
-
+  Widget _getHelperText(int helpStep) {
+    String name = '';
+    String description = '';
+    switch (helpStep) {
+      case HelpStep.saveCardButton:
+        {
+          name = Strings.saveCardButtonName;
+          description = Strings.saveCardButtonDesc;
+        }
+        break;
+      case HelpStep.cardTypeButton:
+        {
+          name = Strings.cardTypeButtonName;
+          description = Strings.cardTypeButtonDesc;
+        }
+        break;
+      case HelpStep.cardImageButton:
+        {
+          name = Strings.cardImageButtonName;
+          description = Strings.cardImageButtonDesc;
+        }
+        break;
+      case HelpStep.cardName:
+        {
+          name = Strings.cardNameName;
+          description = Strings.cardNameDesc;
+        }
+        break;
+      case HelpStep.cardAttribute:
+        {
+          name = Strings.cardAttributeName;
+          description = Strings.cardAttributeDesc;
+        }
+        break;
+      case HelpStep.monsterLevel:
+        {
+          name = Strings.monsterLevelName;
+          description = Strings.monsterLevelDesc;
+        }
+        break;
+      case HelpStep.cardImage:
+        {
+          name = Strings.cardImageName;
+          description = Strings.cardImageDesc;
+        }
+        break;
+      case HelpStep.spellTrapType:
+        {
+          name = Strings.spellTrapTypeName;
+          description = Strings.spellTrapTypeDesc;
+        }
+        break;
+      case HelpStep.linkArrows:
+        {
+          name = Strings.linkArrowsName;
+          description = Strings.linkArrowsDesc;
+        }
+        break;
+      case HelpStep.monsterType:
+        {
+          name = Strings.monsterTypeName;
+          description = Strings.monsterTypeDesc;
+        }
+        break;
+      case HelpStep.cardDescription:
+        {
+          name = Strings.cardDescriptionName;
+          description = Strings.cardDescriptionDesc;
+        }
+        break;
+      case HelpStep.atk:
+        {
+          name = Strings.atkName;
+          description = Strings.atkDesc;
+        }
+        break;
+      case HelpStep.def:
+        {
+          name = Strings.defName;
+          description = Strings.defDesc;
+        }
+        break;
+      case HelpStep.linkRating:
+        {
+          name = Strings.linkRatingName;
+          description = Strings.linkRatingDesc;
+        }
+        break;
+      case HelpStep.creatorName:
+        {
+          name = Strings.creatorNameName;
+          description = Strings.creatorNameDesc;
+        }
+        break;
+    }
+    return Expanded(
+      child: Column(
+        children: [
+          Text(
+            name,
+            style: kSettingGroupTextStyle,
+            textAlign: TextAlign.center,
+          ),
+          Text(
+            description,
+            style: kSettingTextStyle,
+            textAlign: TextAlign.center,
+          ),
+        ],
+      ),
+    );
+  }
 }
