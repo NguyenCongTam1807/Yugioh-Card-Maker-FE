@@ -2,6 +2,7 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it_mixin/get_it_mixin.dart';
 import 'package:yugioh_card_creator/presentation/main_screen/card_creator_page/outer_buttons/save_card_button.dart';
 import 'package:yugioh_card_creator/presentation/main_screen/custom_widgets/highlight_wrapper.dart';
@@ -290,10 +291,24 @@ class _CardCreatorViewState extends State<CardCreatorView>
     return Expanded(
       child: Column(
         children: [
-          Text(
-            name,
-            style: kSettingGroupTextStyle,
-            textAlign: TextAlign.center,
+          Stack(
+            children: [
+              Text(
+                name,
+                style: kSettingGroupTextStyle.copyWith(
+                  foreground: Paint()
+                    ..style = PaintingStyle.stroke
+                    ..strokeWidth = 10.sp
+                    ..color = Colors.white,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              Text(
+                name,
+                style: kSettingGroupTextStyle,
+                textAlign: TextAlign.center,
+              ),
+            ]
           ),
           Text(
             description,

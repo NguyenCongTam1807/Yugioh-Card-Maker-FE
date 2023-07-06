@@ -45,7 +45,7 @@ class Strings {
   static const spellTrapTypeName = 'Spell/Trap card type';
   static const spellTrapTypeDesc = 'Click on the text to select the type for the Spell or Trap card, only available on these types of card';
   static const linkArrowsName = 'Link Arrows';
-  static const linkArrowsDesc = 'Click on any of the arrows to turn it on/off. '
+  static const linkArrowsDesc = 'Click on an arrow to turn it on/off. '
       'The Link Rating would correspondingly change its value based on the number of red arrows. '
       'Only available for Link monster cards';
   static const monsterTypeName = 'Monster Type';
@@ -57,7 +57,7 @@ class Strings {
   static const defName = 'Defense';
   static const defDesc = 'Click on the def value to edit, can hold unknown value if left empty, only available on Monster cards except the Link type';
   static const linkRatingName = 'Link Rating';
-  static const linkRatingDesc = 'Actually can be ignored since it automatically changes based on the Link Arrows, but you can still edit by clicking on its value. '
+  static const linkRatingDesc = 'Actually can be ignored as it automatically changes based on the Link Arrows, but you can still edit by clicking on its value. '
       'Only available on Link monster cards';
   static const creatorNameName = 'Creator Name';
   static const creatorNameDesc = 'Click on the box to edit it';
