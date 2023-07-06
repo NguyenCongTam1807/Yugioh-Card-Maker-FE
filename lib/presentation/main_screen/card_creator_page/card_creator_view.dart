@@ -119,7 +119,7 @@ class _CardCreatorViewState extends State<CardCreatorView>
                         highlightPadding: ScreenLayout.helperColorPadding,
                         child: CardTypeButton())),
                 Positioned(
-                    top: cardTop + cardHeight - ScreenLayout.editButtonHeight,
+                    top: cardTop + cardHeight - ScreenLayout.editButtonHeight - ScreenLayout.helperColorPadding,
                     left: iconLeft - ScreenLayout.helperColorPadding,
                     child: HighlightWrapper(
                         highlightPadding: ScreenLayout.helperColorPadding,
