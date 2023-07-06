@@ -16,6 +16,7 @@ import '../../../../application/dependency_injection.dart';
 import '../../../resources/layout.dart';
 import '../../../resources/strings.dart';
 import '../../../resources/styles.dart';
+import '../help_step.dart';
 
 class SaveCardButton extends StatefulWidget with GetItStatefulWidgetMixin {
   SaveCardButton({Key? key}) : super(key: key);
@@ -26,6 +27,7 @@ class SaveCardButton extends StatefulWidget with GetItStatefulWidgetMixin {
 
 class _SaveCardButtonState extends State<SaveCardButton> with GetItStateMixin {
   final _cardCreatorViewModel = getIt<CardCreatorViewModel>();
+  //final _key = getIt<CardCreatorViewModel>().helpItemKeyMap[HelpStep.saveCardButton];
   final _savedFileNameController = TextEditingController();
   late final String _appDirectoryPath;
   bool isInit = false;
@@ -260,6 +262,7 @@ class _SaveCardButtonState extends State<SaveCardButton> with GetItStateMixin {
   @override
   Widget build(BuildContext context) {
     return IconButton(
+      //key: _key,
       onPressed: _promptImageName,
       icon: Icon(
         Icons.save,

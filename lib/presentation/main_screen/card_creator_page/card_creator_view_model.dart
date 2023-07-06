@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:yugioh_card_creator/application/extensions.dart';
 import 'package:yugioh_card_creator/data/models/yugioh_card.dart';
+import 'package:yugioh_card_creator/presentation/main_screen/card_creator_page/outer_buttons/save_card_button.dart';
 
 import 'help_step.dart';
 
@@ -12,22 +13,22 @@ class CardCreatorViewModel extends ChangeNotifier {
   int cardDescMaxLine = 0;
   int linkRating = 0;
   GlobalKey cardKey = GlobalKey();
-  Map<int, GlobalKey> helpItemKeyMap = {
-    HelpStep.saveCardButton: GlobalKey(),
-    HelpStep.cardTypeButton: GlobalKey(),
-    HelpStep.cardImageButton: GlobalKey(),
-    HelpStep.cardName: GlobalKey(),
-    HelpStep.cardAttribute: GlobalKey(),
-    HelpStep.monsterLevel: GlobalKey(),
-    HelpStep.spellTrapType: GlobalKey(),
-    HelpStep.cardImage: GlobalKey(),
-    HelpStep.linkArrows: GlobalKey(),
-    HelpStep.monsterType: GlobalKey(),
-    HelpStep.cardDescription: GlobalKey(),
-    HelpStep.atk: GlobalKey(),
-    HelpStep.def: GlobalKey(),
-    HelpStep.linkRating: GlobalKey(),
-    HelpStep.creatorName: GlobalKey(),
+  Map<int, String> helpItemNameMap = {
+    HelpStep.saveCardButton: 'SaveCardButton',
+    HelpStep.cardTypeButton: 'CardTypeButton',
+    HelpStep.cardImageButton: 'CardImageButton',
+    HelpStep.cardName: 'CardName',
+    HelpStep.cardAttribute: 'CardAttributeIcon',
+    HelpStep.monsterLevel: 'MonsterLevel',
+    HelpStep.spellTrapType: 'SpellTrapType',
+    HelpStep.cardImage: 'CardImage',
+    HelpStep.linkArrows: 'LinkArrows',
+    HelpStep.monsterType: 'MonsterType',
+    HelpStep.cardDescription: 'CardDescription',
+    HelpStep.atk: 'Atk',
+    HelpStep.def: 'Def',
+    HelpStep.linkRating: 'LinkRating',
+    HelpStep.creatorName: 'CreatorName',
   };
   int helpStep = HelpStep.none;
 

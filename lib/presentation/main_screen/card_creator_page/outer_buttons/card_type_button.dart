@@ -22,7 +22,6 @@ class CardTypeButton extends StatelessWidget with GetItMixin {
         watchOnly((CardCreatorViewModel vm) => vm.currentCard.effectType)
             .nullSafe();
 
-    final glow = watchOnly((CardCreatorViewModel vm) => vm.helpStep == 2);
     return PopupMenuButton(
         padding: EdgeInsets.zero,
         constraints: BoxConstraints(

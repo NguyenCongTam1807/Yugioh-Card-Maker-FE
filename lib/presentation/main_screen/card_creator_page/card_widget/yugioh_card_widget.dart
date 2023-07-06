@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_it_mixin/get_it_mixin.dart';
 import 'package:yugioh_card_creator/application/extensions.dart';
+import 'package:yugioh_card_creator/presentation/main_screen/custom_widgets/highlight_wrapper.dart';
 
 import '../../../../application/dependency_injection.dart';
 import '../../../../data/models/yugioh_card.dart';
@@ -78,71 +79,27 @@ class YugiohCardWidget extends StatelessWidget with GetItMixin {
             ),
             //Card Attribute
             if (cardTypeGroup == CardTypeGroup.monster)
-              helpStep == HelpStep.cardAttribute
-                  ? Positioned(
-                      top: CardLayout.cardAttributeIconTop * _cardWidth -
-                          ScreenLayout.helperColorPadding,
-                      left: CardLayout.cardAttributeIconLeft * _cardWidth -
-                          ScreenLayout.helperColorPadding,
-                      child: Container(
-                        padding:
-                            EdgeInsets.all(ScreenLayout.helperColorPadding),
-                        decoration: BoxDecoration(
-                            color: AppColor.helpOverlayColor,
-                            boxShadow: [
-                              BoxShadow(
-                                color: AppColor.helpOverlayColor,
-                                blurRadius: ScreenLayout.editButtonBlurRadius,
-                                spreadRadius:
-                                    ScreenLayout.editButtonSpreadRadius,
-                              )
-                            ]),
-                        child: CardAttributeIcon(),
-                      ),
-                    )
-                  : Positioned(
-                      top: CardLayout.cardAttributeIconTop * _cardWidth,
-                      left: CardLayout.cardAttributeIconLeft * _cardWidth,
-                      child: CardAttributeIcon(),
-                    ),
+              Positioned(
+                top: CardLayout.cardAttributeIconTop * _cardWidth -
+                    ScreenLayout.helperColorPadding,
+                left: CardLayout.cardAttributeIconLeft * _cardWidth -
+                    ScreenLayout.helperColorPadding,
+                child: HighlightWrapper(
+                    highlightPadding: ScreenLayout.helperColorPadding,
+                    child: CardAttributeIcon()),
+              ),
             //Monster Level
             if (cardTypeGroup == CardTypeGroup.monster &&
                 snapshot.data != CardType.link)
               Positioned(
                 top: CardLayout.monsterLevelTop * _cardWidth,
-                child: helpStep == HelpStep.monsterLevel
-                    ? Container(
-                        decoration: BoxDecoration(
-                            color: AppColor.helpOverlayColor,
-                            boxShadow: [
-                              BoxShadow(
-                                color: AppColor.helpOverlayColor,
-                                blurRadius: ScreenLayout.editButtonBlurRadius,
-                                spreadRadius:
-                                    ScreenLayout.editButtonSpreadRadius,
-                              )
-                            ]),
-                        child: MonsterLevel())
-                    : MonsterLevel(),
+                child: HighlightWrapper(child: MonsterLevel()),
               ),
             if (cardTypeGroup != CardTypeGroup.monster)
               Positioned(
                 top: _cardWidth * CardLayout.effectTypeTop,
                 right: _cardWidth * CardLayout.effectTypeRight,
-                child: helpStep == HelpStep.spellTrapType
-                    ? Container(
-                        decoration: BoxDecoration(
-                            color: AppColor.helpOverlayColor,
-                            boxShadow: [
-                              BoxShadow(
-                                color: AppColor.helpOverlayColor,
-                                blurRadius: ScreenLayout.editButtonBlurRadius,
-                                spreadRadius:
-                                    ScreenLayout.editButtonSpreadRadius,
-                              )
-                            ]),
-                        child: SpellTrapType())
-                    : SpellTrapType(),
+                child: HighlightWrapper(child: SpellTrapType()),
               ),
             //Link arrows
             if (snapshot.data == CardType.link) LinkArrows(),
@@ -151,7 +108,7 @@ class YugiohCardWidget extends StatelessWidget with GetItMixin {
               Positioned(
                   top: _cardWidth * CardLayout.monsterTypeTop,
                   left: _cardWidth * CardLayout.monsterTypeLeft,
-                  child: const MonsterType()),
+                  child: HighlightWrapper(child: const MonsterType())),
             //Card description
             Positioned(
                 top: _cardWidth *
@@ -159,13 +116,13 @@ class YugiohCardWidget extends StatelessWidget with GetItMixin {
                         ? CardLayout.cardDescriptionTop
                         : CardLayout.cardDescriptionWithoutTypeTop),
                 left: _cardWidth * CardLayout.cardDescriptionMargin,
-                child: const CardDescription()),
+                child: HighlightWrapper(child: const CardDescription())),
             //Card ATK
             if (cardTypeGroup == CardTypeGroup.monster)
               Positioned(
                 top: _cardWidth * CardLayout.atkTop,
                 left: _cardWidth * CardLayout.atkLeft,
-                child: Atk(),
+                child: HighlightWrapper(child: Atk()),
               ),
             //Card DEF
             if (cardTypeGroup == CardTypeGroup.monster &&
@@ -173,19 +130,19 @@ class YugiohCardWidget extends StatelessWidget with GetItMixin {
               Positioned(
                 top: _cardWidth * CardLayout.atkTop,
                 left: _cardWidth * CardLayout.defLeft,
-                child: Def(),
+                child: HighlightWrapper(child: Def()),
               ),
             //Link rating for Link monster cards
             if (snapshot.data == CardType.link)
               Positioned(
                   top: _cardWidth * CardLayout.linkRatingTop,
                   left: _cardWidth * CardLayout.linkRatingLeft,
-                  child: LinkRating()),
+                  child: HighlightWrapper(child: LinkRating())),
             //Creator Name
             Positioned(
               top: _cardWidth * CardLayout.creatorNameTop,
               left: _cardWidth * CardLayout.creatorNameLeft,
-              child: CreatorName(),
+              child: HighlightWrapper(child: CreatorName()),
             ),
           ]);
         });

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get_it_mixin/get_it_mixin.dart';
 import 'package:yugioh_card_creator/presentation/main_screen/card_creator_page/outer_buttons/save_card_button.dart';
+import 'package:yugioh_card_creator/presentation/main_screen/custom_widgets/highlight_wrapper.dart';
 
 import '../../../application/dependency_injection.dart';
 import '../../resources/colors.dart';
@@ -121,21 +122,7 @@ class _CardCreatorViewState extends State<CardCreatorView>
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            helpStep == HelpStep.saveCardButton
-                                ? Container(
-                                    decoration: BoxDecoration(
-                                        color: AppColor.helpOverlayColor,
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: AppColor.helpOverlayColor,
-                                            blurRadius: ScreenLayout
-                                                .editButtonBlurRadius,
-                                            spreadRadius: ScreenLayout
-                                                .editButtonSpreadRadius,
-                                          )
-                                        ]),
-                                    child: SaveCardButton())
-                                : SaveCardButton(),
+                            HighlightWrapper(child: SaveCardButton()),
                           ],
                         ),
                         if (helpStep != HelpStep.none)
@@ -172,8 +159,7 @@ class _CardCreatorViewState extends State<CardCreatorView>
                             const Opacity(
                               opacity: 0,
                               child: ElevatedButton(
-                                  onPressed: null,
-                                  child: Text(Strings.end)),
+                                  onPressed: null, child: Text(Strings.end)),
                             ),
                             if (helpStep > HelpStep.linkArrows ||
                                 helpStep == HelpStep.cardImageButton)
@@ -188,67 +174,18 @@ class _CardCreatorViewState extends State<CardCreatorView>
                       ),
                   ],
                 ),
-                helpStep == HelpStep.cardTypeButton
-                    ? Positioned(
-                        top: cardTop - ScreenLayout.helperColorPadding,
-                        left: iconLeft - ScreenLayout.helperColorPadding,
-                        child: Container(
-                            decoration: BoxDecoration(
-                                color: AppColor.helpOverlayColor,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: AppColor.helpOverlayColor,
-                                    blurRadius:
-                                        ScreenLayout.editButtonBlurRadius,
-                                    spreadRadius:
-                                        ScreenLayout.editButtonSpreadRadius,
-                                  )
-                                ]),
-                            padding:
-                                EdgeInsets.all(ScreenLayout.helperColorPadding),
-                            child: CardTypeButton()))
-                    : Positioned(
-                        top: cardTop, left: iconLeft, child: CardTypeButton()),
-                helpStep == HelpStep.cardImageButton
-                    ? Positioned(
-                        top: cardTop +
-                            cardHeight -
-                            ScreenLayout.editButtonHeight -
-                            ScreenLayout.helperColorPadding,
-                        left: iconLeft - ScreenLayout.helperColorPadding,
-                        child: Container(
-                            decoration: BoxDecoration(
-                                color: AppColor.helpOverlayColor,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: AppColor.helpOverlayColor,
-                                    blurRadius:
-                                        ScreenLayout.editButtonBlurRadius,
-                                    spreadRadius:
-                                        ScreenLayout.editButtonSpreadRadius,
-                                  )
-                                ]),
-                            padding:
-                                EdgeInsets.all(ScreenLayout.helperColorPadding),
-                            child: CardImageButton()))
-                    : Positioned(
-                        top: cardTop +
-                            cardHeight -
-                            ScreenLayout.editButtonHeight,
-                        left: iconLeft,
-                        child: Container(
-                            decoration: BoxDecoration(
-                                color: AppColor.helpOverlayColor,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: AppColor.helpOverlayColor,
-                                    blurRadius:
-                                        ScreenLayout.editButtonBlurRadius,
-                                    spreadRadius:
-                                        ScreenLayout.editButtonSpreadRadius,
-                                  )
-                                ]),
-                            child: CardImageButton())),
+                Positioned(
+                    top: cardTop - ScreenLayout.helperColorPadding,
+                    left: iconLeft - ScreenLayout.helperColorPadding,
+                    child: HighlightWrapper(
+                        highlightPadding: ScreenLayout.helperColorPadding,
+                        child: CardTypeButton())),
+                Positioned(
+                    top: cardTop + cardHeight - ScreenLayout.editButtonHeight,
+                    left: iconLeft - ScreenLayout.helperColorPadding,
+                    child: HighlightWrapper(
+                        highlightPadding: ScreenLayout.helperColorPadding,
+                        child: CardImageButton())),
                 Positioned(
                   top: cardTop,
                   left: cardLeft,
