@@ -1,16 +1,6 @@
-# yugioh_card_creator
+# Yugioh Card Maker
 
-A Yugioh Card Creator app that uses MVVM architecture
+Yugioh Card Maker, as its name implies, is a Yu-gi-oh card maker app. Techstack used in this project is: Flutter as the frontend, Java Spring Boot as the backend, MySQL as the database, AWS S3 as the image storage, and Jenkins as the CI/CD tool. 
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+# Yugioh Card Maker-FE
+This repository is the frontend of the Yugioh Card Maker app. It's built using Flutter and the MVVM architecture.
