@@ -41,7 +41,7 @@ class Strings {
   static const monsterLevelName = 'Monster Level';
   static const monsterLevelDesc = 'Swipe or click on the horizontal bar to set the number of stars, only available for monsters except the Link type';
   static const cardImageName = 'Card Image';
-  static const cardImageDesc = 'Use your fingers to resize or drag the image to adjust its visible part provided at least its height or width is not smaller than that of the surrounding frame';
+  static const cardImageDesc = 'Use your fingers to resize or drag the image to adjust its visible area provided the image is not smaller than the frame';
   static const spellTrapTypeName = 'Spell/Trap card type';
   static const spellTrapTypeDesc = 'Click on the text to select the type for the Spell or Trap card, only available on these types of card';
   static const linkArrowsName = 'Link Arrows';

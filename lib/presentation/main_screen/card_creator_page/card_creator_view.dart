@@ -7,7 +7,6 @@ import 'package:yugioh_card_creator/presentation/main_screen/card_creator_page/o
 import 'package:yugioh_card_creator/presentation/main_screen/custom_widgets/highlight_wrapper.dart';
 
 import '../../../application/dependency_injection.dart';
-import '../../resources/colors.dart';
 import '../../resources/images.dart';
 import '../../resources/layout.dart';
 import '../../resources/strings.dart';
@@ -113,67 +112,6 @@ class _CardCreatorViewState extends State<CardCreatorView>
 
             return Stack(
               children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            HighlightWrapper(child: SaveCardButton()),
-                          ],
-                        ),
-                        if (helpStep != HelpStep.none)
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              ElevatedButton(
-                                  onPressed: () {
-                                    _cardCreatorViewModel.prevHelpStep();
-                                  },
-                                  child: const Text(Strings.prev)),
-                              if (helpStep > HelpStep.none &&
-                                  helpStep <= HelpStep.linkArrows &&
-                                  helpStep != HelpStep.cardImageButton)
-                                _getHelperText(helpStep),
-                              ElevatedButton(
-                                  onPressed: () {
-                                    _cardCreatorViewModel.nextHelpStep();
-                                  },
-                                  child: const Text(Strings.next))
-                            ],
-                          ),
-                      ],
-                    ),
-                    if (helpStep != HelpStep.none)
-                      Padding(
-                        padding:
-                            EdgeInsets.only(bottom: ScreenLayout.bigIconSize),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            const Opacity(
-                              opacity: 0,
-                              child: ElevatedButton(
-                                  onPressed: null, child: Text(Strings.end)),
-                            ),
-                            if (helpStep > HelpStep.linkArrows ||
-                                helpStep == HelpStep.cardImageButton)
-                              _getHelperText(helpStep),
-                            ElevatedButton(
-                                onPressed: () {
-                                  _cardCreatorViewModel.endHelp();
-                                },
-                                child: const Text(Strings.end))
-                          ],
-                        ),
-                      ),
-                  ],
-                ),
                 Positioned(
                     top: cardTop - ScreenLayout.helperColorPadding,
                     left: iconLeft - ScreenLayout.helperColorPadding,
@@ -195,6 +133,56 @@ class _CardCreatorViewState extends State<CardCreatorView>
                       child: RepaintBoundary(
                           key: _cardCreatorViewModel.cardKey,
                           child: YugiohCardWidget())),
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            if (helpStep != HelpStep.none)
+                              ElevatedButton(
+                                  onPressed: () {
+                                    _cardCreatorViewModel.prevHelpStep();
+                                  },
+                                  child: const Text(Strings.prev)),
+                            const Spacer(),
+                            HighlightWrapper(child: SaveCardButton()),
+                            const Spacer(),
+                            if (helpStep != HelpStep.none)
+                              ElevatedButton(
+                                  onPressed: () {
+                                    _cardCreatorViewModel.nextHelpStep();
+                                  },
+                                  child: const Text(Strings.next)),
+                          ],
+                        ),
+                      ],
+                    ),
+                    if (helpStep != HelpStep.none)
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          const Opacity(
+                            opacity: 0,
+                            child: ElevatedButton(
+                                onPressed: null, child: Text(Strings.end)),
+                          ),
+                          // if (helpStep > HelpStep.linkArrows ||
+                          //     helpStep == HelpStep.cardImageButton)
+                            _getHelperText(helpStep),
+                          ElevatedButton(
+                              onPressed: () {
+                                _cardCreatorViewModel.endHelp();
+                              },
+                              child: const Text(Strings.end))
+                        ],
+                      ),
+                  ],
                 ),
               ],
             );

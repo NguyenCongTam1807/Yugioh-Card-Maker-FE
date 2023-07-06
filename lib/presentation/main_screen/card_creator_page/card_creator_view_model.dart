@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:yugioh_card_creator/application/extensions.dart';
 import 'package:yugioh_card_creator/data/models/yugioh_card.dart';
-import 'package:yugioh_card_creator/presentation/main_screen/card_creator_page/outer_buttons/save_card_button.dart';
 
 import 'help_step.dart';
 
