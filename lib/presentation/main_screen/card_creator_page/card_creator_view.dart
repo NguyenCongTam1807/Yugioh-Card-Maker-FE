@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it_mixin/get_it_mixin.dart';
-import 'package:yugioh_card_creator/presentation/main_screen/card_creator_page/outer_buttons/save_card_button.dart';
+import 'package:yugioh_card_creator/presentation/main_screen/card_creator_page/outer_buttons/card_maker_menu_button.dart';
 import 'package:yugioh_card_creator/presentation/main_screen/custom_widgets/highlight_wrapper.dart';
 
 import '../../../application/dependency_injection.dart';
@@ -151,7 +151,7 @@ class _CardCreatorViewState extends State<CardCreatorView>
                                   },
                                   child: const Text(Strings.prev)),
                             const Spacer(),
-                            HighlightWrapper(child: SaveCardButton()),
+                            HighlightWrapper(child: CardMakerMenuButton()),
                             const Spacer(),
                             if (helpStep != HelpStep.none)
                               ElevatedButton(
@@ -197,10 +197,10 @@ class _CardCreatorViewState extends State<CardCreatorView>
     String name = '';
     String description = '';
     switch (helpStep) {
-      case HelpStep.saveCardButton:
+      case HelpStep.cardMakerMenuButton:
         {
-          name = Strings.saveCardButtonName;
-          description = Strings.saveCardButtonDesc;
+          name = Strings.cardMakerMenuButtonName;
+          description = Strings.cardMakerMenuButtonDesc;
         }
         break;
       case HelpStep.cardTypeButton:

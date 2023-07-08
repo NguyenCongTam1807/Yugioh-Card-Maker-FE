@@ -13,7 +13,7 @@ class CardCreatorViewModel extends ChangeNotifier {
   int linkRating = 0;
   GlobalKey cardKey = GlobalKey();
   Map<int, String> helpItemNameMap = {
-    HelpStep.saveCardButton: 'SaveCardButton',
+    HelpStep.cardMakerMenuButton: 'CardMakerMenuButton',
     HelpStep.cardTypeButton: 'CardTypeButton',
     HelpStep.cardImageButton: 'CardImageButton',
     HelpStep.cardName: 'CardName',

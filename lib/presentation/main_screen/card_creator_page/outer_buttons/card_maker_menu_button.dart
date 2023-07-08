@@ -13,19 +13,20 @@ import 'package:yugioh_card_creator/presentation/main_screen/card_creator_page/c
 import 'dart:ui' as ui;
 
 import '../../../../application/dependency_injection.dart';
+import '../../../../data/models/yugioh_card.dart';
 import '../../../resources/layout.dart';
+import '../../../resources/map_key.dart';
 import '../../../resources/strings.dart';
 import '../../../resources/styles.dart';
-import '../help_step.dart';
 
-class SaveCardButton extends StatefulWidget with GetItStatefulWidgetMixin {
-  SaveCardButton({Key? key}) : super(key: key);
+class CardMakerMenuButton extends StatefulWidget with GetItStatefulWidgetMixin {
+  CardMakerMenuButton({Key? key}) : super(key: key);
 
   @override
-  State<SaveCardButton> createState() => _SaveCardButtonState();
+  State<CardMakerMenuButton> createState() => _CardMakerMenuButtonState();
 }
 
-class _SaveCardButtonState extends State<SaveCardButton> with GetItStateMixin {
+class _CardMakerMenuButtonState extends State<CardMakerMenuButton> with GetItStateMixin {
   final _cardCreatorViewModel = getIt<CardCreatorViewModel>();
   //final _key = getIt<CardCreatorViewModel>().helpItemKeyMap[HelpStep.saveCardButton];
   final _savedFileNameController = TextEditingController();
@@ -47,6 +48,10 @@ class _SaveCardButtonState extends State<SaveCardButton> with GetItStateMixin {
   void dispose() {
     _savedFileNameController.dispose();
     super.dispose();
+  }
+
+  void _showHelp() {
+    _cardCreatorViewModel.startHelp();
   }
 
   Future<void> _promptImageName() async {
@@ -134,7 +139,7 @@ class _SaveCardButtonState extends State<SaveCardButton> with GetItStateMixin {
                             Navigator.of(context).pop();
                             await _exportImage(_savedFileNameController.text);
                           },
-                          child: const Text(Strings.save)),
+                          child: const Text(Strings.export)),
                     ],
                   )
                 ],
@@ -261,12 +266,52 @@ class _SaveCardButtonState extends State<SaveCardButton> with GetItStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return IconButton(
-      //key: _key,
-      onPressed: _promptImageName,
-      icon: Icon(
-        Icons.save,
-        size: ScreenLayout.bigIconSize,
+    return PopupMenuButton(
+      color: Theme.of(context).colorScheme.onTertiaryContainer,
+      padding: EdgeInsets.zero,
+      onSelected: (value) async {
+        switch (value) {
+          case Strings.export:
+            _promptImageName();
+            break;
+          case Strings.upload:
+            print("UPLOAD");
+            break;
+          case Strings.help:
+            _showHelp();
+            break;
+          default:
+            break;
+        }
+      },
+      itemBuilder: (BuildContext context) {
+        return [
+          appBarMenuItem(Strings.export, Icons.download_for_offline),
+          appBarMenuItem(Strings.upload, Icons.cloud_upload),
+          appBarMenuItem(Strings.help, Icons.help),
+        ];
+      },
+      child: Icon(Icons.menu, size: ScreenLayout.bigIconSize,),
+    );
+  }
+
+  PopupMenuItem<String> appBarMenuItem(String title, IconData iconData) {
+    return PopupMenuItem<String>(
+      value: title,
+      height: double.minPositive,
+      padding: EdgeInsets.all(ScreenLayout.editPopupItemPaddingLarge),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            title,
+            style: kSettingTextStyle,
+          ),
+          Icon(iconData,
+              color: Theme.of(context).appBarTheme.actionsIconTheme?.color??Colors.black,
+              // shadows: []
+          ),
+        ],
       ),
     );
   }

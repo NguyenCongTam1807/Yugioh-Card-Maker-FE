@@ -1,6 +1,6 @@
 class HelpStep {
   static const none = 0;
-  static const saveCardButton = 1;
+  static const cardMakerMenuButton = 1;
   static const cardTypeButton = 2;
   static const cardImageButton = 3;
   static const cardName = 4;
