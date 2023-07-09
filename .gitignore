@@ -31,6 +31,21 @@ migrate_working_dir/
 .pub-cache/
 .pub/
 /build/
+ios/Pods/
+android/.gradle/
+ios/Flutter/App.framework/
+ios/Flutter/Flutter.framework/
+ios/Flutter/Generated.xcconfig
+ios/Flutter/flutter_export_environment.sh
+macos/Flutter/App.framework/
+macos/Flutter/Flutter.framework/
+macos/Flutter/Generated.xcconfig
+macos/Flutter/flutter_export_environment.sh
+
+# Firebase specific files
+# Add any Firebase-specific files to ignore below
+/google-services.json
+/GoogleService-Info.plist
 
 # Symbolication related
 app.*.symbols
