@@ -4,7 +4,6 @@ import '../../presentation/resources/defaults.dart';
 import '../../presentation/resources/strings.dart';
 
 class YugiohCard {
-  int? id;
   String? name;
   CardAttribute? attribute;
   String? imagePath;
@@ -19,7 +18,6 @@ class YugiohCard {
   List<bool>? linkArrows;
 
   YugiohCard({
-    this.id,
     this.name = Strings.defaultCardName,
     this.attribute = CardDefaults.defaultAttribute,
     this.imagePath = CardDefaults.defaultCardImage,
@@ -33,6 +31,50 @@ class YugiohCard {
     this.effectType = EffectType.normal,
     this.linkArrows = CardDefaults.defaultLinkArrows,
   });
+
+  factory YugiohCard.fromJson(Map<String, dynamic> json) {
+    final attribute = CardAttribute.values.firstWhere((element) => element == json['attribute']);
+    final cardType = CardType.values.firstWhere((element) => element == json['cardType']);
+    final effectType = EffectType.values.firstWhere((element) => element == json['effectType']);
+    final linkArrows = <bool>[];
+    final linkArrowsString = json['linkArrows'] as String;
+    for (int i = 0; i<linkArrowsString.length; i++) {
+      linkArrows.add(linkArrowsString[i] == "1");
+    }
+    return YugiohCard(
+      name: json['name'],
+      attribute: attribute,
+      imagePath: json['imagePath'],
+      monsterType: json['monsterType'],
+      description: json['description'],
+      atk: json['atk'],
+      def: json['def'],
+      creatorName: json['creatorName'],
+      cardType: cardType,
+      level: json['level'],
+      effectType: effectType,
+      linkArrows: linkArrows,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['name'] = name;
+    data['attribute'] = attribute.toString();
+    data['imagePath'] = imagePath;
+    data['monsterType'] = monsterType;
+    data['description'] = description;
+    data['atk'] = atk;
+    data['def'] = def;
+    data['creatorName'] = creatorName;
+    data['cardType'] = cardType.toString();
+    data['level'] = level;
+    data['effectType'] = effectType.toString();
+    var arrowsString = "";
+    linkArrows?.forEach((linkEnabled) =>arrowsString+=linkEnabled? "1":"0");
+    data['linkArrows'] = arrowsString;
+    return data;
+  }
 }
 
 enum CardAttribute {

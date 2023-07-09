@@ -1,6 +1,8 @@
+import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:gallery_saver/gallery_saver.dart';
@@ -9,13 +11,12 @@ import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:yugioh_card_creator/application/extensions.dart';
+import 'package:yugioh_card_creator/data/network/yugioh_api.dart';
 import 'package:yugioh_card_creator/presentation/main_screen/card_creator_page/card_creator_view_model.dart';
 import 'dart:ui' as ui;
 
 import '../../../../application/dependency_injection.dart';
-import '../../../../data/models/yugioh_card.dart';
 import '../../../resources/layout.dart';
-import '../../../resources/map_key.dart';
 import '../../../resources/strings.dart';
 import '../../../resources/styles.dart';
 
@@ -30,6 +31,7 @@ class _CardMakerMenuButtonState extends State<CardMakerMenuButton> with GetItSta
   final _cardCreatorViewModel = getIt<CardCreatorViewModel>();
   //final _key = getIt<CardCreatorViewModel>().helpItemKeyMap[HelpStep.saveCardButton];
   final _savedFileNameController = TextEditingController();
+  final dio = Dio();
   late final String _appDirectoryPath;
   bool isInit = false;
 
@@ -264,6 +266,16 @@ class _CardMakerMenuButtonState extends State<CardMakerMenuButton> with GetItSta
     }
   }
 
+  Future<void> _uploadCard() async {
+    _cardCreatorViewModel.cleanPropertiesPreUpload();
+
+    final response = await dio.post(YugiohApi.uploadCard, data:
+      jsonEncode(_cardCreatorViewModel.currentCardJson)
+    );
+
+    print("RESPONSE: ${response.statusCode}\n ${response.data}");
+  }
+
   @override
   Widget build(BuildContext context) {
     return PopupMenuButton(
@@ -275,7 +287,7 @@ class _CardMakerMenuButtonState extends State<CardMakerMenuButton> with GetItSta
             _promptImageName();
             break;
           case Strings.upload:
-            print("UPLOAD");
+            _uploadCard();
             break;
           case Strings.help:
             _showHelp();

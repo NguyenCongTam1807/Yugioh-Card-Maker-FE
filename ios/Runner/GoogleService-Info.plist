@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>63132428406-2f257kd4b180isoi3n2ornbbf9lj5tav.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.63132428406-2f257kd4b180isoi3n2ornbbf9lj5tav</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBQEJR7byHFV8OL83jOcAWMV2W6qpKcAEg</string>
+	<key>GCM_SENDER_ID</key>
+	<string>63132428406</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.congtam.yugiohCardCreator</string>
+	<key>PROJECT_ID</key>
+	<string>yugioh-card-maker-4b7f4</string>
+	<key>STORAGE_BUCKET</key>
+	<string>yugioh-card-maker-4b7f4.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:63132428406:ios:80716b83b1c5d48d4f5757</string>
+</dict>
+</plist>

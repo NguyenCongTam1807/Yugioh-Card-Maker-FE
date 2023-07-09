@@ -7,6 +7,7 @@ import 'help_step.dart';
 
 class CardCreatorViewModel extends ChangeNotifier {
   YugiohCard currentCard = YugiohCard();
+  late Map<String, dynamic> currentCardJson;
   Size cardSize = const Size(0, 0);
   Offset cardOffset = const Offset(0, 0);
   int cardDescMaxLine = 0;
@@ -253,5 +254,29 @@ class CardCreatorViewModel extends ChangeNotifier {
     }
     currentCard.linkArrows = newLinkArrowList;
     notifyListeners();
+  }
+
+  void cleanPropertiesPreUpload() {
+    currentCardJson = currentCard.toJson();
+    final type = currentCard.cardType.nullSafe();
+    switch(type.group) {
+      case CardTypeGroup.monster: {
+        currentCardJson['effectType'] = null;
+        if (type == CardType.link) {
+          currentCardJson['level'] = null;
+          currentCardJson['def'] = null;
+        } else {
+          currentCardJson['linkArrows'] = null;
+        }
+      }break;
+      default: {
+        currentCardJson['attribute'] = null;
+        currentCardJson['level'] = null;
+        currentCardJson['linkArrows'] = null;
+        currentCardJson['monsterType'] = null;
+        currentCardJson['atk'] = null;
+        currentCardJson['def'] = null;
+      }
+    }
   }
 }

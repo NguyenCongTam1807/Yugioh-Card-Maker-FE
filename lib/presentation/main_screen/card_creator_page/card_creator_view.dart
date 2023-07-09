@@ -36,12 +36,6 @@ class _CardCreatorViewState extends State<CardCreatorView>
     super.initState();
   }
 
-  @override
-  void dispose() {
-    _cardCreatorViewModel.dispose();
-    super.dispose();
-  }
-
   void _setCardLayout(double screenWidth, double screenHeight) {
     const cardWidthRatio = ScreenPos.cardWidthRatio;
     const cardHeightRatio = ScreenPos.cardHeightRatio;

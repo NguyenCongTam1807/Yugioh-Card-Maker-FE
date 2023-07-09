@@ -1,0 +1,14 @@
+{
+  "name": "Nguyen Cong Tam",
+  "attribute": "CardAttribute.dark",
+  "imagePath": "abc",
+  "monsterType": "Dragon / Normal",
+  "description": "This is a test card",
+  "atk": "9999",
+  "def": "?",
+  "creatorName": "Cong Tam",
+  "cardType": "CardType.normal",
+  "level": 10,
+  "effectType": "EffectType.normal",
+  "linkArrows": "10100101"
+}
