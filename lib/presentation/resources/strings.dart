@@ -15,6 +15,7 @@ class Strings {
   static const cardUnknownAtkDef = '?';
   static const ok = 'OK';
   static const gotIt = 'Got it';
+  static const uploadedSuccessfully = 'Uploaded successfully';
   static const somethingWrong = 'Something is wrong, please try again later';
   static const saveYugiohCard = 'Save Yu-gi-oh Card';
   static const fileName = 'File name:';
@@ -22,9 +23,13 @@ class Strings {
   static const useTimestamp = 'Use timestamp\nas name';
   static const imageSaveSuccess = 'Card image has been successfully saved to';
   static const share = 'Share';
-  static const goToDirectory = 'Go To Directory';
+  static const reallyUpload = 'Do you really want to upload this card?';
+  static const yes = 'Yes';
+  static const no = 'No';
   static const upload = 'Upload';
+  static const uploadingCard = 'Uploading Card';
   static const settings = 'Settings';
+  static const anErrorOccurred = 'An error occurred';
   static const help = 'Help';
   static const prev = 'Prev';
   static const next = 'Next';

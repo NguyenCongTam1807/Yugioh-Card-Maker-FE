@@ -1,11 +1,18 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:yugioh_card_creator/application/extensions.dart';
 import 'package:yugioh_card_creator/data/models/yugioh_card.dart';
+import 'package:yugioh_card_creator/presentation/base/base_view_model.dart';
 
+import '../../../application/dependency_injection.dart';
+import '../../../data/network/dio_factory.dart';
+import '../../../data/network/yugioh_api.dart';
+import '../../view_model_states/state_renderer.dart';
 import 'help_step.dart';
 
-class CardCreatorViewModel extends ChangeNotifier {
+class CardCreatorViewModel extends ChangeNotifier with BaseViewModel{
   YugiohCard currentCard = YugiohCard();
   late Map<String, dynamic> currentCardJson;
   Size cardSize = const Size(0, 0);
@@ -277,6 +284,22 @@ class CardCreatorViewModel extends ChangeNotifier {
         currentCardJson['atk'] = null;
         currentCardJson['def'] = null;
       }
+    }
+  }
+
+
+
+  Future<void> uploadCard() async {
+    stateStreamController.add(ViewModelState.loading);
+    cleanPropertiesPreUpload();
+    try {
+      final dio = getIt<DioFactory>().getDio();
+      final response = await dio.post(YugiohApi.uploadCard,
+          data: jsonEncode(currentCardJson));
+      print("RESPONSE: ${response.statusCode}\n ${response.data}");
+      stateStreamController.add(ViewModelState.success);
+    } catch(e) {
+      stateStreamController.add(ViewModelState.error);
     }
   }
 }

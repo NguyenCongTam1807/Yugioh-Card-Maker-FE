@@ -49,6 +49,7 @@ dependencies:
   google_sign_in: ^6.1.4
   firebase_core: ^2.14.0
   dio: ^5.2.1+1
+  lottie: ^2.3.2
 
 
 dev_dependencies:

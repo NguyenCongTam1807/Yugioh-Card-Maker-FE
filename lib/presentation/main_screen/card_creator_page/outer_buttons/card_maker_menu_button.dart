@@ -1,8 +1,6 @@
-import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:gallery_saver/gallery_saver.dart';
@@ -11,7 +9,7 @@ import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:yugioh_card_creator/application/extensions.dart';
-import 'package:yugioh_card_creator/data/network/yugioh_api.dart';
+import 'package:yugioh_card_creator/presentation/common/common_widgets.dart';
 import 'package:yugioh_card_creator/presentation/main_screen/card_creator_page/card_creator_view_model.dart';
 import 'dart:ui' as ui;
 
@@ -27,11 +25,10 @@ class CardMakerMenuButton extends StatefulWidget with GetItStatefulWidgetMixin {
   State<CardMakerMenuButton> createState() => _CardMakerMenuButtonState();
 }
 
-class _CardMakerMenuButtonState extends State<CardMakerMenuButton> with GetItStateMixin {
+class _CardMakerMenuButtonState extends State<CardMakerMenuButton>
+    with GetItStateMixin {
   final _cardCreatorViewModel = getIt<CardCreatorViewModel>();
-  //final _key = getIt<CardCreatorViewModel>().helpItemKeyMap[HelpStep.saveCardButton];
   final _savedFileNameController = TextEditingController();
-  final dio = Dio();
   late final String _appDirectoryPath;
   bool isInit = false;
 
@@ -172,73 +169,24 @@ class _CardMakerMenuButtonState extends State<CardMakerMenuButton> with GetItSta
           await showDialog(
               context: context,
               builder: (ctx) {
-                return AlertDialog(
-                  contentPadding: EdgeInsets.zero,
-                  content: Container(
-                    padding: EdgeInsets.all(ScreenLayout.alertDialogPadding),
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(colors: [
-                        Theme.of(context)
-                            .dialogTheme
-                            .backgroundColor
-                            .nullSafe(),
-                        Theme.of(context)
-                            .dialogTheme
-                            .surfaceTintColor
-                            .nullSafe(),
-                        Theme.of(context)
-                            .dialogTheme
-                            .backgroundColor
-                            .nullSafe(),
-                      ], begin: Alignment.topRight, end: Alignment.bottomLeft),
-                    ),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          '${Strings.imageSaveSuccess}\n$savedFilePath',
-                          style: kSettingTextStyle,
-                        ),
-                        SizedBox(
-                          height: ScreenLayout.alertDialogPadding * 2,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor:
-                                      Theme.of(context).dialogTheme.iconColor,
-                                  foregroundColor: Theme.of(context)
-                                      .dialogTheme
-                                      .titleTextStyle
-                                      ?.color,
-                                ),
-                                onPressed: () async {
-                                  await _shareImage(savedFilePath);
-                                },
-                                child: const Text(
-                                  Strings.share,
-                                )),
-                            ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor:
-                                      Theme.of(context).dialogTheme.iconColor,
-                                  foregroundColor: Theme.of(context)
-                                      .dialogTheme
-                                      .titleTextStyle
-                                      ?.color,
-                                ),
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                                child: const Text(Strings.gotIt)),
-                          ],
-                        )
-                      ],
-                    ),
+                return commonDialog(context, [
+                  Text(
+                    '${Strings.imageSaveSuccess}\n$savedFilePath',
+                    style: kSettingTextStyle,
                   ),
-                );
+                  SizedBox(
+                    height: ScreenLayout.alertDialogPadding * 2,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      dialogActionButton(context, Strings.share, () async {
+                        await _shareImage(savedFilePath);
+                      }),
+                      dialogDismissButton(context, Strings.gotIt),
+                    ],
+                  )
+                ]);
               });
           return true;
         }
@@ -266,14 +214,30 @@ class _CardMakerMenuButtonState extends State<CardMakerMenuButton> with GetItSta
     }
   }
 
-  Future<void> _uploadCard() async {
-    _cardCreatorViewModel.cleanPropertiesPreUpload();
-
-    final response = await dio.post(YugiohApi.uploadCard, data:
-      jsonEncode(_cardCreatorViewModel.currentCardJson)
-    );
-
-    print("RESPONSE: ${response.statusCode}\n ${response.data}");
+  void _showUploadConfirmDialog() {
+    showDialog(
+        context: context,
+        builder: (ctx) {
+          return commonDialog(context, [
+            Text(
+              Strings.reallyUpload,
+              style: kSettingTextStyle,
+            ),
+            SizedBox(
+              height: ScreenLayout.alertDialogPadding * 2,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                dialogDismissButton(context, Strings.no),
+                dialogActionButton(context, Strings.yes, () {
+                  Navigator.of(context).pop();
+                  _cardCreatorViewModel.uploadCard();
+                }),
+              ],
+            )
+          ]);
+        });
   }
 
   @override
@@ -287,7 +251,7 @@ class _CardMakerMenuButtonState extends State<CardMakerMenuButton> with GetItSta
             _promptImageName();
             break;
           case Strings.upload:
-            _uploadCard();
+            _showUploadConfirmDialog();
             break;
           case Strings.help:
             _showHelp();
@@ -303,7 +267,10 @@ class _CardMakerMenuButtonState extends State<CardMakerMenuButton> with GetItSta
           appBarMenuItem(Strings.help, Icons.help),
         ];
       },
-      child: Icon(Icons.menu, size: ScreenLayout.bigIconSize,),
+      child: Icon(
+        Icons.menu,
+        size: ScreenLayout.bigIconSize,
+      ),
     );
   }
 
@@ -319,9 +286,11 @@ class _CardMakerMenuButtonState extends State<CardMakerMenuButton> with GetItSta
             title,
             style: kSettingTextStyle,
           ),
-          Icon(iconData,
-              color: Theme.of(context).appBarTheme.actionsIconTheme?.color??Colors.black,
-              // shadows: []
+          Icon(
+            iconData,
+            color: Theme.of(context).appBarTheme.actionsIconTheme?.color ??
+                Colors.black,
+            // shadows: []
           ),
         ],
       ),
