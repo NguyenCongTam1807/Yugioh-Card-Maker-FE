@@ -62,10 +62,10 @@ class MainScreenView extends StatelessWidget with GetItMixin {
                 (CardCreatorViewModel vm) => vm.stateStreamController,
                 ViewModelState.normal)
             .data;
-        print(viewModelState);
-        popDialog(context);
+
         switch (viewModelState) {
           case ViewModelState.loading:
+            popDialog(context);
             WidgetsBinding.instance.addPostFrameCallback((_) {
               showDialog(
                   context: context,
@@ -81,6 +81,7 @@ class MainScreenView extends StatelessWidget with GetItMixin {
                               ?.color,
                         ),
                       ),
+                      SizedBox(height: ScreenLayout.alertDialogPadding),
                       Center(
                         child: CircularProgressIndicator(
                             color: Theme.of(context)
@@ -93,7 +94,9 @@ class MainScreenView extends StatelessWidget with GetItMixin {
             });
             break;
           case ViewModelState.error:
-            WidgetsBinding.instance.addPostFrameCallback((_) => showDialog(
+            popDialog(context);
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              showDialog(
                     context: context,
                     builder: (context) {
                       return commonDialog(context, [
@@ -125,9 +128,10 @@ class MainScreenView extends StatelessWidget with GetItMixin {
                       ]);
                     })
                 .then((_) => _cardCreatorViewModel.stateStreamController
-                    .add(ViewModelState.normal)));
+                    .add(ViewModelState.normal));});
             break;
           case ViewModelState.success:
+            popDialog(context);
             WidgetsBinding.instance.addPostFrameCallback((_) {
               showDialog(
                   context: context,

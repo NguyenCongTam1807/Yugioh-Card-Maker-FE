@@ -5,7 +5,6 @@ import 'package:yugioh_card_creator/application/extensions.dart';
 import 'package:yugioh_card_creator/presentation/main_screen/main_screen_view.dart';
 import 'package:yugioh_card_creator/presentation/settings_screen/settings_view_model.dart';
 
-import '../presentation/main_screen/card_creator_page/card_creator_view.dart';
 import '../presentation/main_screen/card_creator_page/positions.dart';
 import '../presentation/resources/routes.dart';
 import '../presentation/resources/themes.dart';
