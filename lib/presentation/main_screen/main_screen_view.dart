@@ -23,7 +23,7 @@ class MainScreenView extends StatelessWidget with GetItMixin {
 
   final List<Widget> _pages = [
     CardCreatorView(),
-    const GalleryView(),
+    GalleryView(),
   ];
 
   @override

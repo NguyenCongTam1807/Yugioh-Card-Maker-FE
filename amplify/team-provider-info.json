@@ -1,0 +1,23 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-yugiohcardcreator-dev-195001-authRole",
+      "UnauthRoleArn": "arn:aws:iam::895437152146:role/amplify-yugiohcardcreator-dev-195001-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::895437152146:role/amplify-yugiohcardcreator-dev-195001-authRole",
+      "Region": "ap-southeast-2",
+      "DeploymentBucketName": "amplify-yugiohcardcreator-dev-195001-deployment",
+      "UnauthRoleName": "amplify-yugiohcardcreator-dev-195001-unauthRole",
+      "StackName": "amplify-yugiohcardcreator-dev-195001",
+      "StackId": "arn:aws:cloudformation:ap-southeast-2:895437152146:stack/amplify-yugiohcardcreator-dev-195001/c2b2e660-3dc5-11ee-b2fe-0a58d359ad24",
+      "AmplifyAppId": "d1d8r612v5v55h"
+    },
+    "categories": {
+      "auth": {
+        "yugiohcardcreator449c4c57": {}
+      },
+      "storage": {
+        "yugiohcardcreatorresource": {}
+      }
+    }
+  }
+}

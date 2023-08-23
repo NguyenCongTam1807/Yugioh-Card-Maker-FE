@@ -1,5 +1,4 @@
 import 'package:yugioh_card_creator/data/models/yugioh_card.dart';
-import 'package:yugioh_card_creator/presentation/main_screen/card_creator_page/card_widget/card_elements/monster_type.dart';
 
 class UploadedYugiohCard {
   final String? id;

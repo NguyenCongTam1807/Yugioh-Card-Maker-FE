@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:yugioh_card_creator/presentation/main_screen/main_screen_view.dart';
 import 'package:yugioh_card_creator/presentation/resources/strings.dart';
 
-import '../../application/dependency_injection.dart';
 import '../../presentation/settings_screen/settings_view.dart';
 
 class RouteNames {

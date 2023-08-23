@@ -10,5 +10,6 @@
   "cardType": "CardType.normal",
   "level": 10,
   "effectType": "EffectType.normal",
-  "linkArrows": "10100101"
+  "linkArrows": "10100101",
+  "storageKey": "Mock storage key"
 }

@@ -1,0 +1,16 @@
+{
+  "resourceName": "yugiohcardcreatorresource",
+  "policyUUID": "84d03aa4",
+  "bucketName": "yugiohcardcreator-bucket",
+  "storageAccess": "authAndGuest",
+  "guestAccess": [
+    "READ"
+  ],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "READ",
+    "DELETE"
+  ],
+  "triggerFunction": "NONE",
+  "groupAccess": {}
+}

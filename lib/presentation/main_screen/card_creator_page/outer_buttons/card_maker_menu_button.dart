@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -11,7 +10,6 @@ import 'package:share_plus/share_plus.dart';
 import 'package:yugioh_card_creator/application/extensions.dart';
 import 'package:yugioh_card_creator/presentation/common/common_widgets.dart';
 import 'package:yugioh_card_creator/presentation/main_screen/card_creator_page/card_creator_view_model.dart';
-import 'dart:ui' as ui;
 
 import '../../../../application/dependency_injection.dart';
 import '../../../resources/layout.dart';
@@ -151,13 +149,7 @@ class _CardMakerMenuButtonState extends State<CardMakerMenuButton>
 
   Future<bool> _exportImage(String fileName) async {
     try {
-      final RenderRepaintBoundary boundary =
-          _cardCreatorViewModel.cardKey.currentContext?.findRenderObject()
-              as RenderRepaintBoundary;
-      final ui.Image image = await boundary.toImage(pixelRatio: 2.0);
-      final ByteData? byteData =
-          await image.toByteData(format: ui.ImageByteFormat.png);
-      final Uint8List? pngBytes = byteData?.buffer.asUint8List();
+      final pngBytes = await _cardCreatorViewModel.exportFullCardImageBytes();
 
       if (pngBytes != null) {
         final savedFilePath = "$_appDirectoryPath/$fileName.png";
@@ -230,9 +222,9 @@ class _CardMakerMenuButtonState extends State<CardMakerMenuButton>
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 dialogDismissButton(context, Strings.no),
-                dialogActionButton(context, Strings.yes, () {
+                dialogActionButton(context, Strings.yes, () async {
                   Navigator.of(context).pop();
-                  _cardCreatorViewModel.uploadCard();
+                  await _cardCreatorViewModel.uploadCard();
                 }),
               ],
             )

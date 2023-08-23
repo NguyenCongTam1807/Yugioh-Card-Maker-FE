@@ -44,7 +44,7 @@ class ImageContainer extends StatelessWidget with GetItMixin {
   Image _getCorrectImageType(String path, {helpMode = false}) {
     const boxFit = BoxFit.cover;
     const filterQuality = FilterQuality.medium;
-    if (path.startsWith(ImagePath.basePath)) {
+    if (path.startsWith(ImagePath.baseAssetImagePath)) {
       return Image.asset(path, fit: boxFit, filterQuality: filterQuality, color: helpMode?AppColor.helpOverlayColor:null, colorBlendMode: helpMode?BlendMode.darken:null,);
     } else if (path.startsWith('http')) {
       return Image.network(path, fit: boxFit, filterQuality: filterQuality, color: helpMode?AppColor.helpOverlayColor:null, colorBlendMode: helpMode?BlendMode.darken:null,);

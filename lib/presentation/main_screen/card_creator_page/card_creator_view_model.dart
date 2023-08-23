@@ -1,18 +1,21 @@
-import 'dart:convert';
+import 'dart:typed_data';
+import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/rendering.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:yugioh_card_creator/application/extensions.dart';
 import 'package:yugioh_card_creator/data/models/yugioh_card.dart';
+import 'package:yugioh_card_creator/domain/usecase/upload_card_use_case.dart';
 import 'package:yugioh_card_creator/presentation/base/base_view_model.dart';
 
-import '../../../application/dependency_injection.dart';
-import '../../../data/network/dio_factory.dart';
-import '../../../data/network/yugioh_api.dart';
 import '../../view_model_states/state_renderer.dart';
 import 'help_step.dart';
 
-class CardCreatorViewModel extends ChangeNotifier with BaseViewModel{
+class CardCreatorViewModel extends ChangeNotifier with BaseViewModel {
+  final UploadCardUseCase _uploadCardUseCase;
+  CardCreatorViewModel(this._uploadCardUseCase);
+
   YugiohCard currentCard = YugiohCard();
   late Map<String, dynamic> currentCardJson;
   Size cardSize = const Size(0, 0);
@@ -20,23 +23,6 @@ class CardCreatorViewModel extends ChangeNotifier with BaseViewModel{
   int cardDescMaxLine = 0;
   int linkRating = 0;
   GlobalKey cardKey = GlobalKey();
-  Map<int, String> helpItemNameMap = {
-    HelpStep.cardMakerMenuButton: 'CardMakerMenuButton',
-    HelpStep.cardTypeButton: 'CardTypeButton',
-    HelpStep.cardImageButton: 'CardImageButton',
-    HelpStep.cardName: 'CardName',
-    HelpStep.cardAttribute: 'CardAttributeIcon',
-    HelpStep.monsterLevel: 'MonsterLevel',
-    HelpStep.spellTrapType: 'SpellTrapType',
-    HelpStep.cardImage: 'CardImage',
-    HelpStep.linkArrows: 'LinkArrows',
-    HelpStep.monsterType: 'MonsterType',
-    HelpStep.cardDescription: 'CardDescription',
-    HelpStep.atk: 'Atk',
-    HelpStep.def: 'Def',
-    HelpStep.linkRating: 'LinkRating',
-    HelpStep.creatorName: 'CreatorName',
-  };
   int helpStep = HelpStep.none;
 
   final cardTypeStreamController = BehaviorSubject<CardType>();
@@ -44,6 +30,7 @@ class CardCreatorViewModel extends ChangeNotifier with BaseViewModel{
   final atkStreamController = BehaviorSubject<String>();
   final atkDefTextStyleStreamController = BehaviorSubject<TextStyle>();
 
+  @override
   void init() {
     cardTypeStreamController.add(currentCard.cardType.nullSafe());
   }
@@ -70,7 +57,7 @@ class CardCreatorViewModel extends ChangeNotifier with BaseViewModel{
     }
     final cardType = currentCard.cardType;
     while ((cardType.nullSafe().group == CardTypeGroup.monster &&
-        helpStep == HelpStep.spellTrapType) ||
+            helpStep == HelpStep.spellTrapType) ||
         (cardType.nullSafe().group != CardTypeGroup.monster &&
             [
               HelpStep.cardAttribute,
@@ -127,7 +114,7 @@ class CardCreatorViewModel extends ChangeNotifier with BaseViewModel{
     currentCard.cardType = type;
     cardTypeStreamController.add(type);
     while ((type.nullSafe().group == CardTypeGroup.monster &&
-        helpStep == HelpStep.spellTrapType) ||
+            helpStep == HelpStep.spellTrapType) ||
         (type.nullSafe().group != CardTypeGroup.monster &&
             [
               HelpStep.cardAttribute,
@@ -263,43 +250,53 @@ class CardCreatorViewModel extends ChangeNotifier with BaseViewModel{
     notifyListeners();
   }
 
-  void cleanPropertiesPreUpload() {
-    currentCardJson = currentCard.toJson();
-    final type = currentCard.cardType.nullSafe();
-    switch(type.group) {
-      case CardTypeGroup.monster: {
-        currentCardJson['effectType'] = null;
-        if (type == CardType.link) {
-          currentCardJson['level'] = null;
-          currentCardJson['def'] = null;
-        } else {
-          currentCardJson['linkArrows'] = null;
-        }
-      }break;
-      default: {
-        currentCardJson['attribute'] = null;
-        currentCardJson['level'] = null;
-        currentCardJson['linkArrows'] = null;
-        currentCardJson['monsterType'] = null;
-        currentCardJson['atk'] = null;
-        currentCardJson['def'] = null;
-      }
-    }
+  // void cleanPropertiesPreUpload() {
+  //   currentCardJson = currentCard.toJson();
+  //   final type = currentCard.cardType.nullSafe();
+  //   switch(type.group) {
+  //     case CardTypeGroup.monster: {
+  //       currentCardJson['effectType'] = null;
+  //       if (type == CardType.link) {
+  //         currentCardJson['level'] = null;
+  //         currentCardJson['def'] = null;
+  //       } else {
+  //         currentCardJson['linkArrows'] = null;
+  //       }
+  //     }break;
+  //     default: {
+  //       currentCardJson['attribute'] = null;
+  //       currentCardJson['level'] = null;
+  //       currentCardJson['linkArrows'] = null;
+  //       currentCardJson['monsterType'] = null;
+  //       currentCardJson['atk'] = null;
+  //       currentCardJson['def'] = null;
+  //     }
+  //   }
+  // }
+
+  Future<Uint8List?> exportFullCardImageBytes({double qualityRatio = 1.0}) async {
+    final RenderRepaintBoundary boundary =
+        cardKey.currentContext?.findRenderObject() as RenderRepaintBoundary;
+    final pixelRatio = window.devicePixelRatio;
+    final image = await boundary.toImage(pixelRatio: pixelRatio*qualityRatio);
+    final ByteData? byteData =
+        await image.toByteData(format: ImageByteFormat.png);
+    final Uint8List? pngBytes = byteData?.buffer.asUint8List();
+
+    return pngBytes;
   }
-
-
 
   Future<void> uploadCard() async {
     stateStreamController.add(ViewModelState.loading);
-    cleanPropertiesPreUpload();
-    try {
-      final dio = getIt<DioFactory>().getDio();
-      final response = await dio.post(YugiohApi.uploadCard,
-          data: jsonEncode(currentCardJson));
-      print("RESPONSE: ${response.statusCode}\n ${response.data}");
-      stateStreamController.add(ViewModelState.success);
-    } catch(e) {
-      stateStreamController.add(ViewModelState.error);
-    }
+    final fullCardImageBytes = await exportFullCardImageBytes();
+    final thumbnailBytes = await exportFullCardImageBytes(qualityRatio: 0.25);
+    final map = {
+      'yugiohCard': currentCard,
+      'fullCardImageData': fullCardImageBytes,
+      'thumbnailData': thumbnailBytes
+    };
+    (await _uploadCardUseCase.execute(map)).fold(
+        (failure) => stateStreamController.add(ViewModelState.error),
+        (statusCode) => stateStreamController.add(ViewModelState.success));
   }
 }

@@ -16,5 +16,23 @@ class HelpStep {
   static const linkRating = 14; //link monster card
   static const creatorName = 15;
   static const lastStep = 15;
+
+  static const helpItemNameMap = {
+    HelpStep.cardMakerMenuButton: 'CardMakerMenuButton',
+    HelpStep.cardTypeButton: 'CardTypeButton',
+    HelpStep.cardImageButton: 'CardImageButton',
+    HelpStep.cardName: 'CardName',
+    HelpStep.cardAttribute: 'CardAttributeIcon',
+    HelpStep.monsterLevel: 'MonsterLevel',
+    HelpStep.spellTrapType: 'SpellTrapType',
+    HelpStep.cardImage: 'CardImage',
+    HelpStep.linkArrows: 'LinkArrows',
+    HelpStep.monsterType: 'MonsterType',
+    HelpStep.cardDescription: 'CardDescription',
+    HelpStep.atk: 'Atk',
+    HelpStep.def: 'Def',
+    HelpStep.linkRating: 'LinkRating',
+    HelpStep.creatorName: 'CreatorName',
+  };
 }
 

@@ -16,6 +16,7 @@ class YugiohCard {
   int? level;
   EffectType? effectType;
   List<bool>? linkArrows;
+  String? storageKey;
 
   YugiohCard({
     this.name = Strings.defaultCardName,
@@ -30,6 +31,7 @@ class YugiohCard {
     this.level = CardDefaults.defaultCardLevel,
     this.effectType = EffectType.normal,
     this.linkArrows = CardDefaults.defaultLinkArrows,
+    this.storageKey,
   });
 
   factory YugiohCard.fromJson(Map<String, dynamic> json) {
@@ -54,6 +56,7 @@ class YugiohCard {
       level: json['level'],
       effectType: effectType,
       linkArrows: linkArrows,
+      storageKey: json['storageKey'],
     );
   }
 
@@ -73,6 +76,7 @@ class YugiohCard {
     var arrowsString = "";
     linkArrows?.forEach((linkEnabled) =>arrowsString+=linkEnabled? "1":"0");
     data['linkArrows'] = arrowsString;
+    data['storageKey'] = storageKey;
     return data;
   }
 }

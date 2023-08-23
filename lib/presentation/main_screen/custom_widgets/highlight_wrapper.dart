@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_it_mixin/get_it_mixin.dart';
+import 'package:yugioh_card_creator/presentation/main_screen/card_creator_page/help_step.dart';
 
 import '../../../application/dependency_injection.dart';
 import '../../resources/colors.dart';
@@ -12,7 +13,7 @@ class HighlightWrapper extends StatelessWidget with GetItMixin {
   HighlightWrapper({Key? key, this.highlightPadding = 0.0, required this.child})
       : super(key: key);
 
-  final _helpItemNameMap = getIt<CardCreatorViewModel>().helpItemNameMap;
+  final _helpItemNameMap = HelpStep.helpItemNameMap;
 
   @override
   Widget build(BuildContext context) {
