@@ -9,6 +9,8 @@ import 'package:yugioh_card_creator/data/models/yugioh_card.dart';
 import 'package:yugioh_card_creator/domain/usecase/upload_card_use_case.dart';
 import 'package:yugioh_card_creator/presentation/base/base_view_model.dart';
 
+import '../../../data/models/view_state.dart';
+import '../../resources/strings.dart';
 import '../../view_model_states/state_renderer.dart';
 import 'help_step.dart';
 
@@ -250,35 +252,12 @@ class CardCreatorViewModel extends ChangeNotifier with BaseViewModel {
     notifyListeners();
   }
 
-  // void cleanPropertiesPreUpload() {
-  //   currentCardJson = currentCard.toJson();
-  //   final type = currentCard.cardType.nullSafe();
-  //   switch(type.group) {
-  //     case CardTypeGroup.monster: {
-  //       currentCardJson['effectType'] = null;
-  //       if (type == CardType.link) {
-  //         currentCardJson['level'] = null;
-  //         currentCardJson['def'] = null;
-  //       } else {
-  //         currentCardJson['linkArrows'] = null;
-  //       }
-  //     }break;
-  //     default: {
-  //       currentCardJson['attribute'] = null;
-  //       currentCardJson['level'] = null;
-  //       currentCardJson['linkArrows'] = null;
-  //       currentCardJson['monsterType'] = null;
-  //       currentCardJson['atk'] = null;
-  //       currentCardJson['def'] = null;
-  //     }
-  //   }
-  // }
-
-  Future<Uint8List?> exportFullCardImageBytes({double qualityRatio = 1.0}) async {
+  Future<Uint8List?> exportFullCardImageBytes(
+      {double qualityRatio = 1.0}) async {
     final RenderRepaintBoundary boundary =
         cardKey.currentContext?.findRenderObject() as RenderRepaintBoundary;
     final pixelRatio = window.devicePixelRatio;
-    final image = await boundary.toImage(pixelRatio: pixelRatio*qualityRatio);
+    final image = await boundary.toImage(pixelRatio: pixelRatio * qualityRatio);
     final ByteData? byteData =
         await image.toByteData(format: ImageByteFormat.png);
     final Uint8List? pngBytes = byteData?.buffer.asUint8List();
@@ -287,7 +266,8 @@ class CardCreatorViewModel extends ChangeNotifier with BaseViewModel {
   }
 
   Future<void> uploadCard() async {
-    stateStreamController.add(ViewModelState.loading);
+    stateStreamController.add(const ViewState(ViewModelState.loading,
+        message: Strings.uploadingCard));
     final fullCardImageBytes = await exportFullCardImageBytes();
     final thumbnailBytes = await exportFullCardImageBytes(qualityRatio: 0.25);
     final map = {
@@ -296,7 +276,11 @@ class CardCreatorViewModel extends ChangeNotifier with BaseViewModel {
       'thumbnailData': thumbnailBytes
     };
     (await _uploadCardUseCase.execute(map)).fold(
-        (failure) => stateStreamController.add(ViewModelState.error),
-        (statusCode) => stateStreamController.add(ViewModelState.success));
+        (failure) => stateStreamController.add(const ViewState(
+            ViewModelState.error,
+            message: Strings.uploadFailed)),
+        (statusCode) => stateStreamController.add(const ViewState(
+            (ViewModelState.success),
+            message: Strings.uploadedSuccessfully)));
   }
 }

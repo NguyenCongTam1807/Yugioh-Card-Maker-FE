@@ -7,9 +7,9 @@ class DioFactory {
   Dio getDio() {
     final dio = Dio(
       BaseOptions(
-        connectTimeout: const Duration(seconds: 10),
-        receiveTimeout:  const Duration(seconds: 10),
-        sendTimeout:  const Duration(seconds: 10),
+        connectTimeout: const Duration(seconds: 8),
+        receiveTimeout:  const Duration(seconds: 8),
+        sendTimeout:  const Duration(seconds: 8),
         headers: {
           "content-type": "application/json",
           "accept": "application/json",

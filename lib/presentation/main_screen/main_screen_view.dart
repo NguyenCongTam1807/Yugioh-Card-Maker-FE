@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_it_mixin/get_it_mixin.dart';
 import 'package:yugioh_card_creator/application/extensions.dart';
+import 'package:yugioh_card_creator/data/models/view_state.dart';
 import 'package:yugioh_card_creator/presentation/common/common_functions.dart';
 import 'package:yugioh_card_creator/presentation/common/common_widgets.dart';
 import 'package:yugioh_card_creator/presentation/main_screen/card_creator_page/card_creator_view_model.dart';
@@ -58,12 +59,12 @@ class MainScreenView extends StatelessWidget with GetItMixin {
     return Scaffold(
       appBar: appBar,
       body: Builder(builder: (context) {
-        final viewModelState = watchStream(
+        final viewState = watchStream(
                 (CardCreatorViewModel vm) => vm.stateStreamController,
-                ViewModelState.normal)
+                const ViewState(ViewModelState.normal))
             .data;
 
-        switch (viewModelState) {
+        switch (viewState!.state) {
           case ViewModelState.loading:
             popDialog(context);
             WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -73,7 +74,8 @@ class MainScreenView extends StatelessWidget with GetItMixin {
                   builder: (context) {
                     return commonDialog(context, [
                       Text(
-                        Strings.uploadingCard,
+                        viewState.message.nullSafe(),
+                        textAlign: TextAlign.center,
                         style: kCardNameTextStyle.copyWith(
                           color: Theme.of(context)
                               .dialogTheme
@@ -108,7 +110,8 @@ class MainScreenView extends StatelessWidget with GetItMixin {
                         ),
                         SizedBox(height: ScreenLayout.alertDialogPadding),
                         Text(
-                          Strings.anErrorOccurred,
+                          viewState.message.nullSafe(),
+                          textAlign: TextAlign.center,
                           style: kCardNameTextStyle.copyWith(
                             color: Theme.of(context)
                                 .dialogTheme
@@ -116,19 +119,16 @@ class MainScreenView extends StatelessWidget with GetItMixin {
                                 ?.color,
                           ),
                         ),
-                        Text(
-                          Strings.somethingWrong,
-                          style: kSettingTextStyle.copyWith(
-                            color: Theme.of(context)
-                                .dialogTheme
-                                .contentTextStyle
-                                ?.color,
-                          ),
-                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            dialogDismissButton(context, Strings.ok),
+                          ],
+                        )
                       ]);
                     })
                 .then((_) => _cardCreatorViewModel.stateStreamController
-                    .add(ViewModelState.normal));});
+                    .add(const ViewState(ViewModelState.normal)));});
             break;
           case ViewModelState.success:
             popDialog(context);
@@ -144,7 +144,8 @@ class MainScreenView extends StatelessWidget with GetItMixin {
                               shadows: const []),
                           SizedBox(height: ScreenLayout.alertDialogPadding),
                           Text(
-                            Strings.uploadedSuccessfully,
+                            viewState.message.nullSafe(),
+                            textAlign: TextAlign.center,
                             style: kCardNameTextStyle.copyWith(
                               color: Theme.of(context)
                                   .dialogTheme
@@ -160,7 +161,7 @@ class MainScreenView extends StatelessWidget with GetItMixin {
                           )
                         ],
                       )).then((_) => _cardCreatorViewModel.stateStreamController
-                  .add(ViewModelState.normal));
+                  .add(const ViewState(ViewModelState.normal)));
             });
             break;
           default:

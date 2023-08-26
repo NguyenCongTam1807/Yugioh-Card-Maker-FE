@@ -8,10 +8,12 @@ import 'package:http/http.dart' as http;
 import 'package:dartz/dartz.dart';
 import 'package:flutter/services.dart';
 import 'package:yugioh_card_creator/application/extensions.dart';
+import 'package:yugioh_card_creator/data/network/error_handler.dart';
 
 import '../../data/models/yugioh_card.dart';
 import '../../data/network/failure.dart';
 import '../../presentation/resources/images.dart';
+import '../../presentation/resources/strings.dart';
 
 abstract class StorageRepository {
   Future<Either<Failure, String>> uploadImagesToStorage(Map<String, dynamic> input);
@@ -93,15 +95,9 @@ class S3StorageRepository extends StorageRepository {
         key: cardImageKey,
         options: options,
       );
-
       return Right(storageKey);
-    } on StorageException catch (e) {
-      safePrint('Storage Exception, error uploading file: ${e.message}');
-      return Left(
-          Failure(1, 'Storage Exception, error uploading file\n${e.message}'));
-    } on Exception catch (_) {
-      debugPrintStack();
-      return const Left(Failure(1, 'Error when uploading to storage'));
+    } catch (_) {
+      return const Left(Failure(Strings.uploadFailed));
     }
   }
 }

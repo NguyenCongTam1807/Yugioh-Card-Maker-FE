@@ -2,10 +2,12 @@ import 'package:dartz/dartz.dart';
 import 'package:yugioh_card_creator/data/data_source/local_data_source.dart';
 import 'package:yugioh_card_creator/data/models/uploaded_yugioh_card.dart';
 import 'package:yugioh_card_creator/data/models/yugioh_card.dart';
+import 'package:yugioh_card_creator/data/network/error_handler.dart';
 import 'package:yugioh_card_creator/data/network/network_info.dart';
 
 import '../../data/data_source/remote_data_source.dart';
 import '../../data/network/failure.dart';
+import '../../presentation/resources/strings.dart';
 
 abstract class GalleryRepository {
   Future<Either<Failure, List<UploadedYugiohCard>>> fetchGallery();
@@ -23,7 +25,7 @@ class GalleryRepositoryImpl implements GalleryRepository {
     if (await _networkInfo.isConnected()) {
       return Right(await _remoteDataSource.fetchGallery());
     } else {
-      return const Right([]);
+      return Left(DataSourceStatus.connectionError.getFailure());
     }
   }
 
@@ -35,13 +37,13 @@ class GalleryRepositoryImpl implements GalleryRepository {
         if (response/100 == 2) {
           return Right(response);
         } else {
-          return const Left(Failure(1, "Upload failed"));
+          return const Left(Failure(Strings.uploadFailed));
         }
       } else {
-        return const Left(Failure(1, 'Network is not connected'));
+        return Left(DataSourceStatus.connectionError.getFailure());
       }
-    } catch (_) {
-      return const Left(Failure(1, 'Unknown Error'));
+    } on Exception catch (ex) {
+      return Left(ex.getFailure());
     }
   }
 }

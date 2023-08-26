@@ -27,7 +27,6 @@ class Strings {
   static const yes = 'Yes';
   static const no = 'No';
   static const upload = 'Upload';
-  static const uploadingCard = 'Uploading Card';
   static const settings = 'Settings';
   static const anErrorOccurred = 'An error occurred';
   static const help = 'Help';
@@ -67,6 +66,13 @@ class Strings {
       'Only available on Link monster cards';
   static const creatorNameName = 'Creator Name';
   static const creatorNameDesc = 'Click on the box to edit it';
+
+  //Dialog messages
+  static const uploadingCard = 'Uploading Card';
+  static const uploadFailed = 'Something must be wrong\nUpload failed';
+  static const loadingContent = "Loading Content";
+  static const loadingContentFailed = "Something must be wrong\nFailed to load content";
+
 
   //settings screen
   static const settingsScreenTitle = 'Settings';
