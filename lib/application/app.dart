@@ -31,7 +31,8 @@ class _MyAppState extends State<MyApp> with GetItStateMixin{
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: const Size(ScreenPos.cardWidthRatio, ScreenPos.cardHeightRatio),
+        useInheritedMediaQuery: true,
+        designSize: const Size(ScreenPos.cardWidthRatio, ScreenPos.cardHeightRatio),
       minTextAdapt: true,
       builder: (BuildContext context, Widget? child) {
         final updatedTheme = watchOnly((SettingsViewModel vm) => vm.appTheme);
