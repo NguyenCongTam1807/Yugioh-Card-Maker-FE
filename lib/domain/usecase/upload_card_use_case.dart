@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:yugioh_card_creator/application/extensions.dart';
 import 'package:yugioh_card_creator/data/models/yugioh_card.dart';
 import 'package:yugioh_card_creator/data/network/failure.dart';
 import 'package:yugioh_card_creator/domain/repository/gallery_repository.dart';
@@ -15,12 +16,18 @@ class UploadCardUseCase extends BaseUseCase<Map<String, dynamic>, int> {
   Future<Either<Failure, int>> execute(Map<String, dynamic> input) async {
     final yugiohCard = input['yugiohCard'] as YugiohCard;
 
-    (await _storageRepository.uploadImagesToStorage(input)).fold((failure) {
+    (await _storageRepository.uploadImageToStorage(input)).fold((failure) {
       return failure;
     }, (key) {
       yugiohCard.storageKey = key;
     });
 
-    return await _galleryRepository.uploadCard(yugiohCard);
+    final response = await _galleryRepository.uploadCard(yugiohCard);
+    if (response.isLeft()) {
+      await _storageRepository
+          .removeImagesFromStorage(yugiohCard.storageKey.nullSafe());
+    }
+
+    return response;
   }
 }

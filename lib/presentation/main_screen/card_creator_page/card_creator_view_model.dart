@@ -276,9 +276,9 @@ class CardCreatorViewModel extends ChangeNotifier with BaseViewModel {
       'thumbnailData': thumbnailBytes
     };
     (await _uploadCardUseCase.execute(map)).fold(
-        (failure) => stateStreamController.add(const ViewState(
+        (failure) => stateStreamController.add(ViewState(
             ViewModelState.error,
-            message: Strings.uploadFailed)),
+            message: failure.message)),
         (statusCode) => stateStreamController.add(const ViewState(
             (ViewModelState.success),
             message: Strings.uploadedSuccessfully)));

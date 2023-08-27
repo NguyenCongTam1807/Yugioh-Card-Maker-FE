@@ -60,9 +60,9 @@ extension ExceptionHandler on Exception {
 
 class ResponseMessage {
   //User-friendly messages
-  static const String noInternetConnection = "No internet connection found";
-  static const String connectTimeout = "The operation takes too long";
+  static const String noInternetConnection = "No internet connection";
+  static const String connectTimeout = "The operation\ntakes too long";
   static const String cancel = "Request was cancelled";
   static const String others =
-      "There's something wrong, the operation cannot be completed";
+      "There's something wrong\nthe operation has failed";
 }

@@ -38,7 +38,7 @@ Future<void> initAppModule() async {
   getIt.registerLazySingleton<GalleryRepository>(() => GalleryRepositoryImpl(getIt(), getIt(), getIt()));
   getIt.registerLazySingleton<FetchGalleryUseCase>(()=> FetchGalleryUseCase(getIt()));
 
-  getIt.registerLazySingleton<StorageRepository>(()=> S3StorageRepository());
+  getIt.registerLazySingleton<StorageRepository>(()=> S3StorageRepository(getIt()));
   getIt.registerLazySingleton<UploadCardUseCase>(()=> UploadCardUseCase(getIt(), getIt()));
 
   getIt.registerLazySingleton<ImagePicker>(() => ImagePicker());
