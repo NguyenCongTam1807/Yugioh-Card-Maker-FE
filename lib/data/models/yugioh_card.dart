@@ -35,9 +35,9 @@ class YugiohCard {
   });
 
   factory YugiohCard.fromJson(Map<String, dynamic> json) {
-    final attribute = CardAttribute.values.firstWhere((element) => element == json['attribute']);
-    final cardType = CardType.values.firstWhere((element) => element == json['cardType']);
-    final effectType = EffectType.values.firstWhere((element) => element == json['effectType']);
+    final attribute = CardAttribute.values.firstWhere((element) => element.toString() == json['attribute']);
+    final cardType = CardType.values.firstWhere((element) => element.toString() == json['cardType']);
+    final effectType = EffectType.values.firstWhere((element) => element.toString() == json['effectType']);
     final linkArrows = <bool>[];
     final linkArrowsString = json['linkArrows'] as String;
     for (int i = 0; i<linkArrowsString.length; i++) {
