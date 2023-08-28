@@ -28,4 +28,6 @@ class ScreenLayout {
   static final themePreviewSize = 100.sp;
 
   static final alertDialogPadding = 40.sp;
+  static final alertDialogContent = 50.sp;
+  static final alertDialogButtonText = 20.sp;
 }

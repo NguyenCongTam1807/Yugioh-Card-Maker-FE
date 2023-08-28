@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:yugioh_card_creator/application/extensions.dart';
 
 import '../../data/models/view_state.dart';
@@ -40,7 +41,7 @@ void buildViewState(BuildContext context, BaseViewModel viewModel, ViewState vie
                           .dialogTheme
                           .contentTextStyle
                           ?.color),
-                )
+                ),
               ]);
             });
       });
@@ -67,6 +68,7 @@ void buildViewState(BuildContext context, BaseViewModel viewModel, ViewState vie
                         .dialogTheme
                         .contentTextStyle
                         ?.color,
+                    fontSize: ScreenLayout.alertDialogContent,
                   ),
                 ),
                 Row(

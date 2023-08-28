@@ -29,6 +29,9 @@ Widget dialogActionButton(BuildContext context, String text, Function() onPresse
       onPressed: onPressedFn,
       child: Text(
         text,
+        style: TextStyle(
+          fontSize: ScreenLayout.alertDialogButtonText
+        ),
       ));
 }
 

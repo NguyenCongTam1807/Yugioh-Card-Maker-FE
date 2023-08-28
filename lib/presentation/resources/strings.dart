@@ -14,6 +14,7 @@ class Strings {
   static const loadFromStorage = 'Load From Gallery';
   static const cardUnknownAtkDef = '?';
   static const ok = 'OK';
+  static const cancel = 'Cancel';
   static const gotIt = 'Got it';
   static const uploadedSuccessfully = 'Uploaded successfully';
   static const somethingWrong = 'Something is wrong, please try again later';
