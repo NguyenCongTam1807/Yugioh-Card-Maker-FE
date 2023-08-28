@@ -8,10 +8,13 @@ import 'package:yugioh_card_creator/presentation/main_screen/card_creator_page/o
 import 'package:yugioh_card_creator/presentation/main_screen/custom_widgets/highlight_wrapper.dart';
 
 import '../../../application/dependency_injection.dart';
+import '../../../data/models/view_state.dart';
+import '../../common/common_functions.dart';
 import '../../resources/images.dart';
 import '../../resources/layout.dart';
 import '../../resources/strings.dart';
 import '../../resources/styles.dart';
+import '../../view_model_states/state_renderer.dart';
 import 'card_widget/yugioh_card_widget.dart';
 import 'help_step.dart';
 import 'outer_buttons/card_image_button.dart';
@@ -34,6 +37,11 @@ class _CardCreatorViewState extends State<CardCreatorView>
   void initState() {
     _cardCreatorViewModel.init();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   void _setCardLayout(double screenWidth, double screenHeight) {
@@ -65,126 +73,14 @@ class _CardCreatorViewState extends State<CardCreatorView>
 
   @override
   Widget build(BuildContext context) {
-    final helpStep = watchOnly((CardCreatorViewModel vm) => vm.helpStep);
+    final viewState = watchStream(
+            (CardCreatorViewModel vm) => vm.stateStreamController,
+        const ViewState(ViewModelState.normal))
+        .data??const ViewState(ViewModelState.normal);
 
-    return Center(child: SingleChildScrollView(
-      child: LayoutBuilder(builder: (ctx, constraint) {
-        final deviceHeight =
-            ui.window.physicalSize.longestSide / ui.window.devicePixelRatio;
-        final double statusBarHeight =
-            ui.window.padding.top / ui.window.devicePixelRatio;
-        final screenHeight =
-            deviceHeight - AppBar().preferredSize.height - statusBarHeight;
+    buildViewState(context, _cardCreatorViewModel, viewState);
 
-        final screenWidth = constraint.maxWidth;
-
-        if (screenWidth >= screenHeight) {
-          return Center(
-              child: Image.asset(
-            ImagePath.cardImagePlaceHolder,
-            fit: BoxFit.scaleDown,
-          ));
-        }
-        _setCardLayout(screenWidth, screenHeight);
-        return Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(colors: [
-              Theme.of(context).colorScheme.primary,
-              Theme.of(context).colorScheme.secondary,
-              Theme.of(context).colorScheme.primary,
-            ], begin: Alignment.topCenter, end: Alignment.bottomCenter),
-          ),
-          width: screenWidth,
-          height: screenHeight,
-          child: LayoutBuilder(builder: (context, constraint) {
-            final cardWidth = _cardCreatorViewModel.cardSize.width;
-            final cardHeight = _cardCreatorViewModel.cardSize.height;
-            final cardLeft = _cardCreatorViewModel.cardOffset.dx;
-            final cardTop = _cardCreatorViewModel.cardOffset.dy;
-            final iconLeft =
-                (screenWidth - cardWidth - ScreenLayout.editButtonWidth * 2) /
-                    4;
-
-            return Stack(
-              children: [
-                Positioned(
-                    top: cardTop - ScreenLayout.helperColorPadding,
-                    left: iconLeft - ScreenLayout.helperColorPadding,
-                    child: HighlightWrapper(
-                        highlightPadding: ScreenLayout.helperColorPadding,
-                        child: CardTypeButton())),
-                Positioned(
-                    top: cardTop + cardHeight - ScreenLayout.editButtonHeight - ScreenLayout.helperColorPadding,
-                    left: iconLeft - ScreenLayout.helperColorPadding,
-                    child: HighlightWrapper(
-                        highlightPadding: ScreenLayout.helperColorPadding,
-                        child: CardImageButton())),
-                Positioned(
-                  top: cardTop,
-                  left: cardLeft,
-                  child: SizedBox(
-                      width: cardWidth,
-                      height: cardHeight,
-                      child: RepaintBoundary(
-                          key: _cardCreatorViewModel.cardKey,
-                          child: YugiohCardWidget())),
-                ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            if (helpStep != HelpStep.none)
-                              ElevatedButton(
-                                  onPressed: () {
-                                    _cardCreatorViewModel.prevHelpStep();
-                                  },
-                                  child: const Text(Strings.prev)),
-                            const Spacer(),
-                            HighlightWrapper(child: CardMakerMenuButton()),
-                            const Spacer(),
-                            if (helpStep != HelpStep.none)
-                              ElevatedButton(
-                                  onPressed: () {
-                                    _cardCreatorViewModel.nextHelpStep();
-                                  },
-                                  child: const Text(Strings.next)),
-                          ],
-                        ),
-                      ],
-                    ),
-                    if (helpStep != HelpStep.none)
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          const Opacity(
-                            opacity: 0,
-                            child: ElevatedButton(
-                                onPressed: null, child: Text(Strings.end)),
-                          ),
-                          // if (helpStep > HelpStep.linkArrows ||
-                          //     helpStep == HelpStep.cardImageButton)
-                            _getHelperText(helpStep),
-                          ElevatedButton(
-                              onPressed: () {
-                                _cardCreatorViewModel.endHelp();
-                              },
-                              child: const Text(Strings.end))
-                        ],
-                      ),
-                  ],
-                ),
-              ],
-            );
-          }),
-        );
-      }),
-    ));
+    return _normalContent();
   }
 
   Widget _getHelperText(int helpStep) {
@@ -312,5 +208,128 @@ class _CardCreatorViewState extends State<CardCreatorView>
         ],
       ),
     );
+  }
+
+  Widget _normalContent() {
+    final helpStep = watchOnly((CardCreatorViewModel vm) => vm.helpStep);
+
+    return Center(child: SingleChildScrollView(
+      child: LayoutBuilder(builder: (ctx, constraint) {
+        final deviceHeight =
+            ui.window.physicalSize.longestSide / ui.window.devicePixelRatio;
+        final double statusBarHeight =
+            ui.window.padding.top / ui.window.devicePixelRatio;
+        final screenHeight =
+            deviceHeight - AppBar().preferredSize.height - statusBarHeight;
+
+        final screenWidth = constraint.maxWidth;
+
+        if (screenWidth >= screenHeight) {
+          return Center(
+              child: Image.asset(
+                ImagePath.cardImagePlaceHolder,
+                fit: BoxFit.scaleDown,
+              ));
+        }
+        _setCardLayout(screenWidth, screenHeight);
+        return Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(colors: [
+              Theme.of(context).colorScheme.primary,
+              Theme.of(context).colorScheme.secondary,
+              Theme.of(context).colorScheme.primary,
+            ], begin: Alignment.topCenter, end: Alignment.bottomCenter),
+          ),
+          width: screenWidth,
+          height: screenHeight,
+          child: LayoutBuilder(builder: (context, constraint) {
+            final cardWidth = _cardCreatorViewModel.cardSize.width;
+            final cardHeight = _cardCreatorViewModel.cardSize.height;
+            final cardLeft = _cardCreatorViewModel.cardOffset.dx;
+            final cardTop = _cardCreatorViewModel.cardOffset.dy;
+            final iconLeft =
+                (screenWidth - cardWidth - ScreenLayout.editButtonWidth * 2) /
+                    4;
+
+            return Stack(
+              children: [
+                Positioned(
+                    top: cardTop - ScreenLayout.helperColorPadding,
+                    left: iconLeft - ScreenLayout.helperColorPadding,
+                    child: HighlightWrapper(
+                        highlightPadding: ScreenLayout.helperColorPadding,
+                        child: CardTypeButton())),
+                Positioned(
+                    top: cardTop + cardHeight - ScreenLayout.editButtonHeight - ScreenLayout.helperColorPadding,
+                    left: iconLeft - ScreenLayout.helperColorPadding,
+                    child: HighlightWrapper(
+                        highlightPadding: ScreenLayout.helperColorPadding,
+                        child: CardImageButton())),
+                Positioned(
+                  top: cardTop,
+                  left: cardLeft,
+                  child: SizedBox(
+                      width: cardWidth,
+                      height: cardHeight,
+                      child: RepaintBoundary(
+                          key: _cardCreatorViewModel.cardKey,
+                          child: YugiohCardWidget())),
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            if (helpStep != HelpStep.none)
+                              ElevatedButton(
+                                  onPressed: () {
+                                    _cardCreatorViewModel.prevHelpStep();
+                                  },
+                                  child: const Text(Strings.prev)),
+                            const Spacer(),
+                            HighlightWrapper(child: CardMakerMenuButton()),
+                            const Spacer(),
+                            if (helpStep != HelpStep.none)
+                              ElevatedButton(
+                                  onPressed: () {
+                                    _cardCreatorViewModel.nextHelpStep();
+                                  },
+                                  child: const Text(Strings.next)),
+                          ],
+                        ),
+                      ],
+                    ),
+                    if (helpStep != HelpStep.none)
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          const Opacity(
+                            opacity: 0,
+                            child: ElevatedButton(
+                                onPressed: null, child: Text(Strings.end)),
+                          ),
+                          // if (helpStep > HelpStep.linkArrows ||
+                          //     helpStep == HelpStep.cardImageButton)
+                          _getHelperText(helpStep),
+                          ElevatedButton(
+                              onPressed: () {
+                                _cardCreatorViewModel.endHelp();
+                              },
+                              child: const Text(Strings.end))
+                        ],
+                      ),
+                  ],
+                ),
+              ],
+            );
+          }),
+        );
+      }),
+    ));
   }
 }

@@ -1,0 +1,3 @@
+INSERT INTO uploaded_yugioh_card (id, name, attribute, image_path, monster_type, description, atk, def, creator_name, card_type, level, effect_type, link_arrows, storage_key)
+VALUES
+(UUID(),'Nguyen Cong Tam', 'CardAttribute.dark', 'abc', 'Dragon / Normal', 'This is a test card', '9999', '?', 'Cong Tam', 'CardType.normal', 10, 'EffectType.normal', '10100101', 'Mock storage key'),
