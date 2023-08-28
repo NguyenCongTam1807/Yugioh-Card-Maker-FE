@@ -7,6 +7,7 @@ import '../../../application/dependency_injection.dart';
 import '../../../data/models/view_state.dart';
 import '../../common/common_functions.dart';
 import '../../view_model_states/state_renderer.dart';
+import 'gallery_card_widget.dart';
 
 class GalleryView extends StatefulWidget with GetItStatefulWidgetMixin {
   GalleryView({Key? key}) : super(key: key);
@@ -52,8 +53,7 @@ class _GalleryViewState extends State<GalleryView> with GetItStateMixin {
                 crossAxisCount: 2),
             itemBuilder: (ctx, index) {
               final card = galleryData.data![index];
-              return Text(
-                  "${card.id} - ${card.uploadedAt}\n${card.yugiohCard?.creatorName}");
+              return GalleryCardWidget(card);
             },
           )
         : const Center(

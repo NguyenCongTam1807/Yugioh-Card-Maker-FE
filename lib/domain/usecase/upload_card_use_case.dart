@@ -15,17 +15,23 @@ class UploadCardUseCase extends BaseUseCase<Map<String, dynamic>, int> {
   @override
   Future<Either<Failure, int>> execute(Map<String, dynamic> input) async {
     final yugiohCard = input['yugiohCard'] as YugiohCard;
+    final oldCardImagePath = yugiohCard.imagePath;
+    late String storageKey;
 
     (await _storageRepository.uploadImageToStorage(input)).fold((failure) {
       return failure;
-    }, (key) {
-      yugiohCard.storageKey = key;
+    }, (keys) async {
+      storageKey = keys['storageKey'].nullSafe();
+      yugiohCard.imagePath = keys['newImagePath'].nullSafe();
+      yugiohCard.thumbnailUrl = keys['thumbnailUrl'].nullSafe();
+      yugiohCard.fullCardImageUrl = keys['fullCardImageUrl'].nullSafe();
     });
 
     final response = await _galleryRepository.uploadCard(yugiohCard);
     if (response.isLeft()) {
-      await _storageRepository
-          .removeImagesFromStorage(yugiohCard.storageKey.nullSafe());
+      await _storageRepository.removeImagesFromStorage(storageKey);
+
+      yugiohCard.imagePath = oldCardImagePath;
     }
 
     return response;

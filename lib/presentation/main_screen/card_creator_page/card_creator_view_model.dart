@@ -270,8 +270,9 @@ class CardCreatorViewModel extends ChangeNotifier with BaseViewModel {
         message: Strings.uploadingCard));
     final fullCardImageBytes = await exportFullCardImageBytes();
     final thumbnailBytes = await exportFullCardImageBytes(qualityRatio: 0.25);
+    final deepCopiedCard = YugiohCard.fromJson(currentCard.toJson());
     final map = {
-      'yugiohCard': currentCard,
+      'yugiohCard': deepCopiedCard,
       'fullCardImageData': fullCardImageBytes,
       'thumbnailData': thumbnailBytes
     };

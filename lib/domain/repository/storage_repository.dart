@@ -17,9 +17,10 @@ import '../../presentation/resources/images.dart';
 import '../../presentation/resources/strings.dart';
 
 abstract class StorageRepository {
-  Future<Either<Failure, String>> uploadImageToStorage(
+  Future<Either<Failure, Map<String, String>>> uploadImageToStorage(
       Map<String, dynamic> input);
   Future<Either<Failure, void>> removeImagesFromStorage(String storageKey);
+  Future<String> getUrl(String key);
 
   Future<Uint8List> getBytesFromImagePath(String path) async {
     final Uint8List result;
@@ -47,15 +48,6 @@ abstract class StorageRepository {
 
     return result;
   }
-
-// Future<String> getUploadedImageUrl(String key) async {
-//   try {
-//     final imageUrlResult = await Amplify.Storage.getUrl(key: key).result;
-//     return imageUrlResult.url.toString();
-//   } catch (e) {
-//     rethrow;
-//   }
-// }
 }
 
 class S3StorageRepository extends StorageRepository {
@@ -64,17 +56,17 @@ class S3StorageRepository extends StorageRepository {
   S3StorageRepository(this._networkInfo);
 
   @override
-  Future<Either<Failure, String>> uploadImageToStorage(
+  Future<Either<Failure, Map<String, String>>> uploadImageToStorage(
       Map<String, dynamic> input) async {
     final yugiohCard = input['yugiohCard'] as YugiohCard;
     final fullCardImageFile =
-        AWSFilePlatform.fromData(input['fullCardImageData']);
+    AWSFilePlatform.fromData(input['fullCardImageData']);
     final thumbnailFile = AWSFilePlatform.fromData(input['thumbnailData']);
 
     try {
       if (await _networkInfo.isConnected()) {
         final cardImageData =
-            await getBytesFromImagePath(yugiohCard.imagePath.nullSafe());
+        await getBytesFromImagePath(yugiohCard.imagePath.nullSafe());
 
         final cardImageFile = AWSFilePlatform.fromData(cardImageData);
 
@@ -103,7 +95,16 @@ class S3StorageRepository extends StorageRepository {
           key: cardImageKey,
           options: options,
         );
-        return Right(storageKey);
+        final newImagePath = await getUrl('card-image/$storageKey.png');
+        final thumbnailUrl = await getUrl('thumbnail-image/$storageKey.png');
+        final fullCardImageUrl = await getUrl('full-card-image/$storageKey.png');
+        final map = <String, String>{
+          'storageKey': storageKey,
+          'newImagePath': newImagePath,
+          'thumbnailUrl': thumbnailUrl,
+          'fullCardImageUrl': fullCardImageUrl,
+        };
+        return Right(map);
       } else {
         return Left(DataSourceStatus.connectionError.getFailure());
       }
@@ -131,5 +132,20 @@ class S3StorageRepository extends StorageRepository {
       print("Cannot rollback image upload");
     }
     return const Right(Void);
+  }
+
+  @override
+  Future<String> getUrl(String key) async {
+    try {
+      final imageUrlResult = await Amplify.Storage.getUrl(
+          key: key,
+        options: const StorageGetUrlOptions(
+          accessLevel: StorageAccessLevel.guest,
+        ),
+      ).result;
+      return imageUrlResult.url.toString();
+    } catch (e) {
+      rethrow;
+    }
   }
 }

@@ -22,10 +22,14 @@ class GalleryRepositoryImpl implements GalleryRepository {
 
   @override
   Future<Either<Failure, List<UploadedYugiohCard>>> fetchGallery() async {
-    if (await _networkInfo.isConnected()) {
-      return Right(await _remoteDataSource.fetchGallery());
-    } else {
-      return Left(DataSourceStatus.connectionError.getFailure());
+    try {
+      if (await _networkInfo.isConnected()) {
+        return Right(await _remoteDataSource.fetchGallery());
+      } else {
+        return Left(DataSourceStatus.connectionError.getFailure());
+      }
+    } on Exception catch (ex) {
+      return Left(ex.getFailure());
     }
   }
 

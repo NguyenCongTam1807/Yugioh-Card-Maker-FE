@@ -28,6 +28,8 @@ class UploadedYugiohCard {
               'level': json['level'],
               'effectType': json['effectType'],
               'linkArrows': json['linkArrows'],
+              'thumbnailUrl': json['thumbnailUrl'],
+              'fullCardImageUrl': json['fullCardImageUrl'],
             }
         ),
         uploadedAt: json['uploadedAt']

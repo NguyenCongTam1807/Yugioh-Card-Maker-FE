@@ -33,7 +33,6 @@ class GalleryViewModel extends ChangeNotifier with BaseViewModel{
       stateStreamController.add(const ViewState(ViewModelState.error, message: Strings.loadingContentFailed));
     }, (list) {
       galleryDataStreamController.sink.add(list);
-      print("gallery fetched list: ${list.length}");
       stateStreamController.add(const ViewState(ViewModelState.normal));
     });
   }

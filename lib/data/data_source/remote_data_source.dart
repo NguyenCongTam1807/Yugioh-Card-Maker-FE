@@ -15,7 +15,11 @@ class RemoteDataSourceImpl implements RemoteDataSource{
 
   @override
   Future<List<UploadedYugiohCard>> fetchGallery() async {
-    return await _restClient.fetchGallery();
+    try {
+      return await _restClient.fetchGallery();
+    } catch (_) {
+      rethrow;
+    }
   }
 
   @override
