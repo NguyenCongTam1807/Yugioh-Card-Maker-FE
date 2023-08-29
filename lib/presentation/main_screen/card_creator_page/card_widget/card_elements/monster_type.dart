@@ -21,6 +21,7 @@ class _MonsterTypeState extends State<MonsterType> {
   final _cardCreatorViewModel = getIt<CardCreatorViewModel>();
   final _currentCard = getIt<CardCreatorViewModel>().currentCard;
   final _cardWidth = getIt<CardCreatorViewModel>().cardSize.width;
+  bool _focused = false;
 
   @override
   void initState() {
@@ -37,14 +38,30 @@ class _MonsterTypeState extends State<MonsterType> {
 
   @override
   Widget build(BuildContext context) {
+
     return SizedBox(
       width: _cardWidth*CardLayout.monsterTypeWidth,
       height: _cardWidth*CardLayout.monsterTypeHeight,
       child: TextField(
         controller: monsterTypeController,
         onSubmitted: (String value) {
+          FocusManager.instance.primaryFocus?.unfocus();
           _cardCreatorViewModel.setCardMonsterType(value.substring(1,monsterTypeController.text.length-1));
+          setState(() {
+            _focused = false;
+          });
         },
+        onTap: () {
+          setState(() {
+            _focused = true;
+          });
+        },
+        onTapOutside: _focused?(_) {
+          FocusManager.instance.primaryFocus?.unfocus();
+          setState(() {
+            _focused = false;
+          });
+        }:null,
         style: kMonsterTypeTextStyle,
         decoration: const InputDecoration(
           border: InputBorder.none,
