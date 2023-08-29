@@ -87,7 +87,7 @@ class _ElasticTextFieldState extends State<ElasticTextField> {
   @override
   Widget build(BuildContext context) {
     _textLines = _cardCreatorViewModel.cardDescMaxLine;
-    if (widget.controller.selection.toString() == "TextSelection.invalid") {
+    if (_isEditable && widget.controller.selection.toString() == "TextSelection.invalid") {
       widget.controller.selection = TextSelection.fromPosition(TextPosition(offset: widget.controller.text.length));
     }
     
