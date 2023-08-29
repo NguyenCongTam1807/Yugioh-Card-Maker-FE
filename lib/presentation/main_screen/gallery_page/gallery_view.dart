@@ -46,10 +46,14 @@ class _GalleryViewState extends State<GalleryView> with GetItStateMixin {
     final galleryData = watchStream(
         (GalleryViewModel vm) => vm.galleryDataStreamController,
         const <UploadedYugiohCard>[]);
+    const space = 8.0;
     return galleryData.hasData
         ? GridView.builder(
             itemCount: galleryData.data!.length,
+            padding: const EdgeInsets.all(space),
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              mainAxisSpacing: space,
+                crossAxisSpacing: space,
                 crossAxisCount: 2),
             itemBuilder: (ctx, index) {
               final card = galleryData.data![index];
