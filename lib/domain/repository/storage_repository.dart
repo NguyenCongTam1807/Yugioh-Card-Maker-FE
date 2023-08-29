@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:amplify_flutter/amplify_flutter.dart';
+import 'package:amplify_storage_s3/amplify_storage_s3.dart';
 import 'package:aws_common/vm.dart';
 import 'package:http/http.dart' as http;
 import 'package:dartz/dartz.dart';
@@ -20,7 +21,7 @@ abstract class StorageRepository {
   Future<Either<Failure, Map<String, String>>> uploadImageToStorage(
       Map<String, dynamic> input);
   Future<Either<Failure, void>> removeImagesFromStorage(String storageKey);
-  Future<String> getUrl(String key);
+  Future<String> getObjectUrl(String key);
 
   Future<Uint8List> getBytesFromImagePath(String path) async {
     final Uint8List result;
@@ -60,13 +61,13 @@ class S3StorageRepository extends StorageRepository {
       Map<String, dynamic> input) async {
     final yugiohCard = input['yugiohCard'] as YugiohCard;
     final fullCardImageFile =
-    AWSFilePlatform.fromData(input['fullCardImageData']);
+        AWSFilePlatform.fromData(input['fullCardImageData']);
     final thumbnailFile = AWSFilePlatform.fromData(input['thumbnailData']);
 
     try {
       if (await _networkInfo.isConnected()) {
         final cardImageData =
-        await getBytesFromImagePath(yugiohCard.imagePath.nullSafe());
+            await getBytesFromImagePath(yugiohCard.imagePath.nullSafe());
 
         final cardImageFile = AWSFilePlatform.fromData(cardImageData);
 
@@ -95,9 +96,11 @@ class S3StorageRepository extends StorageRepository {
           key: cardImageKey,
           options: options,
         );
-        final newImagePath = await getUrl('card-image/$storageKey.png');
-        final thumbnailUrl = await getUrl('thumbnail-image/$storageKey.png');
-        final fullCardImageUrl = await getUrl('full-card-image/$storageKey.png');
+        final newImagePath = await getObjectUrl('card-image/$storageKey.png');
+        final thumbnailUrl =
+            await getObjectUrl('thumbnail-image/$storageKey.png');
+        final fullCardImageUrl =
+            await getObjectUrl('full-card-image/$storageKey.png');
         final map = <String, String>{
           'storageKey': storageKey,
           'newImagePath': newImagePath,
@@ -135,15 +138,23 @@ class S3StorageRepository extends StorageRepository {
   }
 
   @override
-  Future<String> getUrl(String key) async {
+  Future<String> getObjectUrl(String key) async {
     try {
-      final imageUrlResult = await Amplify.Storage.getUrl(
-          key: key,
+      final preSignedUrlResult = await Amplify.Storage.getUrl(
+        key: key,
         options: const StorageGetUrlOptions(
           accessLevel: StorageAccessLevel.guest,
         ),
       ).result;
-      return imageUrlResult.url.toString();
+      final slashIndex = key.indexOf("/");
+      final objectFolder = key.substring(0, slashIndex + 1);
+      final objectName = key.substring(slashIndex + 1);
+      final encodedObjectName = Uri.encodeFull(objectName);
+      final preSignedUrl = preSignedUrlResult.url.toString();
+      final objectUrl = preSignedUrl.substring(
+              0, preSignedUrl.indexOf(objectFolder) + objectFolder.length) +
+          encodedObjectName;
+      return objectUrl;
     } catch (e) {
       rethrow;
     }
