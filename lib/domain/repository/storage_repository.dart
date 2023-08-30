@@ -77,8 +77,8 @@ class S3StorageRepository extends StorageRepository {
           accessLevel: StorageAccessLevel.guest,
         );
 
-        final fullCardKey = 'full-card-image/$storageKey.png';
-        final thumbnailKey = 'thumbnail-image/$storageKey.png';
+        final fullCardKey = 'full-card-image/$storageKey.jpg';
+        final thumbnailKey = 'thumbnail-image/$storageKey.jpg';
         final cardImageKey = 'card-image/$storageKey.png';
 
         Amplify.Storage.uploadFile(
@@ -98,9 +98,9 @@ class S3StorageRepository extends StorageRepository {
         );
         final newImagePath = await getObjectUrl('card-image/$storageKey.png');
         final thumbnailUrl =
-            await getObjectUrl('thumbnail-image/$storageKey.png');
+            await getObjectUrl('thumbnail-image/$storageKey.jpg');
         final fullCardImageUrl =
-            await getObjectUrl('full-card-image/$storageKey.png');
+            await getObjectUrl('full-card-image/$storageKey.jpg');
         final map = <String, String>{
           'storageKey': storageKey,
           'newImagePath': newImagePath,
@@ -122,8 +122,8 @@ class S3StorageRepository extends StorageRepository {
     try {
       Amplify.Storage.removeMany(
         keys: [
-          'full-card-image/$storageKey.png',
-          'thumbnail-image/$storageKey.png',
+          'full-card-image/$storageKey.jpg',
+          'thumbnail-image/$storageKey.jpg',
           'card-image/$storageKey.png'
         ],
         options: const StorageRemoveManyOptions(

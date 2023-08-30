@@ -3,11 +3,13 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:yugioh_card_creator/application/extensions.dart';
 import 'package:yugioh_card_creator/data/models/yugioh_card.dart';
 import 'package:yugioh_card_creator/domain/usecase/upload_card_use_case.dart';
 import 'package:yugioh_card_creator/presentation/base/base_view_model.dart';
+import 'package:yugioh_card_creator/presentation/main_screen/card_creator_page/positions.dart';
 
 import '../../../data/models/view_state.dart';
 import '../../resources/strings.dart';
@@ -265,23 +267,48 @@ class CardCreatorViewModel extends ChangeNotifier with BaseViewModel {
     return pngBytes;
   }
 
+  Future<Uint8List?> compressImageBytes(Uint8List? source) async {
+    try {
+      var result = await FlutterImageCompress.compressWithList(
+        source!,
+        minHeight: ScreenPos.cardHeightRatio,
+        minWidth: ScreenPos.cardWidthRatio,
+        quality: 100,
+      );
+
+      return result;
+    } catch (_) {
+      return null;
+    }
+  }
+
   Future<void> uploadCard() async {
-    stateStreamController.add(const ViewState(ViewModelState.loading,
-        message: Strings.uploadingCard));
-    final fullCardImageBytes = await exportFullCardImageBytes();
-    final thumbnailBytes = await exportFullCardImageBytes(qualityRatio: 0.25);
-    final deepCopiedCard = YugiohCard.fromJson(currentCard.toJson());
-    final map = {
-      'yugiohCard': deepCopiedCard,
-      'fullCardImageData': fullCardImageBytes,
-      'thumbnailData': thumbnailBytes
-    };
-    (await _uploadCardUseCase.execute(map)).fold(
-        (failure) => stateStreamController.add(ViewState(
+      stateStreamController.add(const ViewState(ViewModelState.loading,
+          message: Strings.uploadingCard));
+      final fullCardImageBytes = await exportFullCardImageBytes(qualityRatio: 0.75);
+      final thumbnailBytes = await exportFullCardImageBytes(qualityRatio: 0.25);
+
+      final compressedFullCardImageBytes = await compressImageBytes(fullCardImageBytes);
+      final compressedThumbnailBytes = await compressImageBytes(thumbnailBytes);
+
+      if (compressedFullCardImageBytes != null && compressedThumbnailBytes != null) {
+        final deepCopiedCard = YugiohCard.fromJson(currentCard.toJson());
+        final map = {
+          'yugiohCard': deepCopiedCard,
+          'fullCardImageData': compressedFullCardImageBytes,
+          'thumbnailData': compressedThumbnailBytes
+        };
+        (await _uploadCardUseCase.execute(map)).fold(
+                (failure) => stateStreamController.add(ViewState(
+                ViewModelState.error,
+                message: failure.message)),
+                (statusCode) => stateStreamController.add(const ViewState(
+                (ViewModelState.success),
+                message: Strings.uploadedSuccessfully)));
+      } else {
+        stateStreamController.add(const ViewState(
             ViewModelState.error,
-            message: failure.message)),
-        (statusCode) => stateStreamController.add(const ViewState(
-            (ViewModelState.success),
-            message: Strings.uploadedSuccessfully)));
+            message: Strings.invalidImage));
+      }
   }
 }

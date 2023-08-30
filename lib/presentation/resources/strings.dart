@@ -69,6 +69,7 @@ class Strings {
   static const creatorNameDesc = 'Click on the box to edit it';
 
   //Dialog messages
+  static const invalidImage = 'Operation failed\nMaybe there\'s something wrong with the image?';
   static const uploadingCard = 'Uploading Card';
   static const uploadFailed = 'Something must be wrong\nUpload failed';
   static const loadingContent = "Loading Content";

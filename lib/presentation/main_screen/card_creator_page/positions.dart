@@ -78,8 +78,8 @@ class CardLayout {
 }
 
 class ScreenPos {
-  static const cardWidthRatio = 813.0;
-  static const cardHeightRatio = 1185.0;
+  static const cardWidthRatio = 813;
+  static const cardHeightRatio = 1185;
   static const cardMarginRatio = 0.26;
 
   //Card Image Button
