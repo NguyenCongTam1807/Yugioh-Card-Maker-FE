@@ -1,7 +1,7 @@
 {
   "name": "Nguyen Cong Tam",
   "attribute": "CardAttribute.dark",
-  "imagePath": "abc",
+  "imagePath": "image path",
   "monsterType": "Dragon / Normal",
   "description": "This is a test card",
   "atk": "9999",
@@ -11,5 +11,6 @@
   "level": 10,
   "effectType": "EffectType.normal",
   "linkArrows": "10100101",
-  "storageKey": "Mock storage key"
+  "thumbnailUrl": "thumbnail url",
+  "fullCardImageUrl": "full card image url"
 }
