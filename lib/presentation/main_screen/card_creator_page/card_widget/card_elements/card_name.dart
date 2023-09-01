@@ -50,6 +50,7 @@ class _CardNameState extends State<CardName> with GetItStateMixin{
           },
           style: kCardNameTextStyle.copyWith(color: textColor),
           maxLines: 1,
+          scaleAlignment: Alignment.centerLeft,
         ));
   }
 }
