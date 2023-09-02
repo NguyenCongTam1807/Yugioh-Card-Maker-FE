@@ -26,18 +26,18 @@ class _GalleryViewState extends State<GalleryView> with GetItStateMixin {
   }
 
   @override
-  void dispose() {
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final viewState = watchStream(
-            (GalleryViewModel vm) => vm.stateStreamController,
-            const ViewState(ViewModelState.normal))
-        .data??const ViewState(ViewModelState.normal);
+                (GalleryViewModel vm) => vm.stateStreamController,
+                const ViewState(ViewModelState.normal))
+            .data ??
+        const ViewState(ViewModelState.normal);
 
-    buildViewState(context, _galleryViewModel, viewState);
+    if (viewState.state != currentState) {
+      buildViewState(context, _galleryViewModel, viewState);
+    }
+
+    currentState = viewState.state;
 
     return _normalContent();
   }

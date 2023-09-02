@@ -32,16 +32,12 @@ class CardCreatorView extends StatefulWidget with GetItStatefulWidgetMixin {
 class _CardCreatorViewState extends State<CardCreatorView>
     with GetItStateMixin {
   final _cardCreatorViewModel = getIt<CardCreatorViewModel>();
+  var currentState = ViewModelState.normal;
 
   @override
   void initState() {
     _cardCreatorViewModel.init();
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
   }
 
   void _setCardLayout(double screenWidth, double screenHeight) {
@@ -78,7 +74,11 @@ class _CardCreatorViewState extends State<CardCreatorView>
         const ViewState(ViewModelState.normal))
         .data??const ViewState(ViewModelState.normal);
 
-    buildViewState(context, _cardCreatorViewModel, viewState);
+    if (viewState.state != currentState) {
+      buildViewState(context, _cardCreatorViewModel, viewState);
+    }
+
+    currentState = viewState.state;
 
     return _normalContent();
   }
