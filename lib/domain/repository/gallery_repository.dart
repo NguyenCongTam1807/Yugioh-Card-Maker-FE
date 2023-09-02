@@ -11,6 +11,7 @@ import '../../presentation/resources/strings.dart';
 
 abstract class GalleryRepository {
   Future<Either<Failure, List<UploadedYugiohCard>>> fetchGallery();
+  Future<Either<Failure, List<UploadedYugiohCard>>> fetchPage(int page);
   Future<Either<Failure, int>> uploadCard(YugiohCard yugiohCard);
 }
 
@@ -25,6 +26,19 @@ class GalleryRepositoryImpl implements GalleryRepository {
     try {
       if (await _networkInfo.isConnected()) {
         return Right(await _remoteDataSource.fetchGallery());
+      } else {
+        return Left(DataSourceStatus.connectionError.getFailure());
+      }
+    } on Exception catch (ex) {
+      return Left(ex.getFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<UploadedYugiohCard>>> fetchPage(int page) async {
+    try {
+      if (await _networkInfo.isConnected()) {
+        return Right(await _remoteDataSource.fetchPage(page));
       } else {
         return Left(DataSourceStatus.connectionError.getFailure());
       }

@@ -16,6 +16,7 @@ class Strings {
   static const ok = 'OK';
   static const cancel = 'Cancel';
   static const gotIt = 'Got it';
+  static const tryAgain = "Try again";
   static const uploadedSuccessfully = 'Uploaded successfully';
   static const somethingWrong = 'Something is wrong, please try again later';
   static const saveYugiohCard = 'Save Yu-gi-oh Card';

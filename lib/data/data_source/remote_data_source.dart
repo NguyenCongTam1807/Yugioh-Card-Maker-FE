@@ -5,6 +5,7 @@ import '../network/rest_client.dart';
 
 abstract class RemoteDataSource {
   Future<List<UploadedYugiohCard>> fetchGallery();
+  Future<List<UploadedYugiohCard>> fetchPage(int page);
   Future<int> uploadCard(YugiohCard yugiohCard);
 }
 
@@ -17,6 +18,15 @@ class RemoteDataSourceImpl implements RemoteDataSource{
   Future<List<UploadedYugiohCard>> fetchGallery() async {
     try {
       return await _restClient.fetchGallery();
+    } catch (_) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<List<UploadedYugiohCard>> fetchPage(int page) async {
+    try {
+      return await _restClient.fetchPage(page);
     } catch (_) {
       rethrow;
     }

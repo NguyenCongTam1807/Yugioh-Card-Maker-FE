@@ -10,13 +10,14 @@ import 'package:yugioh_card_creator/data/network/network_info.dart';
 import 'package:yugioh_card_creator/data/network/rest_client.dart';
 import 'package:yugioh_card_creator/domain/repository/gallery_repository.dart';
 import 'package:yugioh_card_creator/domain/repository/storage_repository.dart';
-import 'package:yugioh_card_creator/domain/usecase/gallery_use_case.dart';
+import 'package:yugioh_card_creator/domain/usecase/fetch_gallery_use_case.dart';
 import 'package:yugioh_card_creator/domain/usecase/upload_card_use_case.dart';
 import 'package:yugioh_card_creator/presentation/main_screen/main_screen_view_model.dart';
 import 'package:yugioh_card_creator/presentation/settings_screen/settings_view_model.dart';
 
 import '../data/network/rest_client_impl.dart';
 import '../data/network/yugioh_api.dart';
+import '../domain/usecase/fetch_page_use_case.dart';
 import '../presentation/main_screen/card_creator_page/card_creator_view_model.dart';
 import '../presentation/main_screen/gallery_page/gallery_view_model.dart';
 
@@ -36,7 +37,7 @@ Future<void> initAppModule() async {
   getIt.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(InternetConnectionChecker()));
 
   getIt.registerLazySingleton<GalleryRepository>(() => GalleryRepositoryImpl(getIt(), getIt(), getIt()));
-  getIt.registerLazySingleton<FetchGalleryUseCase>(()=> FetchGalleryUseCase(getIt()));
+  getIt.registerLazySingleton<FetchPageUseCase>(()=> FetchPageUseCase(getIt()));
 
   getIt.registerLazySingleton<StorageRepository>(()=> S3StorageRepository(getIt()));
   getIt.registerLazySingleton<UploadCardUseCase>(()=> UploadCardUseCase(getIt(), getIt()));

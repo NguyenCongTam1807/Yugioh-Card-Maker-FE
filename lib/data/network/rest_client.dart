@@ -22,5 +22,6 @@ import '../models/yugioh_card.dart';
 
 abstract class RestClient {
   Future<List<UploadedYugiohCard>> fetchGallery();
+  Future<List<UploadedYugiohCard>> fetchPage(int page);
   Future<int> uploadCard(YugiohCard yugiohCard);
 }

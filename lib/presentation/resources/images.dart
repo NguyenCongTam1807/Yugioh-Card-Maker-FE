@@ -2,7 +2,7 @@ class ImagePath {
   static const baseAssetImagePath = 'assets/images';
 
   static const cardImagePlaceHolder = '$baseAssetImagePath/loading1.jpg';
-  static const cardImageLoading = '$baseAssetImagePath/loading new.png';
+  static const cardImageLoading = '$baseAssetImagePath/loading.png';
   static const cardLevelStar = '$baseAssetImagePath/stars/star.png';
   static const cardImageEditButton = '$baseAssetImagePath/button/card_image_edit_button.png';
   static const cardTypeEditButton = '$baseAssetImagePath/button/card_type_edit_button.png';

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:yugioh_card_creator/data/network/rest_client.dart';
 import 'package:yugioh_card_creator/data/network/yugioh_api.dart';
+import 'package:yugioh_card_creator/presentation/resources/config_values.dart';
 
 import '../models/uploaded_yugioh_card.dart';
 import '../models/yugioh_card.dart';
@@ -35,6 +36,28 @@ class RestClientImpl extends RestClient {
       '/cards',
       //queryParameters: queryParameters,
       //data: _data,
+    )
+        .copyWith(
+        baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        ))));
+    var value = result.data!
+        .map((dynamic i) =>
+        UploadedYugiohCard.fromJson(i as Map<String, dynamic>))
+        .toList();
+    return value;
+  }
+
+  @override
+  Future<List<UploadedYugiohCard>> fetchPage(int page) async {
+    final result = await _dio
+        .fetch<List<dynamic>>(_setStreamType<List<UploadedYugiohCard>>(Options(
+      method: 'GET',
+    )
+        .compose(
+      _dio.options,
+      '/cards?page=$page&size=${ConfigValues.galleryPageSize}',
     )
         .copyWith(
         baseUrl: _combineBaseUrls(
