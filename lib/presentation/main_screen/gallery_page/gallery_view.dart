@@ -63,26 +63,7 @@ class _GalleryViewState extends State<GalleryView> with GetItStateMixin {
   }
 
   Widget _normalContent() {
-    // final galleryData = watchStream(
-    //     (GalleryViewModel vm) => vm.galleryDataStreamController,
-    //     const <UploadedYugiohCard>[]);
     const space = 8.0;
-    // return galleryData.hasData
-    //     ? GridView.builder(
-    //         itemCount: galleryData.data!.length,
-    //         padding: const EdgeInsets.all(space),
-    //         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-    //           mainAxisSpacing: space,
-    //             crossAxisSpacing: space,
-    //             crossAxisCount: 2),
-    //         itemBuilder: (ctx, index) {
-    //           final card = galleryData.data![index];
-    //           return GalleryCardWidget(card);
-    //         },
-    //       )
-    //     : const Center(
-    //         child: Text("No data"),
-    //       );
     return RefreshIndicator(
       onRefresh: () => Future.sync(
         () => _pagingController.refresh(),
