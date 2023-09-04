@@ -66,7 +66,7 @@ extension NullableAppTheme on AppTheme? {
 
 extension CardAttributeExtension on CardAttribute {
   String getAssetPath() {
-    return 'assets/images/attribute/${toString().split('.').last}_en.png';
+    return 'assets/images/attribute/${toString().split('.').last}.png';
   }
 }
 

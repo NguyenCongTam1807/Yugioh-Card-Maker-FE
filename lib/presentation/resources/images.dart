@@ -1,6 +1,8 @@
 class ImagePath {
   static const baseAssetImagePath = 'assets/images';
 
+  static const defaultCardFrame = '$baseAssetImagePath/theme/normal.png';
+  static const defaultMonsterAttribute = '$baseAssetImagePath/attribute/light.png';
   static const cardImagePlaceHolder = '$baseAssetImagePath/loading1.jpg';
   static const cardImageLoading = '$baseAssetImagePath/loading.png';
   static const cardLevelStar = '$baseAssetImagePath/stars/star.png';
